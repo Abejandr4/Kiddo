@@ -19,55 +19,15 @@ struct ContentView: View {
     var body: some View {
         Group {
             if hasCompletedOnboarding {
-                // Vista principal después de la selección
-                NavigationSplitView {
-                    List {
-                        ForEach(items) { item in
-                            NavigationLink {
-                                Text("Detalle de registro: \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                            } label: {
-                                Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                            }
-                        }
-                        .onDelete(perform: deleteItems)
-                    }
-                    .navigationTitle(userRole == "Padre" ? "Panel del Padre" : "Mi Diario")
-#if os(macOS)
-                    .navigationSplitViewColumnWidth(min: 180, ideal: 200)
-#endif
-                    .toolbar {
-#if os(iOS)
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            EditButton()
-                        }
-#endif
-                        ToolbarItem {
-                            Button(action: addItem) {
-                                Label("Añadir Registro", systemImage: "plus")
-                            }
-                        }
-                    }
-                } detail: {
-                    Text("Selecciona un registro para ver las recomendaciones")
+                // Selección de la vista principal según el rol guardado
+                if userRole == "Padre" {
+                    MainViewPadre()
+                } else {
+                    MainViewHijo()
                 }
             } else {
-                // Pantalla de selección inicial
+                // Pantalla de selección inicial solo para apps nuevas
                 OnboardingView()
-            }
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
             }
         }
     }
@@ -99,8 +59,10 @@ struct OnboardingView: View {
 
     private func roleButton(title: String, icon: String, color: Color, role: String) -> some View {
         Button(action: {
-            userRole = role
-            hasCompletedOnboarding = true
+            withAnimation(.spring()) {
+                userRole = role
+                hasCompletedOnboarding = true
+            }
         }) {
             HStack {
                 Image(systemName: icon)
