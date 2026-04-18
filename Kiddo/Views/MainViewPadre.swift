@@ -56,3 +56,7 @@ struct MainViewPadre: View {
         
     }
 }
+
+#Preview {
+    MainViewPadre()
+}

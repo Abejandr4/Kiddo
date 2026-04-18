@@ -56,3 +56,7 @@ struct MainViewHijo: View {
         
     }
 }
+
+#Preview {
+    MainViewHijo()
+}
