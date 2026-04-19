@@ -25,11 +25,7 @@ struct LoginScreen: View {
                     VStack(spacing: -10) {
                         // Rayitos decorativos
                         HStack {
-                            Image(systemName: "bolt.fill")
-                                .rotationEffect(.degrees(-20))
-                                .font(.system(size: 20))
-                                .offset(x: -20, y: 10)
-                            Spacer()
+                            
                         }
                         .frame(width: 150)
                         .foregroundColor(Color(hex: "2D3748"))
