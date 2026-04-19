@@ -11,10 +11,7 @@ struct GradientButtonStyle: ButtonStyle {
     // El método makeBody define cómo se ve el botón
     func makeBody(configuration: Configuration) -> some View {
         HStack(spacing: 12) {
-            // Icono de verificación (check)
-            Image(systemName: "checkmark")
-                .font(.system(size: 20, weight: .bold)) // Un poco más grueso como en la imagen
-                .foregroundColor(foregroundColor)
+        
             
             // El contenido del botón (el texto)
             configuration.label

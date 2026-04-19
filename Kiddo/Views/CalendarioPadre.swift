@@ -3,50 +3,26 @@ import SwiftUI
 struct CalendarioPadre: View {
     @Binding var allEvents: [CalendarEvent]
     @State private var showingAddSheet = false
+    @State private var selectedDate = Date()
 
     var body: some View {
-        NavigationStack { // NavigationStack is preferred over NavigationView in newer iOS
-            VStack(spacing: 0) {
-                // 1. El Calendario (Asegúrate que el nombre coincida: CalendarioView)
-                CalendarView(events: allEvents)
+        NavigationStack {
+            ZStack(alignment: .bottomTrailing) { // Alineamos el contenido al fondo a la derecha
                 
-                // 2. Lista de próximos eventos
-                List(allEvents) { event in
-                    VStack(alignment: .leading, spacing: 5) {
-                        HStack {
-                            Circle()
-                                .fill(event.color)
-                                .frame(width: 10, height: 10)
-                            Text(event.title)
-                                .font(.headline)
-                        }
-                        
-                        // Usamos 'description' porque 'dose' no existe en tu modelo
-                        if let desc = event.description {
-                            Text(desc)
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                        }
-                        
-                        Text("Hora: \(event.startTime)")
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                    }
-                    .padding(.vertical, 4)
+                // 1. El contenido principal (Calendario)
+                CalendarView(events: allEvents, selectedDate: $selectedDate)
+                    .ignoresSafeArea(edges: .bottom)
+                
+                // 2. Tu botón con degradado personalizado
+                ActionButton("+") {
+                    showingAddSheet = true
                 }
-                .listStyle(.plain)
+                .padding(.trailing, 20) // Margen desde la derecha
+                .padding(.bottom, 30)   // Margen desde abajo (ajusta según el TabBar)
+                .shadow(color: Color.black.opacity(0.15), radius: 10, x: 0, y: 5)
             }
-            .navigationTitle("Mi Agenda")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: { showingAddSheet = true }) {
-                        Image(systemName: "plus.circle.fill")
-                            .font(.title2)
-                    }
-                }
-            }
+            // Quitamos el botón del toolbar ya que ahora tenemos el ActionButton
             .sheet(isPresented: $showingAddSheet) {
-                // Pasamos el binding para que AddEventView pueda guardar
                 AddEventView(events: $allEvents)
             }
         }
