@@ -22,7 +22,7 @@ struct CheckpointView: View {
                 if isActive {
                     Circle()
                     .fill(Color(hex: "F9E784"))
-                    .frame(width: 70, height: 70)
+                    .frame(width: 60, height: 60)
                         .scaleEffect(pulseScale)
                         .opacity(2.5 - pulseScale)
                         .onAppear {
@@ -36,7 +36,7 @@ struct CheckpointView: View {
                 Circle()
                     .fill(backgroundGradient)
                 
-                    .frame(width: 70, height: 70)
+                    .frame(width: 50, height: 50)
                     .overlay(
                         Circle().stroke(isCompleted ? Color.clear : Color(hex: "E2E8F0"), lineWidth: isCompleted ? 0 : 4)
                     )
@@ -46,8 +46,8 @@ struct CheckpointView: View {
                 if isActive {
                     // Aquí iría tu SuperheroSprite
                     Text("🦸‍♂️")
-                        .font(.system(size: 40))
-                        .rotationEffect(.degrees(isActive ? 5 : 0))
+                        .font(.system(size: 30))
+                        .rotationEffect(.degrees(isActive ? 2 : 0))
                         .animation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true), value: isActive)
                 } else {
                     Text(checkpoint.emoji)

@@ -23,11 +23,11 @@ struct ProgressMap: View {
     // Simulación del AvatarConfig
     var body: some View {
         let checkpoints = [
-            Checkpoint(x: 0.15, y: 0.85, label: "Mañana", emoji: "🌅", time: "8:00 AM"),
-            Checkpoint(x: 0.35, y: 0.60, label: "Mediodía", emoji: "☀️", time: "12:00 PM"),
-            Checkpoint(x: 0.55, y: 0.40, label: "Tarde", emoji: "🌤️", time: "4:00 PM"),
-            Checkpoint(x: 0.75, y: 0.25, label: "Noche", emoji: "🌙", time: "8:00 PM"),
-            Checkpoint(x: 0.85, y: 0.10, label: "¡Día completo!", emoji: "⭐", time: "")
+            Checkpoint(x: 0.15, y: 0.75, label: "Mañana", emoji: "🌅", time: "8:00 AM"),
+            Checkpoint(x: 0.8, y: 0.65, label: "Mediodía", emoji: "☀️", time: "12:00 PM"),
+            Checkpoint(x: 0.26, y: 0.48, label: "Tarde", emoji: "🌤️", time: "4:00 PM"),
+            Checkpoint(x: 0.75, y: 0.35, label: "Noche", emoji: "🌙", time: "8:00 PM"),
+            Checkpoint(x: 0.50, y: 0.15, label: "¡Día completo!", emoji: "⭐", time: "")
         ]
         
         let currentCheckpointIndex = Int((progress / 100) * 4)
@@ -43,23 +43,29 @@ struct ProgressMap: View {
                 .cornerRadius(30)
                 .shadow(radius: 10)
                 
-                // Elementos decorativos (Emojis flotantes)
-                Group {
-                    Text("🌸").position(x: geometry.size.width * 0.1, y: geometry.size.height * 0.1).opacity(0.4)
-                    Text("🦋").position(x: geometry.size.width * 0.8, y: geometry.size.height * 0.2).opacity(0.4)
-                    Text("🌻").position(x: geometry.size.width * 0.15, y: geometry.size.height * 0.8).opacity(0.4)
-                }
                 
                 // Líneas del camino (Dashed Path)
                 Path { path in
                     for i in 0..<checkpoints.count - 1 {
                         let start = CGPoint(x: checkpoints[i].x * geometry.size.width, y: checkpoints[i].y * geometry.size.height)
                         let end = CGPoint(x: checkpoints[i+1].x * geometry.size.width, y: checkpoints[i+1].y * geometry.size.height)
+                        
                         path.move(to: start)
-                        path.addLine(to: end)
+                        
+                        // 1. Calculamos el punto medio exacto entre los dos checkpoints
+                        let midX = (start.x + end.x) / 2
+                        let midY = (start.y + end.y) / 2
+                        
+                        // 2. Desplazamos ese punto medio hacia los lados para crear el "imán" de la curva
+                        // i % 2 == 0 hace que una curva vaya hacia un lado y la siguiente hacia el opuesto
+                        let curveOffset: CGFloat = i % 2 == 0 ? 50 : -50
+                        let controlPoint = CGPoint(x: midX + curveOffset, y: midY)
+                        
+                        // 3. Dibujamos la línea curva usando ese punto de control
+                        path.addQuadCurve(to: end, control: controlPoint)
                     }
                 }
-                .stroke(Color.gray.opacity(0.3), style: StrokeStyle(lineWidth: 3, lineCap: .round, dash: [8, 8]))
+                .stroke(Color.gray.opacity(0.4), style: StrokeStyle(lineWidth: 3, lineCap: .round, dash: [6, 12]))
                 
                 // Checkpoints
                 ForEach(0..<checkpoints.count, id: \.self) { i in
