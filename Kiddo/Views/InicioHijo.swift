@@ -106,7 +106,7 @@ struct InicioHijo: View {
                             .cornerRadius(20)
                         }
                     } else if todaysMedications.isEmpty {
-                        Text("No hay medicamentos programados para hoy.")
+                        Text("No hay poderes programados para hoy.")
                             .foregroundColor(.secondary)
                             .padding()
                     }

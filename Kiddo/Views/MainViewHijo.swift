@@ -36,7 +36,6 @@ struct MainView: View {
             // 3. CALENDARIO
             NavigationStack {
                 CalendarioHijo()
-                    .navigationTitle("Mi Calendario")
             }
             .tabItem {
                 Label("Calendario", systemImage: "calendar")

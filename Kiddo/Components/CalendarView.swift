@@ -70,7 +70,7 @@ struct CalendarView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 120, height: 120)
-                            Text("¡Tu superhéroe ha tomado todos sus medicamentos!")
+                            Text("¡El superhéroe ha activado todos sus poderes!")
                                 .font(.title3)
                                 .fontWeight(.medium)
                                 .foregroundColor(.secondary)
