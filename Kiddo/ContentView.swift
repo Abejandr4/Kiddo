@@ -22,10 +22,7 @@ struct ContentView: View {
                 // Selección de la vista principal según el rol guardado
                 if userRole == "Padre" {
                     MainViewPadre()
-                } else {
-                    MainViewHijo()
-                }
-            } else {
+                }            } else {
                 // Pantalla de selección inicial solo para apps nuevas
                 OnboardingView()
             }
