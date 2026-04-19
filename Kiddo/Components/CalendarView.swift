@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CalendarView: View {
     var events: [CalendarEvent]
-    @State private var selectedDate = Date()
+    @Binding var selectedDate: Date
     
     // Colores convertidos a RGB estándar (0.0 a 1.0)
     let themeYellow = Color(red: 249/255, green: 231/255, blue: 132/255)
@@ -69,7 +69,7 @@ struct CalendarView: View {
                             Image(systemName: "sparkles")
                                 .font(.system(size: 60))
                                 .foregroundColor(themeYellow)
-                            Text("¡Día libre de tareas!")
+                            Text("¡Tu superhéroe ha tomado todos sus medicamentos!")
                                 .font(.title3)
                                 .fontWeight(.medium)
                                 .foregroundColor(.secondary)
@@ -81,6 +81,7 @@ struct CalendarView: View {
                     }
                 }
                 .padding()
+                
             }
             .background(Color(UIColor.secondarySystemBackground))
         }

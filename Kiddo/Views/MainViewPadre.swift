@@ -21,7 +21,7 @@ struct MainViewPadre: View {
             NavigationStack {
                 // IMPORTANTE: Aquí también debes pasar $allEvents
                 CalendarioPadre(allEvents: $allEvents)
-                    .navigationTitle("Mi Calendario")
+                  
             }
             .tabItem { Label("Calendario", systemImage: "calendar") }
             
