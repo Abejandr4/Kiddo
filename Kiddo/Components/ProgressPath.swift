@@ -20,7 +20,6 @@ struct Checkpoint: Identifiable {
 struct ProgressMap: View {
     let progress: Double // 0 a 100
     
-    // Simulación del AvatarConfig
     var body: some View {
         let checkpoints = [
             Checkpoint(x: 0.15, y: 0.75, label: "Mañana", emoji: "🌅", time: "8:00 AM"),
@@ -43,29 +42,13 @@ struct ProgressMap: View {
                 .cornerRadius(30)
                 .shadow(radius: 10)
                 
-                
-                // Líneas del camino (Dashed Path)
-                Path { path in
-                    for i in 0..<checkpoints.count - 1 {
-                        let start = CGPoint(x: checkpoints[i].x * geometry.size.width, y: checkpoints[i].y * geometry.size.height)
-                        let end = CGPoint(x: checkpoints[i+1].x * geometry.size.width, y: checkpoints[i+1].y * geometry.size.height)
-                        
-                        path.move(to: start)
-                        
-                        // 1. Calculamos el punto medio exacto entre los dos checkpoints
-                        let midX = (start.x + end.x) / 2
-                        let midY = (start.y + end.y) / 2
-                        
-                        // 2. Desplazamos ese punto medio hacia los lados para crear el "imán" de la curva
-                        // i % 2 == 0 hace que una curva vaya hacia un lado y la siguiente hacia el opuesto
-                        let curveOffset: CGFloat = i % 2 == 0 ? 50 : -50
-                        let controlPoint = CGPoint(x: midX + curveOffset, y: midY)
-                        
-                        // 3. Dibujamos la línea curva usando ese punto de control
-                        path.addQuadCurve(to: end, control: controlPoint)
-                    }
-                }
-                .stroke(Color.gray.opacity(0.4), style: StrokeStyle(lineWidth: 3, lineCap: .round, dash: [6, 12]))
+                // Camino serpenteante orgánico
+                OrganicPath(points: checkpoints.map { CGPoint(x: $0.x, y: $0.y) })
+                    .stroke(
+                        Color.gray.opacity(0.4), // Aquí la hacemos gris y sutil
+                        style: StrokeStyle(lineWidth: 3, lineCap: .round, dash: [8, 8]) // Punteada
+                    )
+                // ⚠️ ¡Aquí estaba la llave extra que borré!
                 
                 // Checkpoints
                 ForEach(0..<checkpoints.count, id: \.self) { i in
@@ -89,14 +72,14 @@ struct ProgressMap: View {
                         .shadow(radius: 5)
                         .padding(.bottom, 20)
                 }
-            }
-        }
+            } // <-- Aquí se cierra el ZStack correctamente
+        } // <-- Aquí se cierra el GeometryReader
         .frame(height: 500)
         .padding()
     }
 }
+
 #Preview {
-    // Usamos un State personalizado para poder ver cómo cambia el mapa
-    // si modificamos el valor del progreso
     ProgressMap(progress: 45.0)
 }
+
