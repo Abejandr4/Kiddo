@@ -40,7 +40,6 @@ struct AddEventView: View {
                                 ForEach(filteredMedications) { med in
                                     Button {
                                         selectedMedication = med
-                                        dismissSearch() // Cerramos la lista de selección
                                     } label: {
                                         HStack {
                                             Text(med.emoji ?? "💊")

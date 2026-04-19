@@ -2,7 +2,7 @@ import SwiftUI
 
 struct MedicamentosView: View {
     // 1. Recibimos la lista de eventos del calendario para filtrar
-    let calendarEvents: [CalendarEvent]
+    @Binding var calendarEvents: [CalendarEvent]
     
     @State private var selectedMedication: Medication? = nil
     
@@ -11,7 +11,7 @@ struct MedicamentosView: View {
         medicationList.filter { med in
             calendarEvents.contains { event in
                 // Comprobamos si el nombre de la medicina está dentro del título del evento
-                event.title.contains(med.name)
+                event.title.localizedCaseInsensitiveContains(med.name)
             }
         }
     }

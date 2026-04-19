@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct CalendarioPadre: View {
-    @State private var allEvents: [CalendarEvent] = []
+    @Binding var allEvents: [CalendarEvent]
     @State private var showingAddSheet = false
 
     var body: some View {
@@ -53,6 +53,3 @@ struct CalendarioPadre: View {
     }
 }
 
-#Preview {
-    CalendarioPadre()
-}
