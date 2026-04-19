@@ -1,11 +1,10 @@
 import SwiftUI
 
 struct PersonalizedSuggestionView: View {
-    let tip: AISuggestion
+    let suggestion: Suggestion  // ← cambia AISuggestion por Suggestion
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            // Título de la sección
             HStack {
                 Image(systemName: "lightbulb.fill")
                     .foregroundColor(.yellow)
@@ -13,24 +12,22 @@ struct PersonalizedSuggestionView: View {
                     .font(.system(.body, design: .rounded)).bold()
             }
             
-            // Tarjeta de contenido
             HStack(alignment: .top, spacing: 15) {
-                Text(tip.icon)
+                Text(suggestion.emoji)          // ← tip.icon → suggestion.emoji
                     .font(.system(size: 40))
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(tip.title)
+                    Text(suggestion.title)      // ← igual
                         .font(.headline)
                         .foregroundColor(Color(red: 0.18, green: 0.22, blue: 0.28))
                     
-                    Text(tip.description)
+                    Text(suggestion.detail)     // ← tip.description → suggestion.detail
                         .font(.subheadline)
                         .foregroundColor(.secondary)
-                        .fixedSize(horizontal: false, vertical: true) // Evita que se corte el texto
+                        .fixedSize(horizontal: false, vertical: true)
                     
                     HStack {
                         Image(systemName: "timer")
-                        Text(tip.time)
                     }
                     .font(.caption)
                     .foregroundColor(Color(red: 0.48, green: 0.78, blue: 0.49))
@@ -53,4 +50,14 @@ struct PersonalizedSuggestionView: View {
         .cornerRadius(25)
         .shadow(color: .black.opacity(0.05), radius: 10)
     }
+}
+
+#Preview {
+    PersonalizedSuggestionView(suggestion: Suggestion(
+        title: "Tómatelo con calma",
+        detail: "Tu cuerpo está pidiendo descanso ahora mismo.",
+        emoji: "🛋️",
+        category: .rest,
+        urgency: .strong
+    ))
 }
