@@ -8,137 +8,74 @@
 import Foundation
 import SwiftUI
 
-// Estructura de datos para la configuración del avatar
-struct AvatarConfig {
-    // Define aquí tus propiedades (ej. color, tipo de máscara)
-    var heroColor: Color = .blue
+// MARK: - Models
+enum UserType {
+    case child, parent
 }
 
+struct AvatarConfig {
+    var skinColor: Color = .orange
+}
+
+// MARK: - Main View
 struct SettingsView: View {
-    let userType: String // "child" o "parent"
+    let userType: UserType
     let avatarConfig: AvatarConfig
+    
     var onCustomizeAvatar: () -> Void
     var onLogout: () -> Void
     
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                // Título de la sección
-                HStack(spacing: 12) {
-                    Image(systemName: "person.fill")
-                        .font(.system(size: 28))
-                        .foregroundColor(Color("7BC67E"))
-                    
-                    Text("Configuración")
-                        .font(.system(size: 32, weight: .bold))
-                        .foregroundColor(Color("2D3748"))
-                    Spacer()
-                }
-                .padding(.horizontal)
-
-                // Profile Card (Avatar)
-                VStack {
-                    ZStack {
-                        Circle()
-                            .fill(
-                                LinearGradient(
-                                    colors: [Color("7BC67E"), Color("87CEEB")],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
-                            .frame(width: 150, height: 150)
-                            .shadow(color: .black.opacity(0.1), radius: 10, x: 0, y: 5)
-                        
-                        Circle()
-                            .fill(.white)
-                            .frame(width: 142, height: 142)
-                        
-                        // Placeholder del SuperheroSprite
-                        Image(systemName: "bolt.shield.fill")
-                            .font(.system(size: 80))
-                            .foregroundColor(avatarConfig.heroColor)
-                    }
-                    .padding(.top, 20)
-
-                    Text(userType == "child" ? "¡Mi Superhéroe!" : "Cuidador")
-                        .font(.title2)
-                        .fontWeight(.semibold)
-                        .foregroundColor(Color("2D3748"))
-
-                    Text(userType == "child" ? "Cuenta personal" : "Cuenta de apoyo")
-                        .font(.subheadline)
-                        .foregroundColor(Color("718096"))
-                        .padding(.bottom, 20)
-                }
-                .frame(maxWidth: .infinity)
-                .background(
-                    LinearGradient(colors: [Color("E8F5E9"), .white], startPoint: .top, endPoint: .bottom)
-                )
-                .cornerRadius(30)
-                .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 5)
-
+                
+                // Header
+                HStoreHeader()
+                
+                // User Profile Card
+                UserProfileCard(userType: userType, avatarConfig: avatarConfig)
+                
                 // Settings Options List
                 VStack(spacing: 0) {
-                    if userType == "child" {
+                    if userType == .child {
                         SettingsRow(
-                            icon: "paintbrush.fill",
-                            colors: [Color("B4A7D6"), Color("FFB366")],
+                            icon: "paintpalette.fill",
                             title: "Personalizar Superhéroe",
                             subtitle: "Cambia tu máscara, capa y colores",
+                            // CORRECCIÓN: Se agrega hex:
+                            gradient: Gradient(colors: [Color(hex: "B4A7D6"), Color(hex: "FFB366")]),
                             action: onCustomizeAvatar
                         )
                         Divider().padding(.leading, 70)
                     }
-
+                    
                     SettingsRow(
                         icon: "shield.fill",
-                        colors: [Color("87CEEB"), Color("7BC67E")],
                         title: "Privacidad",
-                        subtitle: userType == "child" ? "Tu diario es solo tuyo" : "Configuración de acceso",
-                        action: {}
+                        subtitle: userType == .child ? "Tu diario es solo tuyo" : "Configuración de acceso",
+                        // CORRECCIÓN: Se agrega hex:
+                        gradient: Gradient(colors: [Color(hex: "87CEEB"), Color(hex: "7BC67E")]),
+                        action: { /* Acción de privacidad */ }
                     )
                     
                     Divider().padding(.leading, 70)
-
+                    
                     SettingsRow(
                         icon: "info.circle.fill",
-                        colors: [Color("F9E784"), Color("FFB366")],
                         title: "Acerca de",
                         subtitle: "Versión 1.0.0 - Mi Jardín de Salud",
-                        action: {}
+                        // CORRECCIÓN: Se agrega hex:
+                        gradient: Gradient(colors: [Color(hex: "F9E784"), Color(hex: "FFB366")]),
+                        action: { /* Acción de Info */ }
                     )
                 }
-                .background(.white)
-                .cornerRadius(30)
-                .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 5)
-
+                .background(Color.white)
+                .cornerRadius(25)
+                .shadow(color: Color.black.opacity(0.05), radius: 10, x: 0, y: 5)
+                
                 // App Info Card
-                VStack(alignment: .leading, spacing: 12) {
-                    HStack(spacing: 15) {
-                        Text("🌸")
-                            .font(.system(size: 40))
-                        VStack(alignment: .leading) {
-                            Text("Mi Jardín de Salud")
-                                .font(.headline)
-                            Text("Una app para cuidar de ti con amor")
-                                .font(.subheadline)
-                                .opacity(0.9)
-                        }
-                    }
-                    
-                    Text("Recuerda: Esta app es una herramienta de apoyo. Siempre consulta con tu equipo médico para decisiones importantes sobre tu salud.")
-                        .font(.caption)
-                        .opacity(0.8)
-                }
-                .padding(24)
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(
-                    LinearGradient(colors: [Color("B4A7D6"), Color("7BC67E")], startPoint: .leading, endPoint: .trailing)
-                )
-                .cornerRadius(30)
-
+                AppInfoCard()
+                
                 // Logout Button
                 Button(action: onLogout) {
                     HStack {
@@ -146,38 +83,112 @@ struct SettingsView: View {
                         Text("Cerrar Sesión")
                             .fontWeight(.semibold)
                     }
-                    .font(.headline)
                     .foregroundColor(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 18)
                     .background(
-                        LinearGradient(colors: [Color("FF8ED4"), Color("FFB366")], startPoint: .leading, endPoint: .trailing)
+                        LinearGradient(
+                            // CORRECCIÓN: Se agrega hex:
+                            gradient: Gradient(colors: [Color(hex: "FF8ED4"), Color(hex: "FFB366")]),
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
                     )
-                    .cornerRadius(30)
-                    .shadow(radius: 5)
+                    .cornerRadius(25)
+                    .shadow(color: Color(hex: "FF8ED4").opacity(0.3), radius: 8, x: 0, y: 4)
                 }
+                .padding(.top, 10)
             }
             .padding()
         }
-        .background(Color("F7FAFC"))
+        .background(Color(hex: "F7FAFC").ignoresSafeArea())
     }
 }
 
-// Subcomponente para las filas de configuración
+// MARK: - Subviews
+
+struct HStoreHeader: View {
+    var body: some View {
+        HStack(spacing: 12) {
+            Image(systemName: "person.fill")
+                .font(.system(size: 24, weight: .bold))
+                // CORRECCIÓN: hex:
+                .foregroundColor(Color(hex: "7BC67E"))
+            Text("Configuración")
+                .font(.system(size: 28, weight: .bold))
+                // CORRECCIÓN: hex:
+                .foregroundColor(Color(hex: "2D3748"))
+            Spacer()
+        }
+        .padding(.bottom, 5)
+    }
+}
+
+struct UserProfileCard: View {
+    let userType: UserType
+    let avatarConfig: AvatarConfig
+    
+    var body: some View {
+        VStack(spacing: 15) {
+            ZStack {
+                Circle()
+                    .fill(LinearGradient(
+                        // CORRECCIÓN: hex:
+                        gradient: Gradient(colors: [Color(hex: "7BC67E"), Color(hex: "87CEEB")]),
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ))
+                    .frame(width: 140, height: 140)
+                
+                Circle()
+                    .fill(Color.white)
+                    .frame(width: 132, height: 132)
+                
+                Text("👤")
+                    .font(.system(size: 60))
+            }
+            .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+            
+            VStack(spacing: 4) {
+                Text(userType == .child ? "¡Mi Superhéroe!" : "Cuidador")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    .foregroundColor(Color(hex: "2D3748"))
+                
+                Text(userType == .child ? "Cuenta personal" : "Cuenta de apoyo")
+                    .font(.subheadline)
+                    .foregroundColor(Color(hex: "718096"))
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 30)
+        .background(
+            LinearGradient(
+                // CORRECCIÓN: hex:
+                gradient: Gradient(colors: [Color(hex: "E8F5E9"), .white]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        )
+        .cornerRadius(30)
+        .shadow(color: Color.black.opacity(0.05), radius: 15, x: 0, y: 10)
+    }
+}
+
 struct SettingsRow: View {
     let icon: String
-    let colors: [Color]
     let title: String
     let subtitle: String
+    let gradient: Gradient
     var action: () -> Void
-
+    
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 16) {
+            HStack(spacing: 15) {
                 ZStack {
-                    LinearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing)
+                    Circle()
+                        .fill(LinearGradient(gradient: gradient, startPoint: .topLeading, endPoint: .bottomTrailing))
                         .frame(width: 44, height: 44)
-                        .clipShape(Circle())
                     
                     Image(systemName: icon)
                         .foregroundColor(.white)
@@ -187,32 +198,66 @@ struct SettingsRow: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(title)
                         .font(.headline)
-                        .foregroundColor(Color("2D3748"))
+                        .foregroundColor(Color(hex: "2D3748"))
                     Text(subtitle)
                         .font(.caption)
-                        .foregroundColor(Color("718096"))
+                        .foregroundColor(Color(hex: "718096"))
                 }
                 
                 Spacer()
                 
-                Image(systemName: "play.fill")
-                    .font(.system(size: 12))
-                    .foregroundColor(Color("CBD5E0"))
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundColor(Color(hex: "CBD5E0"))
             }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 16)
+            .padding(.all, 18)
         }
     }
 }
 
-    struct SettingsView_Previews: PreviewProvider {
-        static var previews: some View {
-            SettingsView(
-                userType: "child",
-                avatarConfig: AvatarConfig(),
-                onCustomizeAvatar: { print("Personalizar") },
-                onLogout: { print("Salir") }
-            )
+struct AppInfoCard: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 15) {
+                Text("🌸")
+                    .font(.system(size: 40))
+                VStack(alignment: .leading) {
+                    Text("Mi Jardín de Salud")
+                        .font(.headline)
+                    Text("Una app para cuidar de ti con amor")
+                        .font(.subheadline)
+                        .opacity(0.9)
+                }
+            }
+            
+            Text("Recuerda: Esta app es una herramienta de apoyo. Siempre consulta con tu equipo médico para decisiones importantes sobre tu salud.")
+                .font(.system(size: 11))
+                .opacity(0.8)
+                .lineLimit(nil)
         }
+        .padding(20)
+        .foregroundColor(.white)
+        .background(
+            LinearGradient(
+                // CORRECCIÓN: hex:
+                gradient: Gradient(colors: [Color(hex: "B4A7D6"), Color(hex: "7BC67E")]),
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+        )
+        .cornerRadius(25)
     }
+}
+
+// MARK: - Preview
+struct SettingsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SettingsView(
+            userType: .child,
+            avatarConfig: AvatarConfig(),
+            onCustomizeAvatar: { print("Personalizar") },
+            onLogout: { print("Salir") }
+        )
+    }
+}
 
