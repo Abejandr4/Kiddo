@@ -163,4 +163,21 @@ private struct ImportantInfoCardView: View {
         .shadow(color: Color(hex: "B4A7D6").opacity(0.3), radius: 10, x: 0, y: 5)
     }
 }
+struct MedicamentosView_Previews: PreviewProvider {
+    static var previews: some View {
+        MedicamentosView(calendarEvents: .constant([
+            CalendarEvent(
+                title: "Tomar Ibuprofeno",
+                // 1. Cambiamos el String por el caso del Enum (ajusta .medication si tiene otro nombre)
+                type: .medication,
+                date: Date(),
+                // 2. Cambiamos Date() por un String
+                startTime: "08:00",
+                endTime: "08:30",
+                description: "Dosis matutina",
+                color: .blue
+            )
+        ]))
+    }
+}
 
