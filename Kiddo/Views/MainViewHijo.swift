@@ -10,7 +10,7 @@ struct MainView: View {
     // 1. Añade estas variables de estado aquí
     @State private var medicineTaken = false
     @State private var showAnimation = false
-    let progressPercentage: Double = 21.0 / 24.0 // Ejemplo: 21 de 24
+    @State private var progressPercentage: Double = 0.0
     
     var body: some View {
         TabView {
@@ -20,7 +20,7 @@ struct MainView: View {
                 InicioHijo(
                     medicineTaken: $medicineTaken,
                     showAnimation: $showAnimation,
-                    progress: progressPercentage
+                    progress: $progressPercentage
                 )
             }
             .tabItem {
@@ -32,7 +32,6 @@ struct MainView: View {
             // 2. DIARIO
             NavigationStack {
                 DiarioHijo()
-                    .navigationTitle("Mi Diario")
             }
             .tabItem {
                 Label("Diario", systemImage: "heart.text.square.fill")
