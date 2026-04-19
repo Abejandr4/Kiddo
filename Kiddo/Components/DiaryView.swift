@@ -58,7 +58,7 @@ struct DiaryView: View {
                     Image(systemName: "book.closed.fill")
                         .font(.system(size: 28))
                         .foregroundColor(Color(red: 0.71, green: 0.65, blue: 0.84))
-                    Text("Mi Diario Secreto")
+                    Text("Mi Diario")
                         .font(.system(size: 28, weight: .bold))
                         .foregroundColor(Color(red: 0.18, green: 0.22, blue: 0.28))
                     Spacer()
