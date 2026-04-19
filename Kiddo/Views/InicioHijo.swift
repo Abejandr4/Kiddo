@@ -1,5 +1,5 @@
 //
-//  InicioPadre.swift
+//  InicioHijo.swift
 //  Kiddo
 //
 //  Created by Dev Jr.1 on 18/04/26.
@@ -124,8 +124,38 @@ struct InicioHijo: View {
                     .cornerRadius(30)
                     .shadow(color: .black.opacity(0.05), radius: 10)
 
-                // Tarjeta Motivacional...
-                // (Mismo código que ya tienes)
+                // MARK: - Tarjeta Motivacional (AQUÍ ESTÁ INTEGRADA)
+                VStack(alignment: .leading, spacing: 12) {
+                    HStack {
+                        Text("¡Vas muy bien, campeón!")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                        
+                        Spacer()
+                        
+                        Image(systemName: "star.circle.fill")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(.yellow)
+                    }
+                    
+                    Text("Sigue así, completar tus misiones te hace más fuerte cada día.")
+                        .font(.subheadline)
+                        .foregroundColor(.white.opacity(0.9))
+                        .lineSpacing(4)
+                }
+                .padding(20)
+                .background(
+                    LinearGradient(
+                        gradient: Gradient(colors: [Color(hex: "B4A7D6"), Color(hex: "FFB366")]),
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .cornerRadius(25)
+                .shadow(color: Color(hex: "B4A7D6").opacity(0.3), radius: 10, x: 0, y: 5)
+                
             }
             .padding(.horizontal, 20)
             .padding(.top, 10)
@@ -133,6 +163,7 @@ struct InicioHijo: View {
         }
     }
 }
+
 #Preview {
     InicioHijo(showAnimation: .constant(false))
         .modelContainer(for: CalendarEvent.self, inMemory: true)
