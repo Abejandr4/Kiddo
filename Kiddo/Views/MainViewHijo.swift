@@ -1,6 +1,9 @@
 import SwiftUI
+import SwiftData
 
 struct MainView: View {
+    @EnvironmentObject var dataManager: DataManager
+    
     
     var body: some View {
         TabView {
@@ -8,19 +11,6 @@ struct MainView: View {
             NavigationStack {
                 InicioHijo()
                     .navigationTitle("¡Hola!")
-                    .background(
-                        VStack {
-                            Spacer()
-                            HStack {
-                                Image("pandaBien")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 170, height: 200)
-                                    .padding(.leading, -20) // Ajusta la posición según necesites
-                                Spacer()
-                            }
-                        }
-                    )
             }
             .tabItem {
                 Label("Inicio", systemImage: "house.fill")
@@ -60,5 +50,10 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView()
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: DiaryEntry.self, configurations: config)
+    
+    MainView()  // ← sin "return"
+        .environmentObject(DataManager(modelContext: container.mainContext))
+        .modelContainer(container)
 }

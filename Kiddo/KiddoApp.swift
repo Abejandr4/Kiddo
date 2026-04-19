@@ -1,10 +1,3 @@
-//
-//  KiddoApp.swift
-//  Kiddo
-//
-//  Created by Dev Jr.1 on 18/04/26.
-//
-
 import SwiftUI
 import SwiftData
 
@@ -12,7 +5,7 @@ import SwiftData
 struct KiddoApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            DiaryEntry.self,   // ← cambia Item.self por DiaryEntry.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -25,8 +18,17 @@ struct KiddoApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootView()             // ← cambia ContentView por RootView
         }
         .modelContainer(sharedModelContainer)
+    }
+}
+
+struct RootView: View {
+    @Environment(\.modelContext) private var modelContext
+
+    var body: some View {
+        ContentView()              // ← tu ContentView original sigue aquí adentro
+            .environmentObject(DataManager(modelContext: modelContext))
     }
 }

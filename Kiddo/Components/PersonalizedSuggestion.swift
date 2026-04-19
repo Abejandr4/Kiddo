@@ -1,6 +1,9 @@
 import SwiftUI
 
 struct PersonalizedSuggestionView: View {
+    
+    @EnvironmentObject var dataManager: DataManager
+    
     let suggestion: Suggestion  // ← cambia AISuggestion por Suggestion
     
     var body: some View {
