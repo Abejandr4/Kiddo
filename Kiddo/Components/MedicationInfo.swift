@@ -1,18 +1,5 @@
 import SwiftUI
 
-// Estructura de datos actualizada
-struct Medication: Identifiable {
-    let id = UUID()
-    let name: String
-    let genericName: String
-    let time: String?      // Se agregaron estos
-    let dose: String?      // para que el componente
-    let emoji: String?     // sea compatible
-    let description: String
-    let sideEffects: [String]
-    let warnings: [String]
-}
-
 struct MedicationInfoCard: View {
     let medication: Medication
     var onClose: () -> Void
