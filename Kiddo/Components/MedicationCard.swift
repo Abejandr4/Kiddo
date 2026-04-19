@@ -77,3 +77,4 @@ struct MedicationCard: View {
         .shadow(color: Color.black.opacity(0.05), radius: 15, x: 0, y: 10)
     }
 }
+
