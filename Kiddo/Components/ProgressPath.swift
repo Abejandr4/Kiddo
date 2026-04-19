@@ -35,7 +35,7 @@ struct ProgressMap: View {
             ZStack {
                 // Fondo con gradiente
                 LinearGradient(
-                    gradient: Gradient(colors: [Color(hex: "E8F5E9"), Color(hex: "F1F8E9"), Color(hex: "FFF9E6")]),
+                    gradient: Gradient(colors: [Color("E8F5E9"), Color( "F1F8E9"), Color( "FFF9E6")]),
                     startPoint: .top,
                     endPoint: .bottom
                 )

@@ -1,4 +1,3 @@
-
 import SwiftUI
 struct MedicamentosView: View {
     // 1. Recibimos la lista de eventos del calendario para filtrar
@@ -164,5 +163,4 @@ private struct ImportantInfoCardView: View {
         .shadow(color: Color(hex: "B4A7D6").opacity(0.3), radius: 10, x: 0, y: 5)
     }
 }
-
 
