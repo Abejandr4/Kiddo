@@ -28,7 +28,16 @@ struct RootView: View {
     @Environment(\.modelContext) private var modelContext
 
     var body: some View {
-        ContentView()              // ← tu ContentView original sigue aquí adentro
+        ContentView()
             .environmentObject(DataManager(modelContext: modelContext))
+            .task {
+                // Intenta cargar los modelos del bundle al arrancar
+                try? PredictionEngine.shared.loadModels()
+            }
+            .task {
+                try? PredictionEngine.shared.loadModels()
+                print("Modelos cargados: \(PredictionEngine.shared.modelsLoaded)")
+            }
     }
 }
+

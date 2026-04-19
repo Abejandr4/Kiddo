@@ -23,9 +23,16 @@ struct DiarioHijo: View {
             let entries = try dataManager.fetchAll()
             guard !entries.isEmpty else { return }
 
-            // Usar fallback heurístico hasta tener modelo entrenado
-            let averages = try dataManager.averagesByHour()
-            let insight  = PredictionEngine.shared.generateHeuristicInsight(averagesByHour: averages)
+            let insight: DailyInsight
+
+            if PredictionEngine.shared.modelsLoaded {
+                // ✅ Usa los modelos reales de ML
+                insight = try PredictionEngine.shared.generateDailyInsight(recentEntries: entries)
+            } else {
+                // ⚠️ Fallback si los modelos no cargaron
+                let averages = try dataManager.averagesByHour()
+                insight = PredictionEngine.shared.generateHeuristicInsight(averagesByHour: averages)
+            }
 
             guard let context = SuggestionEngine.shared.buildContext(
                 recentEntries: entries,
