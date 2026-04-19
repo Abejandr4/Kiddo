@@ -29,26 +29,30 @@ struct ProgressMap: View {
             Checkpoint(x: 0.50, y: 0.15, label: "¡Día completo!", emoji: "⭐", time: "")
         ]
         
-        let currentCheckpointIndex = Int((progress / 100) * 4)
+        // Calculamos cuál es el checkpoint actual basado en el progreso
+        let currentCheckpointIndex = Int((progress / 100) * Double(checkpoints.count - 1))
         
         GeometryReader { geometry in
             ZStack {
-                // Fondo con gradiente
+                // Fondo con gradiente usando la extensión hex:
                 LinearGradient(
-                    gradient: Gradient(colors: [Color("E8F5E9"), Color( "F1F8E9"), Color( "FFF9E6")]),
+                    gradient: Gradient(colors: [
+                        Color(hex: "E8F5E9"),
+                        Color(hex: "F1F8E9"),
+                        Color(hex: "FFF9E6")
+                    ]),
                     startPoint: .top,
                     endPoint: .bottom
                 )
                 .cornerRadius(30)
-                .shadow(radius: 10)
+                .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
                 
-                // Camino serpenteante orgánico
+                // Camino serpenteante (Usa tu OrganicPath existente)
                 OrganicPath(points: checkpoints.map { CGPoint(x: $0.x, y: $0.y) })
                     .stroke(
-                        Color.gray.opacity(0.4), // Aquí la hacemos gris y sutil
-                        style: StrokeStyle(lineWidth: 3, lineCap: .round, dash: [8, 8]) // Punteada
+                        Color.gray.opacity(0.3),
+                        style: StrokeStyle(lineWidth: 3, lineCap: .round, dash: [8, 10])
                     )
-                // ⚠️ ¡Aquí estaba la llave extra que borré!
                 
                 // Checkpoints
                 ForEach(0..<checkpoints.count, id: \.self) { i in
@@ -63,23 +67,44 @@ struct ProgressMap: View {
                 // Indicador de progreso inferior
                 VStack {
                     Spacer()
-                    Text("Progreso: \(Int(progress))%")
-                        .font(.system(size: 16, weight: .semibold))
-                        .padding(.vertical, 12)
-                        .padding(.horizontal, 24)
-                        .background(Color.white.opacity(0.9))
-                        .cornerRadius(25)
-                        .shadow(radius: 5)
-                        .padding(.bottom, 20)
+                    HStack(spacing: 15) {
+                        Text("Progreso: \(Int(progress))%")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(Color(hex: "2D3748"))
+                        
+                        // Barra de progreso estética
+                        ZStack(alignment: .leading) {
+                            Capsule()
+                                .fill(Color.gray.opacity(0.2))
+                                .frame(width: 100, height: 8)
+                            Capsule()
+                                .fill(LinearGradient(
+                                    colors: [Color(hex: "7BC67E"), Color(hex: "87CEEB")],
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                ))
+                                .frame(width: CGFloat(progress), height: 8)
+                        }
+                    }
+                    .padding(.vertical, 12)
+                    .padding(.horizontal, 24)
+                    .background(Color.white.opacity(0.9))
+                    .cornerRadius(25)
+                    .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
+                    .padding(.bottom, 25)
                 }
-            } // <-- Aquí se cierra el ZStack correctamente
-        } // <-- Aquí se cierra el GeometryReader
-        .frame(height: 500)
+            }
+        }
+        .frame(height: 550)
         .padding()
     }
 }
 
+// MARK: - Preview
 #Preview {
-    ProgressMap(progress: 45.0)
+    VStack {
+        ProgressMap(progress: 45.0)
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .background(Color(hex: "F7FAFC"))
 }
-

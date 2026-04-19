@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+
+
 struct CheckpointView: View {
     let checkpoint: Checkpoint
     let isActive: Bool
@@ -21,8 +23,8 @@ struct CheckpointView: View {
                 // Pulso de fondo para el activo
                 if isActive {
                     Circle()
-                        .fill(Color("F9E784"))
-                    .frame(width: 60, height: 60)
+                        .fill(Color(hex: "F9E784")) // CORRECCIÓN: hex
+                        .frame(width: 60, height: 60)
                         .scaleEffect(pulseScale)
                         .opacity(2.5 - pulseScale)
                         .onAppear {
@@ -35,10 +37,9 @@ struct CheckpointView: View {
                 // Círculo principal
                 Circle()
                     .fill(backgroundGradient)
-                
                     .frame(width: 50, height: 50)
                     .overlay(
-                        Circle().stroke(isCompleted ? Color.clear : Color("E2E8F0"), lineWidth: isCompleted ? 0 : 4)
+                        Circle().stroke(isCompleted ? Color.clear : Color(hex: "E2E8F0"), lineWidth: isCompleted ? 0 : 4) // CORRECCIÓN: hex
                     )
                     .shadow(radius: 5)
                 
@@ -58,7 +59,7 @@ struct CheckpointView: View {
                 if isCompleted {
                     Image(systemName: "checkmark")
                         .font(.system(size: 12, weight: .bold))
-                        .foregroundColor(Color("7BC67E"))
+                        .foregroundColor(Color(hex: "7BC67E")) // CORRECCIÓN: hex
                         .padding(6)
                         .background(Color.white)
                         .clipShape(Circle())
@@ -71,7 +72,7 @@ struct CheckpointView: View {
             VStack(spacing: 2) {
                 Text(checkpoint.label)
                     .font(.system(size: 14, weight: isActive ? .bold : .regular))
-                    .foregroundColor(isActive ? Color("2D3748") : Color("718096"))
+                    .foregroundColor(isActive ? Color(hex: "2D3748") : Color(hex: "718096")) // CORRECCIÓN: hex
                 
                 if !checkpoint.time.isEmpty {
                     Text(checkpoint.time)
@@ -85,14 +86,16 @@ struct CheckpointView: View {
     
     var backgroundGradient: LinearGradient {
         if isCompleted {
-            return LinearGradient(colors: [Color("7BC67E"), Color("87CEEB")], startPoint: .topLeading, endPoint: .bottomTrailing)
+            return LinearGradient(colors: [Color(hex: "7BC67E"), Color(hex: "87CEEB")], startPoint: .topLeading, endPoint: .bottomTrailing)
         } else if isActive {
-            return LinearGradient(colors: [Color("F9E784"), Color("FFB366")], startPoint: .topLeading, endPoint: .bottomTrailing)
+            return LinearGradient(colors: [Color(hex: "F9E784"), Color(hex: "FFB366")], startPoint: .topLeading, endPoint: .bottomTrailing)
         } else {
             return LinearGradient(colors: [.white], startPoint: .top, endPoint: .bottom)
         }
     }
 }
+
+// MARK: - Preview corregido
 #Preview {
     GeometryReader { geometry in
         ZStack {
