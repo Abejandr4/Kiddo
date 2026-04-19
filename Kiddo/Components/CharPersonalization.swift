@@ -2,9 +2,9 @@ import SwiftUI
 
 // MARK: - Data Model
 
+
 struct AvatarPersonalization: Codable, Equatable {
 
-    // Asset name for the cape layer (e.g. "capa_azul"). nil = no cape.
     var capeAsset: String? = nil
 
     // Asset name for the accessory layer (e.g. "kiddo_rana"). nil = no accessory.
@@ -36,12 +36,13 @@ struct AvatarPersonalization: Codable, Equatable {
             self == .none ? nil : rawValue
         }
     }
+    
 
     // MARK: - Accessory options
     enum AccesorioType: String, CaseIterable, Identifiable {
         case none    = "none"
-        case rana    = "kiddo_rana"
-        case conejo  = "kiddo_conejo"
+        case rana    = "rana"
+        case conejo  = "conejo"
 
         var id: String { rawValue }
 
@@ -54,7 +55,11 @@ struct AvatarPersonalization: Codable, Equatable {
         }
 
         var assetName: String? {
-            self == .none ? nil : rawValue
+            switch self {
+            case .none:   return nil
+            case .rana:   return "rana"
+            case .conejo: return "kiddo_conejo"
+            }
         }
     }
 
@@ -184,7 +189,7 @@ struct AvatarCustomizerView: View {
                     }
 
                     // Layer 2 – Base character body
-                    Image("kiddo")
+                    Image("kiddo_principal")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 120)
