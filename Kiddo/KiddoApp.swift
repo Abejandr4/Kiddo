@@ -4,8 +4,10 @@ import SwiftData
 @main
 struct KiddoApp: App {
     var sharedModelContainer: ModelContainer = {
+        // Mantenemos tu DiaryEntry y agregamos el nuevo CalendarEvent
         let schema = Schema([
-            DiaryEntry.self,   // ← cambia Item.self por DiaryEntry.self
+            DiaryEntry.self,
+            CalendarEvent.self // <-- NUEVO
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -18,12 +20,13 @@ struct KiddoApp: App {
 
     var body: some Scene {
         WindowGroup {
-            RootView()             // ← cambia ContentView por RootView
+            RootView()
         }
         .modelContainer(sharedModelContainer)
     }
 }
 
+// Mantenemos tu RootView exactamente como lo tenías
 struct RootView: View {
     @Environment(\.modelContext) private var modelContext
 

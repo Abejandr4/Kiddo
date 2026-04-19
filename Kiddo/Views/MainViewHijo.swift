@@ -17,11 +17,7 @@ struct MainView: View {
             // 1. INICIO
             NavigationStack {
                 // 2. Pásale las variables a InicioHijo
-                InicioHijo(
-                    medicineTaken: $medicineTaken,
-                    showAnimation: $showAnimation,
-                    progress: $progressPercentage
-                )
+                InicioHijo(showAnimation: $showAnimation)
             }
             .tabItem {
                 Label("Inicio", systemImage: "house.fill")
