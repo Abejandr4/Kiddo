@@ -36,10 +36,10 @@ struct MedicationCard: View {
                     // Info de tiempo y dosis
                     VStack(alignment: .leading, spacing: 8) {
                         if let time = medication.time {
-                            Label(medication.time ?? <#default value#>, systemImage: "clock")
+                            Label(time, systemImage: "clock")
                         }
-                        if let time = medication.time {
-                            Label(medication.dose ?? <#default value#>, systemImage: "pill")
+                        if let dose = medication.dose {
+                            Label(dose, systemImage: "pill")
                         }
                     }
                     .font(.system(size: 17, weight: .medium, design: .rounded))
