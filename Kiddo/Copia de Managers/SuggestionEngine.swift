@@ -293,3 +293,13 @@ private extension SuggestionUrgency {
         }
     }
 }
+
+extension Suggestion {
+    var urgencyLabel: String {
+        switch urgency {
+        case .strong:   return "Ahora mismo"
+        case .moderate: return "En los próximos minutos"
+        case .gentle:   return "Cuando puedas"
+        }
+    }
+}
