@@ -1,0 +1,274 @@
+{
+  "topics": [
+    {
+      "id": "chemotherapy",
+      "aliases": ["chemo", "cytotoxic therapy"],
+      "summary": "A cancer treatment using drugs to kill fast-growing cells throughout the body.",
+      "how_it_works": "Chemotherapy drugs interfere with the cell cycle, specifically targeting cells that divide rapidly. By damaging the DNA or RNA, it prevents them from reproducing.",
+      "common_side_effects": ["nausea", "hair loss", "fatigue", "increased infection risk", "mouth sores"],
+      "contact_care_team_if": ["fever over 38°C", "unusual bleeding or bruising", "severe vomiting", "shaking chills"],
+      "source": "National Cancer Institute"
+    },
+    {
+      "id": "immunotherapy",
+      "aliases": ["biological therapy", "checkpoint inhibitors", "mAbs"],
+      "summary": "Treatment that boosts the body's natural defenses to fight cancer.",
+      "how_it_works": "It uses substances made by the body or in a lab to improve or restore immune system function. Checkpoint inhibitors, for instance, take the 'brakes' off the immune system so it can recognize and attack cancer cells.",
+      "common_side_effects": ["skin reactions", "flu-like symptoms", "muscle aches", "shortness of breath", "diarrhea"],
+      "contact_care_team_if": ["new or worsening cough", "severe abdominal pain", "significant skin rash"],
+      "source": "American Cancer Society"
+    },
+    {
+      "id": "radiation-therapy",
+      "aliases": ["radiotherapy", "RT", "XRT"],
+      "summary": "High-energy particles or waves used to destroy cancer cells.",
+      "how_it_works": "High doses of radiation create small breaks in the DNA inside cancer cells, preventing them from growing and causing them to die.",
+      "common_side_effects": ["fatigue", "skin irritation", "localized hair loss"],
+      "contact_care_team_if": ["skin blistering", "difficulty swallowing", "new or worsening pain"],
+      "source": "American Cancer Society"
+    },
+    {
+      "id": "targeted-therapy",
+      "aliases": ["precision medicine", "molecular therapy"],
+      "summary": "Drugs designed to target specific molecules that help cancer grow.",
+      "how_it_works": "These drugs block the action of specific enzymes, proteins, or other molecules that signal cancer cells to grow and spread.",
+      "common_side_effects": ["diarrhea", "liver problems", "skin rashes", "high blood pressure"],
+      "contact_care_team_if": ["yellowing of skin/eyes", "severe headache", "sudden chest pain"],
+      "source": "ASCO"
+    },
+    {
+      "id": "hormone-therapy",
+      "aliases": ["endocrine therapy"],
+      "summary": "Treatment that slows or stops the growth of cancers that use hormones to grow.",
+      "how_it_works": "It acts by blocking the body's ability to produce hormones or by interfering with how hormones behave in the body.",
+      "common_side_effects": ["hot flashes", "loss of libido", "bone thinning", "mood changes"],
+      "contact_care_team_if": ["sudden bone pain", "shortness of breath", "signs of a blood clot"],
+      "source": "National Cancer Institute"
+    },
+    {
+      "id": "stem-cell-transplant",
+      "aliases": ["bone marrow transplant", "BMT"],
+      "summary": "Procedures that restore blood-forming stem cells in people who have had theirs destroyed by high doses of chemo or radiation.",
+      "how_it_works": "Healthy stem cells are infused into the bloodstream, where they travel to the bone marrow and begin producing new, healthy blood cells.",
+      "common_side_effects": ["mouth sores", "infections", "nausea", "graft-versus-host disease"],
+      "contact_care_team_if": ["fever", "rash on palms or soles", "jaundice", "severe diarrhea"],
+      "source": "American Cancer Society"
+    },
+    {
+      "id": "breast-cancer",
+      "aliases": ["carcinoma of the breast"],
+      "summary": "Cancer that forms in the cells of the breasts.",
+      "how_it_works": "Cells in the breast tissue begin to grow uncontrollably, often forming a tumor that can be seen on an x-ray or felt as a lump.",
+      "common_side_effects": ["lump in breast", "skin dimpling", "nipple discharge"],
+      "contact_care_team_if": ["new lump", "persistent skin redness", "swollen lymph nodes under the arm"],
+      "source": "National Cancer Institute"
+    },
+    {
+      "id": "lung-cancer",
+      "aliases": ["NSCLC", "SCLC", "bronchogenic carcinoma"],
+      "summary": "Cancer that begins in the lungs and most often occurs in people who smoke.",
+      "how_it_works": "Malignant tumors develop in the tissues of the lung, usually in the cells lining air passages.",
+      "common_side_effects": ["persistent cough", "chest pain", "shortness of breath", "wheezing"],
+      "contact_care_team_if": ["coughing up blood", "sudden chest pain", "unexplained weight loss"],
+      "source": "American Cancer Society"
+    },
+    {
+      "id": "colorectal-cancer",
+      "aliases": ["colon cancer", "rectal cancer"],
+      "summary": "Cancer that starts in the colon or the rectum.",
+      "how_it_works": "Most start as growths called polyps on the inner lining of the colon or rectum. Over time, some polyps can turn into cancer.",
+      "common_side_effects": ["change in bowel habits", "rectal bleeding", "abdominal cramping"],
+      "contact_care_team_if": ["blood in stool", "persistent abdominal pain", "severe constipation"],
+      "source": "ASCO"
+    },
+    {
+      "id": "prostate-cancer",
+      "aliases": ["prostatic carcinoma"],
+      "summary": "Cancer in a man's prostate, a small walnut-sized gland that produces seminal fluid.",
+      "how_it_works": "Cancer cells develop in the prostate and can grow slowly or aggressively to invade nearby tissue.",
+      "common_side_effects": ["urinary frequency", "weak urine flow", "blood in semen"],
+      "contact_care_team_if": ["inability to urinate", "painful urination", "persistent bone pain"],
+      "source": "National Cancer Institute"
+    },
+    {
+      "id": "leukemia",
+      "aliases": ["blood cancer"],
+      "summary": "Cancer of the body's blood-forming tissues, including the bone marrow and the lymphatic system.",
+      "how_it_works": "The bone marrow produces excessive amounts of abnormal white blood cells, which don't function properly and crowd out healthy cells.",
+      "common_side_effects": ["easy bruising", "frequent infections", "pale skin", "night sweats"],
+      "contact_care_team_if": ["uncontrollable bleeding", "high fever", "severe lethargy"],
+      "source": "American Cancer Society"
+    },
+    {
+      "id": "lymphoma",
+      "aliases": ["Hodgkin lymphoma", "Non-Hodgkin lymphoma"],
+      "summary": "Cancer of the lymphatic system, which is part of the body's germ-fighting network.",
+      "how_it_works": "Lymphocytes (white blood cells) grow out of control and collect in lymph nodes, making it harder for the body to fight infection.",
+      "common_side_effects": ["painless swelling of lymph nodes", "persistent fatigue", "fever", "itchy skin"],
+      "contact_care_team_if": ["drenching night sweats", "rapid weight loss", "trouble breathing"],
+      "source": "National Cancer Institute"
+    },
+    {
+      "id": "pancreatic-cancer",
+      "aliases": ["pancreatic adenocarcinoma"],
+      "summary": "Cancer that begins in the organ lying behind the lower part of the stomach.",
+      "how_it_works": "Malignant cells form in the tissues of the pancreas, often spreading rapidly to nearby organs.",
+      "common_side_effects": ["jaundice", "back pain", "loss of appetite", "blood clots"],
+      "contact_care_team_if": ["yellowing of skin", "dark urine", "severe abdominal pain"],
+      "source": "ASCO"
+    },
+    {
+      "id": "melanoma",
+      "aliases": ["skin cancer", "malignant melanoma"],
+      "summary": "The most serious type of skin cancer, developing in the cells that produce melanin.",
+      "how_it_works": "Occurs when pigment-producing cells become cancerous; often triggered by UV radiation damage.",
+      "common_side_effects": ["changing mole", "new pigmented growth", "irregular borders on skin spot"],
+      "contact_care_team_if": ["a mole that bleeds or itches", "rapidly growing skin lesion"],
+      "source": "American Cancer Society"
+    },
+    {
+      "id": "metastasis",
+      "aliases": ["metastasized", "secondary cancer", "Stage IV"],
+      "summary": "The spread of cancer from the primary site to other parts of the body.",
+      "how_it_works": "Cancer cells break away from the original tumor, travel through the blood or lymph, and form new tumors in other organs.",
+      "common_side_effects": ["bone pain", "shortness of breath", "headaches", "fractures"],
+      "contact_care_team_if": ["sudden loss of mobility", "seizures", "severe new pain"],
+      "source": "National Cancer Institute"
+    },
+    {
+      "id": "remission",
+      "aliases": ["NED", "complete remission", "partial remission"],
+      "summary": "A decrease in or disappearance of signs and symptoms of cancer.",
+      "how_it_works": "Tests indicate that the cancer is responding to treatment or is no longer detectable.",
+      "common_side_effects": ["anxiety", "fatigue", "fear of recurrence"],
+      "contact_care_team_if": ["return of previous symptoms", "new unexplained lumps"],
+      "source": "American Cancer Society"
+    },
+    {
+      "id": "biopsy",
+      "aliases": ["tissue sample"],
+      "summary": "An examination of tissue removed from a living body to discover the presence, cause, or extent of a disease.",
+      "how_it_works": "A sample of cells is extracted (via needle or surgery) and analyzed by a pathologist.",
+      "common_side_effects": ["bruising", "mild pain", "soreness"],
+      "contact_care_team_if": ["fever", "excessive bleeding", "signs of infection at site"],
+      "source": "ASCO"
+    },
+    {
+      "id": "carcinoma",
+      "aliases": ["epithelial cancer"],
+      "summary": "Cancer that begins in the skin or in tissues that line or cover internal organs.",
+      "how_it_works": "These cancers start in epithelial cells, which make up the skin and the linings of organs like the liver or kidneys.",
+      "common_side_effects": ["varies by organ system"],
+      "contact_care_team_if": ["unexplained weight loss", "persistent pain"],
+      "source": "National Cancer Institute"
+    },
+    {
+      "id": "sarcoma",
+      "aliases": ["soft tissue cancer", "bone cancer"],
+      "summary": "A type of cancer that begins in bone or in the soft tissues of the body.",
+      "how_it_works": "Arises from mesenchymal cells, which form connective tissue, fat, muscle, blood vessels, and bone.",
+      "common_side_effects": ["lump that can be felt through skin", "bone pain", "unintended weight loss"],
+      "contact_care_team_if": ["broken bone without trauma", "painful lump that grows"],
+      "source": "American Cancer Society"
+    },
+    {
+      "id": "benign",
+      "aliases": ["non-cancerous"],
+      "summary": "A growth that is not cancerous and does not spread to other parts of the body.",
+      "how_it_works": "Cells grow abnormally but do not invade nearby tissue or metastasize.",
+      "common_side_effects": ["pressure on nearby organs", "discomfort"],
+      "contact_care_team_if": ["sudden change in size of growth"],
+      "source": "ASCO"
+    },
+    {
+      "id": "malignant",
+      "aliases": ["cancerous"],
+      "summary": "Cells that can invade and destroy nearby tissue and spread to other parts of the body.",
+      "how_it_works": "Uncontrolled cell division that leads to the invasion of healthy tissue and systemic spread.",
+      "common_side_effects": ["fatigue", "weight loss", "pain"],
+      "contact_care_team_if": ["any new or worsening cancer symptoms"],
+      "source": "National Cancer Institute"
+    },
+    {
+      "id": "palliative-care",
+      "aliases": ["supportive care"],
+      "summary": "Specialized medical care for people living with a serious illness.",
+      "how_it_works": "Focuses on providing relief from the symptoms and stress of the illness to improve quality of life for both the patient and the family.",
+      "common_side_effects": ["none (this is a care model)"],
+      "contact_care_team_if": ["unmanaged pain", "severe emotional distress"],
+      "source": "American Cancer Society"
+    },
+    {
+      "id": "staging",
+      "aliases": ["TNM system"],
+      "summary": "The process of finding out how much cancer is in a person's body and where it’s located.",
+      "how_it_works": "Uses physical exams, imaging, and biopsies to determine the tumor size (T), lymph node involvement (N), and metastasis (M).",
+      "common_side_effects": ["anxiety during tests"],
+      "contact_care_team_if": ["confusion about diagnosis"],
+      "source": "ASCO"
+    },
+    {
+      "id": "adjuvant-therapy",
+      "aliases": ["additional therapy"],
+      "summary": "Treatment given after the primary treatment to lower the risk that the cancer will come back.",
+      "how_it_works": "Aims to kill any remaining microscopic cancer cells that could not be removed during surgery.",
+      "common_side_effects": ["fatigue", "nausea (depends on treatment type)"],
+      "contact_care_team_if": ["inability to complete treatment course"],
+      "source": "National Cancer Institute"
+    },
+    {
+      "id": "neoadjuvant-therapy",
+      "aliases": ["pre-operative therapy"],
+      "summary": "Treatment given as a first step to shrink a tumor before the main treatment.",
+      "how_it_works": "Usually chemo or radiation given before surgery to make the tumor easier to remove.",
+      "common_side_effects": ["tumor shrinkage pain", "fatigue"],
+      "contact_care_team_if": ["fever", "severe nausea"],
+      "source": "American Cancer Society"
+    },
+    {
+      "id": "clinical-trial",
+      "aliases": ["research study"],
+      "summary": "Research studies that test how well new medical approaches work in people.",
+      "how_it_works": "Patients volunteer to test new drugs or combinations under strict supervision to determine safety and efficacy.",
+      "common_side_effects": ["varies by study drug"],
+      "contact_care_team_if": ["any unexpected reaction"],
+      "source": "ASCO"
+    },
+    {
+      "id": "neutropenia",
+      "aliases": ["low white blood cell count"],
+      "summary": "A condition in which there is a lower-than-normal number of neutrophils (a type of white blood cell).",
+      "how_it_works": "Often a side effect of chemotherapy, making the patient highly susceptible to infection.",
+      "common_side_effects": ["fever", "chills", "sore throat"],
+      "contact_care_team_if": ["fever of 38°C or higher"],
+      "source": "National Cancer Institute"
+    },
+    {
+      "id": "oncologist",
+      "aliases": ["cancer doctor"],
+      "summary": "A doctor who has special training in diagnosing and treating cancer.",
+      "how_it_works": "Coordinates the patient's care plan, including medical, surgical, or radiation oncology.",
+      "common_side_effects": ["N/A"],
+      "contact_care_team_if": ["N/A"],
+      "source": "ASCO"
+    },
+    {
+      "id": "precision-medicine",
+      "aliases": ["personalized medicine"],
+      "summary": "An approach to patient care that allows doctors to select treatments based on a genetic understanding of their disease.",
+      "how_it_works": "Uses genetic testing of a tumor to find the specific mutations driving the cancer and matches them with targeted drugs.",
+      "common_side_effects": ["varies by drug"],
+      "contact_care_team_if": ["N/A"],
+      "source": "National Cancer Institute"
+    },
+    {
+      "id": "liquid-biopsy",
+      "aliases": ["blood-based tumor marker test"],
+      "summary": "A test done on a sample of blood to look for cancer cells or pieces of DNA from a tumor.",
+      "how_it_works": "Identifies circulating tumor DNA (ctDNA) or circulating tumor cells (CTCs) shed into the blood.",
+      "common_side_effects": ["mild bruising at needle site"],
+      "contact_care_team_if": ["N/A"],
+      "source": "American Cancer Society"
+    }
+  ]
+}
