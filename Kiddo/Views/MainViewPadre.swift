@@ -3,6 +3,8 @@ import SwiftUI
 struct MainViewPadre: View {
     
     var body: some View {
+        @State var allEvents: [CalendarEvent] = []
+        
         TabView {
             // 1. INICIO
             NavigationStack {
@@ -28,7 +30,7 @@ struct MainViewPadre: View {
             
             // 2. DIARIO
             NavigationStack {
-                MedicinasPadre()
+                MedicamentosView(calendarEvents: allEvents)
             }
             .tabItem {
                 Label("Medicinas", systemImage: "heart.text.square.fill")
