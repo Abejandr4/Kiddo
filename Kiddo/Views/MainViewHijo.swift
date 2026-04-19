@@ -1,20 +1,33 @@
 import SwiftUI
 import SwiftData
 
+import SwiftUI
+import SwiftData
+
 struct MainView: View {
     @EnvironmentObject var dataManager: DataManager
     
+    // 1. Añade estas variables de estado aquí
+    @State private var medicineTaken = false
+    @State private var showAnimation = false
+    let progressPercentage: Double = 21.0 / 24.0 // Ejemplo: 21 de 24
     
     var body: some View {
         TabView {
             // 1. INICIO
             NavigationStack {
-                InicioHijo()
-                    .navigationTitle("¡Hola!")
+                // 2. Pásale las variables a InicioHijo
+                InicioHijo(
+                    medicineTaken: $medicineTaken,
+                    showAnimation: $showAnimation,
+                    progress: progressPercentage
+                )
             }
             .tabItem {
                 Label("Inicio", systemImage: "house.fill")
             }
+            
+            // ... (el resto de tus pestañas Diario, Calendario, Ajustes se quedan igual)
             
             // 2. DIARIO
             NavigationStack {

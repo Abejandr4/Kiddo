@@ -22,10 +22,10 @@ struct ProgressMap: View {
     
     var body: some View {
         let checkpoints = [
-            Checkpoint(x: 0.15, y: 0.75, label: "Mañana", emoji: "🌅", time: "8:00 AM"),
-            Checkpoint(x: 0.8, y: 0.65, label: "Mediodía", emoji: "☀️", time: "12:00 PM"),
-            Checkpoint(x: 0.26, y: 0.48, label: "Tarde", emoji: "🌤️", time: "4:00 PM"),
-            Checkpoint(x: 0.75, y: 0.35, label: "Noche", emoji: "🌙", time: "8:00 PM"),
+            Checkpoint(x: 0.2, y: 0.75, label: "Mañana", emoji: "🌅", time: "8:00 AM"),
+            Checkpoint(x: 0.8, y: 0.60, label: "Mediodía", emoji: "☀️", time: "12:00 PM"),
+            Checkpoint(x: 0.26, y: 0.45, label: "Tarde", emoji: "🌤️", time: "4:00 PM"),
+            Checkpoint(x: 0.75, y: 0.34, label: "Noche", emoji: "🌙", time: "8:00 PM"),
             Checkpoint(x: 0.50, y: 0.15, label: "¡Día completo!", emoji: "⭐", time: "")
         ]
         
@@ -103,7 +103,7 @@ struct ProgressMap: View {
 // MARK: - Preview
 #Preview {
     VStack {
-        ProgressMap(progress: 45.0)
+        ProgressMap(progress: 100.0)
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .background(Color(hex: "F7FAFC"))

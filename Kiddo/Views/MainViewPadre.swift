@@ -7,11 +7,8 @@ struct MainViewPadre: View {
     var body: some View {
         TabView {
             // --- 1. INICIO ---
-            NavigationStack {
-                InicioPadre()
-                    .navigationTitle("¡Hola!")
-            }
-            .tabItem { Label("Inicio", systemImage: "house.fill") }
+          
+            
             
             // --- 2. MEDICINAS (DIARIO) ---
             NavigationStack {
