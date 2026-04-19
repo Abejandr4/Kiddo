@@ -71,7 +71,7 @@ struct DiaryView: View {
                 }
                 
                 // Botón Nueva Batalla (Usando tu ActionButton)
-                ActionButton("Registro de Batallas",
+                ActionButton("Registro de Batalla",
                              startColor: Color(red: 0.71, green: 0.65, blue: 0.84),
                              endColor: Color(red: 1.0, green: 0.7, blue: 0.4)) {
                     withAnimation(.spring()) {
