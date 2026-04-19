@@ -16,7 +16,7 @@ struct CalendarEvent: Identifiable {
     }
 }
 
-struct CalendarioHijoView: View {
+struct CalendarioView: View {
     @State private var selectedDate = Date()
     
     // Colores convertidos a RGB estándar (0.0 a 1.0)
@@ -197,5 +197,5 @@ extension Date {
 
 // MARK: - Preview
 #Preview {
-    CalendarioHijoView()
+    CalendarioView()
 }

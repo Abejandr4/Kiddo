@@ -1,9 +1,13 @@
 import SwiftUI
 
-// Estructura de datos basada en tu interfaz de TypeScript
-struct Medication {
+// Estructura de datos actualizada
+struct Medication: Identifiable {
+    let id = UUID()
     let name: String
     let genericName: String
+    let time: String?      // Se agregaron estos
+    let dose: String?      // para que el componente
+    let emoji: String?     // sea compatible
     let description: String
     let sideEffects: [String]
     let warnings: [String]
@@ -98,7 +102,7 @@ struct MedicationInfoCard: View {
                         .cornerRadius(15)
                     }
                     
-                    // Sección: Advertencias (Solo si existen)
+                    // Sección: Advertencias
                     if !medication.warnings.isEmpty {
                         VStack(alignment: .leading, spacing: 12) {
                             HStack {
@@ -130,8 +134,7 @@ struct MedicationInfoCard: View {
                         }
                     }
                     
-                    // Disclaimer Final
-                    Text("**Nota:** Esta información es solo educativa. Siempre consulta con tu médico o equipo de salud sobre cualquier duda.")
+                    Text("**Nota:** Esta información es solo educativa. Siempre consulta con tu médico.")
                         .font(.caption)
                         .foregroundColor(Color(red: 0.29, green: 0.33, blue: 0.41))
                         .padding()
@@ -142,14 +145,19 @@ struct MedicationInfoCard: View {
                 .padding(25)
             }
             
-            // --- FOOTER (Usando tu ActionButton) ---
+            // --- FOOTER ---
             VStack {
-                ActionButton("Entendido") {
+                Button("Entendido") {
                     onClose()
                 }
+                .font(.headline)
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color.blue) // O usa tu ActionButton personalizado aquí
+                .cornerRadius(15)
                 .padding(.bottom, 10)
             }
-            .frame(maxWidth: .infinity)
             .padding(20)
             .background(Color(red: 0.97, green: 0.98, blue: 0.99))
         }
@@ -160,7 +168,7 @@ struct MedicationInfoCard: View {
     }
 }
 
-// --- PREVIEW ---
+// --- PREVIEW CORREGIDO ---
 struct MedicationInfoCard_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
@@ -170,9 +178,12 @@ struct MedicationInfoCard_Previews: PreviewProvider {
                 medication: Medication(
                     name: "Paracetamol",
                     genericName: "Acetaminofén",
-                    description: "Se utiliza para el alivio del dolor de intensidad leve o moderada y estados febriles.",
-                    sideEffects: ["Náuseas", "Reacciones de hipersensibilidad", "Daño hepático (en dosis altas)"],
-                    warnings: ["No exceder la dosis recomendada", "Evitar el consumo de alcohol durante el tratamiento"]
+                    time: "8:00 AM", // Argumento faltante corregido
+                    dose: "500 mg",  // Argumento faltante corregido
+                    emoji: "💊",     // Argumento faltante corregido
+                    description: "Se utiliza para el alivio del dolor.",
+                    sideEffects: ["Náuseas"],
+                    warnings: ["No exceder la dosis"]
                 ),
                 onClose: { print("Cerrar") }
             )

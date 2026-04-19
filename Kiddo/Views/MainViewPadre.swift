@@ -29,7 +29,6 @@ struct MainViewPadre: View {
             // 2. DIARIO
             NavigationStack {
                 MedicinasPadre()
-                    .navigationTitle("Mi Diario")
             }
             .tabItem {
                 Label("Medicinas", systemImage: "heart.text.square.fill")
