@@ -1,15 +1,50 @@
-
-//  Created by Dev Jr.1 on 18/04/26.
-//
-
 import SwiftUI
+import SwiftData
 
 struct DiarioHijo: View {
+    @EnvironmentObject var dataManager: DataManager
+    @State private var suggestions: [Suggestion] = []
+
     var body: some View {
-        DiaryView()
+        VStack {
+            if let first = suggestions.first {
+                PersonalizedSuggestionView(suggestion: first)
+            }
+
+            DiaryView()
+        }
+        .task {
+            await loadSuggestions()
+        }
+    }
+
+    private func loadSuggestions() async {
+        do {
+            let entries = try dataManager.fetchAll()
+            guard !entries.isEmpty else { return }
+
+            // Usar fallback heurístico hasta tener modelo entrenado
+            let averages = try dataManager.averagesByHour()
+            let insight  = PredictionEngine.shared.generateHeuristicInsight(averagesByHour: averages)
+
+            guard let context = SuggestionEngine.shared.buildContext(
+                recentEntries: entries,
+                insight: insight
+            ) else { return }
+
+            suggestions = SuggestionEngine.shared.suggestions(for: context)
+
+        } catch {
+            print("Error cargando sugerencias: \(error.localizedDescription)")
+        }
     }
 }
 
 #Preview {
-    DiarioHijo()
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: DiaryEntry.self, configurations: config)
+    
+    return DiarioHijo()
+        .environmentObject(DataManager(modelContext: container.mainContext))
+        .modelContainer(container)
 }
