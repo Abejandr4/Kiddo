@@ -134,10 +134,10 @@ struct InicioHijo: View {
                         
                         Spacer()
                         
-                        Image(systemName: "star.circle.fill")
+                        Image( "recomendacion_2")
                             .resizable()
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(.yellow)
+                            .scaledToFit()
+                            .frame(width: 80, height: 80)
                     }
                     
                     Text("Sigue así, completar tus misiones te hace más fuerte cada día.")
