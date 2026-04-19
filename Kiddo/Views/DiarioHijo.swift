@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct DiarioHijo: View {
-    // 1. El Estado: Aquí se guardará lo que genere la IA
     @State private var aiTip: AISuggestion?
     @State private var isAnalyzing = false
     
@@ -36,14 +35,8 @@ struct DiarioHijo: View {
         try? await Task.sleep(nanoseconds: 2 * 1_000_000_000)
         
         // AQUÍ es donde integrarías el LanguageModel de iOS 18+
-        // let response = try? await LanguageModel.shared.generate(...)
+        let response = try? await LanguageModel.shared.generate(...)
         
-        let mockResult = AISuggestion(
-            icon: "⚡️",
-            title: "Recarga de Energía",
-            description: "He notado que los jueves tu energía baja. Intenta un descanso corto a las 4 PM.",
-            time: "Hoy mismo"
-        )
         
         withAnimation {
             self.aiTip = mockResult
