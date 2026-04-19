@@ -1,22 +1,14 @@
+//
+//  CalendarView.swift
+//  Kiddo
+//
+//  Created by Dev Jr.1 on 18/04/26.
+//
+
 import SwiftUI
 
-// MARK: - Modelo de Datos
-struct CalendarEvent: Identifiable {
-    let id = UUID()
-    let title: String
-    let type: EventType
-    let date: Date
-    let startTime: String
-    let endTime: String?
-    let description: String?
-    let color: Color
-    
-    enum EventType {
-        case medication, appointment
-    }
-}
-
-struct CalendarioView: View {
+struct CalendarView: View {
+    var events: [CalendarEvent]
     @State private var selectedDate = Date()
     
     // Colores convertidos a RGB estándar (0.0 a 1.0)
@@ -25,23 +17,13 @@ struct CalendarioView: View {
     let themeBlue   = Color(red: 135/255, green: 206/255, blue: 235/255)
     let themeOrange = Color(red: 255/255, green: 179/255, blue: 102/255)
     let themePurple = Color(red: 180/255, green: 167/255, blue: 214/255)
-
-    var events: [CalendarEvent] {
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: Date())
-        return [
-            CalendarEvent(title: "Prednisona", type: .medication, date: today, startTime: "08:00", endTime: nil, description: "10 mg", color: themeBlue),
-            CalendarEvent(title: "Cita Oncología", type: .appointment, date: today, startTime: "10:00", endTime: "11:00", description: "Dr. García - Revisión", color: themeOrange),
-            CalendarEvent(title: "Ondansetrón", type: .medication, date: today, startTime: "12:00", endTime: nil, description: "4 mg", color: themeBlue),
-            CalendarEvent(title: "Metotrexato", type: .medication, date: calendar.date(byAdding: .day, value: 1, to: today)!, startTime: "18:00", endTime: nil, description: "Quimio semanal", color: themePurple)
-        ]
-    }
-
+    
     var filteredEvents: [CalendarEvent] {
-        events.filter { Calendar.current.isDate($0.date, inSameDayAs: selectedDate) }
-            .sorted { $0.startTime < $1.startTime }
-    }
-
+            events.filter { event in
+                Calendar.current.isDate(event.date, inSameDayAs: selectedDate)
+            }
+        }
+    
     var body: some View {
         VStack(spacing: 0) {
             // Header con Icono y Título
@@ -195,7 +177,4 @@ extension Date {
     }
 }
 
-// MARK: - Preview
-#Preview {
-    CalendarioView()
-}
+

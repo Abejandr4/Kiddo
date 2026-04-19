@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CalendarioHijo: View {
     var body: some View {
-        CalendarioView()
+        Text("hi")
     }
 }
 
