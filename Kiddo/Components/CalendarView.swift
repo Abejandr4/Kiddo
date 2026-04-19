@@ -66,9 +66,10 @@ struct CalendarView: View {
                     if filteredEvents.isEmpty {
                         VStack(spacing: 20) {
                             Spacer(minLength: 50)
-                            Image(systemName: "sparkles")
-                                .font(.system(size: 60))
-                                .foregroundColor(themeYellow)
+                            Image("recomendacion_2")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 120, height: 120)
                             Text("¡Tu superhéroe ha tomado todos sus medicamentos!")
                                 .font(.title3)
                                 .fontWeight(.medium)

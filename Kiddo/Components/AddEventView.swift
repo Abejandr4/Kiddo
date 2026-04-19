@@ -12,14 +12,16 @@ struct AddEventView: View {
     @State private var notes = ""
     @State private var searchText = ""
     
+    // Configuración de repetición
     let daysOfWeek = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"]
     @State private var selectedDays: Set<String> = []
     @State private var isRecurring = false
-
-    // Colores para el degradado de fondo (basados en tu ActionButton)
-    let startColor = Color(red: 0.53, green: 0.84, blue: 0.61).opacity(0.3)
-    let endColor = Color(red: 0.55, green: 0.86, blue: 0.95).opacity(0.3)
     
+    // Colores para el degradado de fondo
+    let startColor = Color(red: 0.53, green: 0.84, blue: 0.61).opacity(0.4)
+    let endColor = Color(red: 0.55, green: 0.86, blue: 0.95).opacity(0.4)
+    
+    // Lista filtrada para la búsqueda
     var filteredMedications: [Medication] {
         if searchText.isEmpty {
             return medicationList
@@ -28,10 +30,36 @@ struct AddEventView: View {
         }
     }
     
+    // --- SOLUCIÓN ERROR 1: Definir medicationSearchList ---
+    var medicationSearchList: some View {
+        List {
+            ForEach(filteredMedications) { medication in
+                Button(action: {
+                    self.selectedMedication = medication
+                    // Al seleccionar, regresamos a la vista anterior
+                }) {
+                    HStack {
+                        Text(medication.emoji ?? "💊")
+                        VStack(alignment: .leading) {
+                            Text(medication.name).font(.headline)
+                            Text(medication.genericName).font(.caption).foregroundColor(.secondary)
+                        }
+                        Spacer()
+                        if selectedMedication?.id == medication.id {
+                            Image(systemName: "checkmark.circle.fill").foregroundColor(.blue)
+                        }
+                    }
+                }
+                .foregroundColor(.primary)
+            }
+        }
+        .searchable(text: $searchText, prompt: "Buscar medicamento...")
+        .navigationTitle("Seleccionar Medicina")
+    }
+    
     var body: some View {
         NavigationStack {
             ZStack {
-                // --- 1. FONDO DEGRADADO ---
                 LinearGradient(
                     gradient: Gradient(colors: [startColor, endColor]),
                     startPoint: .topLeading,
@@ -39,7 +67,6 @@ struct AddEventView: View {
                 )
                 .ignoresSafeArea()
                 
-                // --- 2. FORMULARIO ---
                 Form {
                     Section("Tipo de Registro") {
                         Picker("Tipo", selection: $type) {
@@ -48,18 +75,18 @@ struct AddEventView: View {
                         }
                         .pickerStyle(.segmented)
                     }
-                    .listRowBackground(Color.white.opacity(0.6)) // Celdas traslúcidas
+                    .listRowBackground(Color.white.opacity(0.6))
                     
                     if type == .medication {
                         Section("Selecciona el Medicamento") {
                             NavigationLink {
-                                medicationSelectionList
+                                medicationSearchList
                             } label: {
                                 HStack {
                                     Text("Medicina:")
                                     Spacer()
                                     Text(selectedMedication?.name ?? "Toca para elegir")
-                                        .foregroundColor(selectedMedication == nil ? .secondary : .blue)
+                                        .foregroundColor(selectedMedication == nil ? .gray : .blue)
                                 }
                             }
                         }
@@ -107,7 +134,7 @@ struct AddEventView: View {
                     }
                     .listRowBackground(Color.white.opacity(0.6))
                 }
-                .scrollContentBackground(.hidden) // OCULTA EL GRIS POR DEFECTO
+                .scrollContentBackground(.hidden)
             }
             .navigationTitle("Nuevo Registro")
             .navigationBarTitleDisplayMode(.inline)
@@ -126,103 +153,66 @@ struct AddEventView: View {
         }
     }
     
-    // Vista extraída para la selección de medicinas para limpiar el body
-    private var medicationSelectionList: some View {
-        List {
-            ForEach(filteredMedications) { med in
-                Button {
-                    selectedMedication = med
-                    dismissSearch()
-                } label: {
-                    HStack {
-                        Text(med.emoji ?? "💊")
-                        VStack(alignment: .leading) {
-                            Text(med.name).font(.headline)
-                            Text(med.genericName).font(.caption).foregroundColor(.secondary)
-                        }
-                        Spacer()
-                        if selectedMedication?.id == med.id {
-                            Image(systemName: "checkmark").foregroundColor(.blue)
-                        }
-                    }
-                }
-                .foregroundColor(.primary)
-            }
-        }
-        .navigationTitle("Buscar Medicina")
-        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
-    }
-
-    @Environment(\.dismiss) var dismissSearch
-
+    // --- SOLUCIÓN ERROR 2: Implementar saveEvent() ---
     private func saveEvent() {
-        let calendar = Calendar.current
         let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
+        formatter.timeStyle = .short
+        let timeString = formatter.string(from: selectedDate)
         
-        let finalTitle = type == .medication ? "\(selectedMedication?.emoji ?? "") \(selectedMedication?.name ?? "")" : customTitle
-        let formattedTime = formatter.string(from: selectedDate)
+        let title = type == .medication ? (selectedMedication?.name ?? "Medicamento") : customTitle
         
-        let dayMapping: [String: Int] = [
-            "Dom": 1, "Lun": 2, "Mar": 3, "Mié": 4, "Jue": 5, "Vie": 6, "Sáb": 7
-        ]
+        // 1. Crear el evento principal (el del día seleccionado)
+        let mainEvent = CalendarEvent(
+            title: title,
+            type: type,
+            date: selectedDate,
+            startTime: timeString,
+            endTime: nil,
+            description: notes.isEmpty ? nil : notes,
+            color: type == .medication ? .blue : .green
+        )
+        events.append(mainEvent)
         
+        // 2. Si es recurrente, calculamos las repeticiones
         if isRecurring && !selectedDays.isEmpty {
-            for dayName in selectedDays {
-                guard let weekdayTarget = dayMapping[dayName] else { continue }
-                
-                var components = DateComponents()
-                components.weekday = weekdayTarget
-                
-                if let firstDate = calendar.nextDate(after: selectedDate.addingTimeInterval(-1),
-                                                   matching: components,
-                                                   matchingPolicy: .nextTime) {
+            let calendar = Calendar.current
+            // Mapeo de tus abreviaturas a números de día de la semana de Swift (1 = Dom, 2 = Lun...)
+            let dayMapping: [String: Int] = [
+                "Dom": 1, "Lun": 2, "Mar": 3, "Mié": 4, "Jue": 5, "Vie": 6, "Sáb": 7
+            ]
+            
+            // Convertimos tus "Lun", "Mar" a números (2, 3...)
+            let targetDays = selectedDays.compactMap { dayMapping[$0] }
+            
+            // Calculamos repeticiones para las próximas 4 semanas (puedes aumentar este número)
+            for weekOffset in 0..<4 {
+                for dayOfWeek in targetDays {
+                    // Buscamos la fecha que corresponde a ese día de la semana en esa semana específica
+                    var components = DateComponents()
+                    components.weekday = dayOfWeek
+                    components.weekOfYear = calendar.component(.weekOfYear, from: selectedDate) + weekOffset
+                    components.year = calendar.component(.year, from: selectedDate)
                     
-                    for weekOffset in 0..<4 {
-                        if let dateForWeek = calendar.date(byAdding: .weekOfYear, value: weekOffset, to: firstDate) {
-                            
-                            let eventExists = events.contains { existingEvent in
-                                existingEvent.title == finalTitle &&
-                                Calendar.current.isDate(existingEvent.date, inSameDayAs: dateForWeek) &&
-                                existingEvent.startTime == formattedTime
-                            }
-                            
-                            if !eventExists {
-                                let recurringEvent = CalendarEvent(
-                                    title: finalTitle,
-                                    type: type,
-                                    date: dateForWeek,
-                                    startTime: formattedTime,
-                                    endTime: nil,
-                                    description: notes.isEmpty ? selectedMedication?.description : notes,
-                                    color: type == .medication ? .blue : .orange
-                                )
-                                events.append(recurringEvent)
-                            }
-                        }
+                    if let recurringDate = calendar.nextDate(after: calendar.startOfDay(for: selectedDate).addingTimeInterval(-1), matching: components, matchingPolicy: .nextTime) {
+                        
+                        // Evitamos duplicar el evento principal si cae en el mismo día y hora
+                        if calendar.isDate(recurringDate, inSameDayAs: selectedDate) { continue }
+                        
+                        let recurringEvent = CalendarEvent(
+                            title: title,
+                            type: type,
+                            date: recurringDate,
+                            startTime: timeString,
+                            endTime: nil,
+                            description: notes,
+                            color: type == .medication ? .blue : .green
+                        )
+                        events.append(recurringEvent)
                     }
                 }
             }
-        } else {
-            let eventExists = events.contains { existingEvent in
-                existingEvent.title == finalTitle &&
-                Calendar.current.isDate(existingEvent.date, inSameDayAs: selectedDate) &&
-                existingEvent.startTime == formattedTime
-            }
-            
-            if !eventExists {
-                let newEvent = CalendarEvent(
-                    title: finalTitle,
-                    type: type,
-                    date: selectedDate,
-                    startTime: formattedTime,
-                    endTime: nil,
-                    description: notes.isEmpty ? selectedMedication?.description : notes,
-                    color: type == .medication ? .blue : .orange
-                )
-                events.append(newEvent)
-            }
         }
+        
         dismiss()
     }
 }
