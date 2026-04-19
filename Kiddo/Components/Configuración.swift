@@ -27,11 +27,11 @@ struct SettingsView: View {
                 HStack(spacing: 12) {
                     Image(systemName: "person.fill")
                         .font(.system(size: 28))
-                        .foregroundColor(Color(hex: "7BC67E"))
+                        .foregroundColor(Color("7BC67E"))
                     
                     Text("Configuración")
                         .font(.system(size: 32, weight: .bold))
-                        .foregroundColor(Color(hex: "2D3748"))
+                        .foregroundColor(Color("2D3748"))
                     Spacer()
                 }
                 .padding(.horizontal)
@@ -42,7 +42,7 @@ struct SettingsView: View {
                         Circle()
                             .fill(
                                 LinearGradient(
-                                    colors: [Color(hex: "7BC67E"), Color(hex: "87CEEB")],
+                                    colors: [Color("7BC67E"), Color("87CEEB")],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 )
@@ -64,16 +64,16 @@ struct SettingsView: View {
                     Text(userType == "child" ? "¡Mi Superhéroe!" : "Cuidador")
                         .font(.title2)
                         .fontWeight(.semibold)
-                        .foregroundColor(Color(hex: "2D3748"))
+                        .foregroundColor(Color("2D3748"))
 
                     Text(userType == "child" ? "Cuenta personal" : "Cuenta de apoyo")
                         .font(.subheadline)
-                        .foregroundColor(Color(hex: "718096"))
+                        .foregroundColor(Color("718096"))
                         .padding(.bottom, 20)
                 }
                 .frame(maxWidth: .infinity)
                 .background(
-                    LinearGradient(colors: [Color(hex: "E8F5E9"), .white], startPoint: .top, endPoint: .bottom)
+                    LinearGradient(colors: [Color("E8F5E9"), .white], startPoint: .top, endPoint: .bottom)
                 )
                 .cornerRadius(30)
                 .shadow(color: .black.opacity(0.05), radius: 10, x: 0, y: 5)
@@ -83,7 +83,7 @@ struct SettingsView: View {
                     if userType == "child" {
                         SettingsRow(
                             icon: "paintbrush.fill",
-                            colors: [Color(hex: "B4A7D6"), Color(hex: "FFB366")],
+                            colors: [Color("B4A7D6"), Color("FFB366")],
                             title: "Personalizar Superhéroe",
                             subtitle: "Cambia tu máscara, capa y colores",
                             action: onCustomizeAvatar
@@ -93,7 +93,7 @@ struct SettingsView: View {
 
                     SettingsRow(
                         icon: "shield.fill",
-                        colors: [Color(hex: "87CEEB"), Color(hex: "7BC67E")],
+                        colors: [Color("87CEEB"), Color("7BC67E")],
                         title: "Privacidad",
                         subtitle: userType == "child" ? "Tu diario es solo tuyo" : "Configuración de acceso",
                         action: {}
@@ -103,7 +103,7 @@ struct SettingsView: View {
 
                     SettingsRow(
                         icon: "info.circle.fill",
-                        colors: [Color(hex: "F9E784"), Color(hex: "FFB366")],
+                        colors: [Color("F9E784"), Color("FFB366")],
                         title: "Acerca de",
                         subtitle: "Versión 1.0.0 - Mi Jardín de Salud",
                         action: {}
@@ -135,7 +135,7 @@ struct SettingsView: View {
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(
-                    LinearGradient(colors: [Color(hex: "B4A7D6"), Color(hex: "7BC67E")], startPoint: .leading, endPoint: .trailing)
+                    LinearGradient(colors: [Color("B4A7D6"), Color("7BC67E")], startPoint: .leading, endPoint: .trailing)
                 )
                 .cornerRadius(30)
 
@@ -151,7 +151,7 @@ struct SettingsView: View {
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 18)
                     .background(
-                        LinearGradient(colors: [Color(hex: "FF8ED4"), Color(hex: "FFB366")], startPoint: .leading, endPoint: .trailing)
+                        LinearGradient(colors: [Color("FF8ED4"), Color("FFB366")], startPoint: .leading, endPoint: .trailing)
                     )
                     .cornerRadius(30)
                     .shadow(radius: 5)
@@ -159,7 +159,7 @@ struct SettingsView: View {
             }
             .padding()
         }
-        .background(Color(hex: "F7FAFC"))
+        .background(Color("F7FAFC"))
     }
 }
 
@@ -187,37 +187,21 @@ struct SettingsRow: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(title)
                         .font(.headline)
-                        .foregroundColor(Color(hex: "2D3748"))
+                        .foregroundColor(Color("2D3748"))
                     Text(subtitle)
                         .font(.caption)
-                        .foregroundColor(Color(hex: "718096"))
+                        .foregroundColor(Color("718096"))
                 }
                 
                 Spacer()
                 
                 Image(systemName: "play.fill")
                     .font(.system(size: 12))
-                    .foregroundColor(Color(hex: "CBD5E0"))
+                    .foregroundColor(Color("CBD5E0"))
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 16)
         }
-    }
-}
-
-// Helper para usar colores Hexadecimales en SwiftUI
-extension Color {
-    init(hex: String) {
-        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
-        var int: UInt64 = 0
-        Scanner(string: hex).scanHexInt64(&int)
-        let a, r, g, b: UInt64
-        switch hex.count {
-        case 3: (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
-        case 6: (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
-        default: (a, r, g, b) = (1, 1, 1, 0)
-        }
-        self.init(.sRGB, red: Double(r) / 255, green: Double(g) / 255, blue: Double(b) / 255, opacity: Double(a) / 255)
     }
 }
 
