@@ -25,7 +25,7 @@ enum Mood: String, CaseIterable {
     }
 }
 
-struct DiaryEntry: Identifiable {
+struct DiaryEntryy: Identifiable {
     let id = UUID()
     let date: Date
     let mood: Mood
@@ -36,9 +36,9 @@ struct DiaryEntry: Identifiable {
 }
 
 struct DiaryView: View {
-    @State private var entries: [DiaryEntry] = [
-        DiaryEntry(date: Date(), mood: .great, energyLevel: 8, painLevel: 2, sideEffects: [], notes: "¡Me sentí muy bien hoy!"),
-        DiaryEntry(date: Date().addingTimeInterval(-86400), mood: .neutral, energyLevel: 5, painLevel: 4, sideEffects: ["Cansancio leve"], notes: "Día tranquilo.")
+    @State private var entries: [DiaryEntryy] = [
+        DiaryEntryy(date: Date(), mood: .great, energyLevel: 8, painLevel: 2, sideEffects: [], notes: "¡Me sentí muy bien hoy!"),
+        DiaryEntryy(date: Date().addingTimeInterval(-86400), mood: .neutral, energyLevel: 5, painLevel: 4, sideEffects: ["Cansancio leve"], notes: "Día tranquilo.")
     ]
     
     @State private var showPrivacyNotice = true
@@ -109,7 +109,7 @@ struct DiaryView: View {
                 
                 // Lista de Entradas
                 ForEach(entries) { entry in
-                    DiaryEntryCard(entry: entry)
+                    DiaryEntryyCard(entry: entry)
                 }
                 .padding(.horizontal)
             }
@@ -119,7 +119,7 @@ struct DiaryView: View {
     }
     
     private func saveEntry() {
-        let entry = DiaryEntry(date: Date(), mood: newMood, energyLevel: newEnergy, painLevel: newPain, sideEffects: [], notes: newNotes)
+        let entry = DiaryEntryy(date: Date(), mood: newMood, energyLevel: newEnergy, painLevel: newPain, sideEffects: [], notes: newNotes)
         withAnimation {
             entries.insert(entry, at: 0)
             showNewEntry = false
@@ -157,8 +157,8 @@ struct PrivacyNoticeView: View {
     }
 }
 
-struct DiaryEntryCard: View {
-    let entry: DiaryEntry
+struct DiaryEntryyCard: View {
+    let entry: DiaryEntryy
     
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
