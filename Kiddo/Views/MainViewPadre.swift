@@ -36,7 +36,7 @@ struct MainViewPadre: View {
             
             // --- 5. AJUSTES ---
             NavigationStack {
-                AjustesPadre()
+                SettingsView(userType: .parent)
                     
             }
             .tabItem { Label("Ajustes", systemImage: "gearshape.fill") }
