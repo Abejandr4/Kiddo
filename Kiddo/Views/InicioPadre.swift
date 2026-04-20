@@ -9,10 +9,10 @@ import SwiftData
 
 struct InicioPadre: View {
     @Environment(\.modelContext) private var context
+    @EnvironmentObject var dataManager: DataManager
     @Query(sort: \CalendarEvent.startTime) private var allEvents: [CalendarEvent]
     
-    @AppStorage("personalRecom_1") private var personalRecom_1: String = "⭐️ Asegúrate de que beba suficiente agua hoy."
-    @AppStorage("personalRecom_2") private var personalRecom_2: String = "🧘‍♀️ Tómate 5 minutos para ti hoy, ¡lo estás haciendo genial!"
+    @State private var suggestions: [Suggestion] = []
     
     // Lógica de datos
     var todaysMedications: [CalendarEvent] {
@@ -139,12 +139,26 @@ struct InicioPadre: View {
                 )
 
                 // --- SECCIÓN 3: Tips ---
-                VStack(alignment: .leading, spacing: 15) {
-                    Text("Tips de Cuidador")
-                        .font(.headline)
-                    
-                    TipRow(text: personalRecom_1, color: Color(hex: "B4A7D6"), icon: "sparkles")
-                    TipRow(text: personalRecom_2, color: .teal, icon: "heart.fill")
+                VStack(spacing: 12) {
+                    if suggestions.isEmpty {
+                        // Placeholder mientras cargan o no hay entradas aún
+                        HeroTipCard(
+                            emoji: "⭐️",
+                            title: "¡Tu héroe todavía no ha registrado ninguna batalla!",
+                            description: "Una vez agregue entradas a su diario se te ofrecerán consejos para cuidarlo mejor aquí.",
+                            timeText: "Cuando ingrese una entrada"
+                        )
+                    } else {
+                        // Tips generados por el modelo
+                        ForEach(suggestions) { suggestion in
+                            HeroTipCard(
+                                emoji: suggestion.emoji,
+                                title: suggestion.title,
+                                description: suggestion.detail,
+                                timeText: suggestion.urgencyLabel
+                            )
+                        }
+                    }
                 }
                 .padding(25)
                 .background(Color.white.cornerRadius(30))

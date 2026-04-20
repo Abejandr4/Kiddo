@@ -1,6 +1,9 @@
 import Foundation
 
-// MARK: - Tipos
+enum RecipientType {
+    case child   // sugerencias para el niño
+    case parent  // sugerencias para el padre/tutor
+}
 
 struct Suggestion: Identifiable {
     let id = UUID()
@@ -48,15 +51,14 @@ final class SuggestionEngine {
     static let shared = SuggestionEngine()
     private init() {}
 
-    // MARK: - API principal
 
     /// Genera sugerencias personalizadas en base al contexto actual del usuario.
-    func suggestions(for context: SuggestionContext) -> [Suggestion] {
+    func suggestions(for context: SuggestionContext, recipient: RecipientType = .child) -> [Suggestion] {
         var result: [Suggestion] = []
 
-        result += suggestionsForCurrentState(context)
-        result += suggestionsForUpcomingHours(context)
-        result += trendBasedSuggestions(context)
+        result += suggestionsForCurrentState(context, recipient: recipient)
+        result += suggestionsForUpcomingHours(context, recipient: recipient)
+        result += trendBasedSuggestions(context, recipient: recipient)
 
         // Ordenar por urgencia y limitar a 4 sugerencias para no abrumar
         return result
@@ -86,85 +88,104 @@ final class SuggestionEngine {
         )
     }
 
-    // MARK: - Sugerencias por estado actual
-
-    private func suggestionsForCurrentState(_ ctx: SuggestionContext) -> [Suggestion] {
+    private func suggestionsForCurrentState(_ ctx: SuggestionContext, recipient: RecipientType) -> [Suggestion] {
         var suggestions: [Suggestion] = []
         let fatigue   = ctx.currentFatigue
         let pain      = ctx.currentPain
         let wellbeing = ctx.currentWellbeing
 
-        // Fatiga y dolor altos → descanso urgente
         if fatigue >= 4.0 && pain >= 4.0 {
             suggestions.append(Suggestion(
-                title: "Tómatelo con mucha calma",
-                detail: "Tu cuerpo está enviando señales claras. Este es buen momento para recostarte y dejar que descanse.",
+                title: recipient == .child
+                    ? "Hoy tu cuerpo necesita descanso 💙"
+                    : "Tu pequeño necesita descansar hoy 💙",
+                detail: recipient == .child
+                    ? "Está bien no estar bien. Tu cuerpo está trabajando muy duro y merece un descanso. Recuéstate un ratito y respira tranquilo."
+                    : "Su cuerpo está trabajando muy duro. Ayúdalo a encontrar un lugar cómodo para descansar y hazle saber que está bien tomarse una pausa.",
                 emoji: "🛋️",
                 category: .rest,
                 urgency: .strong
             ))
         }
 
-        // Solo fatiga alta
         if fatigue >= 4.0 && pain < 3.0 {
             suggestions.append(Suggestion(
-                title: "Hora de recargar energía",
-                detail: "Estás bastante agotado/a. Una siesta corta de 20 minutos puede hacer una gran diferencia.",
+                title: recipient == .child
+                    ? "Los superhéroes también descansan"
+                    : "Tu héroe necesita recargar energía",
+                detail: recipient == .child
+                    ? "Hasta los más valientes necesitan recargar energía. Una siesta corta de 20 minutos te hará sentir mucho mejor, ¡te lo prometemos!"
+                    : "Tu niño está bastante agotado. Una siesta de 20 minutos puede hacer una gran diferencia. Es buen momento para crear un ambiente tranquilo en casa.",
                 emoji: "😴",
                 category: .rest,
                 urgency: .strong
             ))
         }
 
-        // Solo dolor alto
         if pain >= 4.0 && fatigue < 3.0 {
             suggestions.append(Suggestion(
-                title: "Cuida tu cuerpo ahora",
-                detail: "El dolor está alto. Prueba con calor local, estiramiento suave o simplemente cambiar de postura.",
+                title: recipient == .child
+                    ? "Sabemos que duele, y está bien decirlo"
+                    : "Tu niño tiene dolor elevado ahora",
+                detail: recipient == .child
+                    ? "No tienes que aguantar solo. Cuéntale a alguien de confianza cómo te sientes. Mientras tanto, intenta cambiar de postura o poner algo calientito donde duela."
+                    : "Es un buen momento para preguntarle cómo se siente y ofrecerle consuelo. Calor local o un cambio de postura pueden ayudar. Si persiste, considera contactar a su médico.",
                 emoji: "🩹",
                 category: .selfCare,
                 urgency: .strong
             ))
         }
 
-        // Buen momento general
         if fatigue <= 2.0 && pain <= 2.0 && wellbeing >= 4.0 {
             suggestions.append(Suggestion(
-                title: "¡Te sientes muy bien ahora!",
-                detail: "Este es uno de tus mejores momentos del día. ¡Aprovéchalo para algo que te guste o te importe!",
+                title: recipient == .child
+                    ? "¡Hoy te ves con mucha energía! ⚡️"
+                    : "¡Tu niño está con mucha energía hoy! ⚡️",
+                detail: recipient == .child
+                    ? "Tu cuerpo está contento ahora mismo. ¡Aprovecha para hacer algo que te encante — jugar, dibujar, lo que tú quieras!"
+                    : "Este es uno de sus mejores momentos del día. Ideal para hacer algo juntos — salir a caminar, jugar, o simplemente disfrutar su buena energía.",
                 emoji: "✨",
                 category: .productivity,
                 urgency: .moderate
             ))
         }
 
-        // Estado neutral con bienestar bueno
         if fatigue <= 3.0 && pain <= 2.0 && wellbeing >= 3.5 {
             suggestions.append(Suggestion(
-                title: "Momento tranquilo disponible",
-                detail: "No estás al 100%, pero tampoco mal. Buen momento para actividades ligeras o creativas.",
+                title: recipient == .child
+                    ? "Un momento tranquilo para ti"
+                    : "Buen momento para actividades ligeras",
+                detail: recipient == .child
+                    ? "No estás al 100% pero tampoco mal. Qué tal si haces algo que te relaje, como escuchar música, colorear o ver tu serie favorita."
+                    : "Tu niño no está al 100% pero se encuentra estable. Actividades tranquilas como leer juntos, ver una película o colorear son ideales ahora.",
                 emoji: "🎨",
                 category: .lightActivity,
                 urgency: .gentle
             ))
         }
 
-        // Hora de siesta natural (1–3pm)
         if (13...15).contains(ctx.currentHour) && fatigue >= 3.0 {
             suggestions.append(Suggestion(
-                title: "La siesta de la tarde te espera",
-                detail: "Tu cuerpo naturalmente baja el ritmo a esta hora. Un descanso de 15–20 min puede revitalizarte.",
+                title: recipient == .child
+                    ? "La hora mágica de la siesta ☀️"
+                    : "Hora ideal para que descanse",
+                detail: recipient == .child
+                    ? "A esta hora el cuerpo de casi todos baja el ritmo, ¡no solo el tuyo! Una siestita de 15-20 minutos puede hacer magia."
+                    : "A esta hora su energía naturalmente baja. Si es posible, ayúdalo a tomar una siesta corta de 15-20 minutos en un lugar tranquilo.",
                 emoji: "☀️",
                 category: .rest,
                 urgency: .moderate
             ))
         }
 
-        // Noche tardía con fatiga media
         if ctx.currentHour >= 22 && fatigue >= 3.0 {
             suggestions.append(Suggestion(
-                title: "Tu cuerpo pide descanso nocturno",
-                detail: "Es tarde y ya estás cansado/a. Considera prepararte para dormir pronto.",
+                title: recipient == .child
+                    ? "Es hora de darle las buenas noches a tu cuerpo"
+                    : "Tu niño debería estar descansando ya",
+                detail: recipient == .child
+                    ? "Ya hiciste mucho hoy, ¡eres increíble! Prepárate para dormir y mañana será un nuevo día lleno de posibilidades."
+                    : "Es tarde y su nivel de fatiga es alto. Iniciar la rutina de dormir ahora le ayudará a descansar mejor esta noche.",
                 emoji: "🌙",
                 category: .rest,
                 urgency: .moderate
@@ -174,48 +195,55 @@ final class SuggestionEngine {
         return suggestions
     }
 
-    // MARK: - Sugerencias basadas en predicción de las próximas horas
-
-    private func suggestionsForUpcomingHours(_ ctx: SuggestionContext) -> [Suggestion] {
+    private func suggestionsForUpcomingHours(_ ctx: SuggestionContext, recipient: RecipientType) -> [Suggestion] {
         var suggestions: [Suggestion] = []
         let predictions = ctx.insight.allPredictions
 
-        // Buscar la próxima buena ventana (dentro de las próximas 4 horas)
         let upcomingGoodHours = predictions
             .filter { $0.hour > ctx.currentHour && $0.hour <= ctx.currentHour + 4 }
             .filter { $0.isGoodHour }
 
         if let nextGood = upcomingGoodHours.first {
             suggestions.append(Suggestion(
-                title: "Buena ventana se acerca a las \(formatHour(nextGood.hour))",
-                detail: "Según tu patrón, en un par de horas te sentirás mejor. Guarda algo de energía para ese momento.",
+                title: recipient == .child
+                    ? "¡Se viene un buen momento a las \(formatHour(nextGood.hour))!"
+                    : "Ventana de energía a las \(formatHour(nextGood.hour))",
+                detail: recipient == .child
+                    ? "Según tu historial, en un par de horas te vas a sentir mejor. Guarda un poco de energía para ese momento y úsala en algo que disfrutes."
+                    : "Según el historial de tu niño, debería sentirse mejor alrededor de las \(formatHour(nextGood.hour)). Puedes planear algo especial para ese momento.",
                 emoji: "🔆",
                 category: .productivity,
                 urgency: .gentle
             ))
         }
 
-        // Advertir sobre la próxima hora difícil
         let upcomingBadHours = predictions
             .filter { $0.hour > ctx.currentHour && $0.hour <= ctx.currentHour + 3 }
             .filter { $0.isBadHour }
 
         if let nextBad = upcomingBadHours.first, ctx.currentFatigue < 3.5 {
             suggestions.append(Suggestion(
-                title: "Prepárate para las \(formatHour(nextBad.hour))",
-                detail: "Tu historial indica que esta hora suele ser más difícil. Aprovecha que ahora te sientes mejor.",
+                title: recipient == .child
+                    ? "Aprovecha que te sientes bien ahora"
+                    : "Prepara a tu niño para las \(formatHour(nextBad.hour))",
+                detail: recipient == .child
+                    ? "A las \(formatHour(nextBad.hour)) tu cuerpo suele cansarse más. Haz algo padre ahorita que tienes energía, y luego descansas sin culpa."
+                    : "Su historial indica que alrededor de las \(formatHour(nextBad.hour)) suele tener más fatiga o dolor. Considera tener lista una actividad tranquila para ese momento.",
                 emoji: "⏰",
                 category: .selfCare,
                 urgency: .gentle
             ))
         }
 
-        // Mostrar la mejor hora del día si aún no ha pasado
         let peakHour = ctx.insight.peakEnergyHour
         if peakHour > ctx.currentHour {
             suggestions.append(Suggestion(
-                title: "Tu mejor hora: \(formatHour(peakHour))",
-                detail: "Esa suele ser tu hora pico de energía. Ideal para tareas que requieran más de ti.",
+                title: recipient == .child
+                    ? "Tu momento estrella es a las \(formatHour(peakHour)) ⭐️"
+                    : "Mejor hora de tu niño: \(formatHour(peakHour)) ⭐️",
+                detail: recipient == .child
+                    ? "Esa es tu hora pico según lo que has registrado. Guárdala para algo especial o para lo que más ganas tengas de hacer."
+                    : "Esa es su hora de mayor energía según sus registros. Es el mejor momento para actividades que requieran más concentración o esfuerzo.",
                 emoji: "⚡️",
                 category: .productivity,
                 urgency: .gentle
@@ -225,22 +253,28 @@ final class SuggestionEngine {
         return suggestions
     }
 
-    // MARK: - Sugerencias basadas en tendencia reciente
-
-    private func trendBasedSuggestions(_ ctx: SuggestionContext) -> [Suggestion] {
+    private func trendBasedSuggestions(_ ctx: SuggestionContext, recipient: RecipientType) -> [Suggestion] {
         switch ctx.recentTrend {
         case .worsening:
             return [Suggestion(
-                title: "Has tenido un día difícil",
-                detail: "Tus últimas entradas muestran que un buen descanso podría ayudarte.",
+                title: recipient == .child
+                    ? "Has tenido días difíciles, y eso es válido"
+                    : "Tu niño ha tenido días difíciles",
+                detail: recipient == .child
+                    ? "Notamos que has estado luchando más de lo normal. No tienes que ser fuerte todo el tiempo. Descansa, pide ayuda si la necesitas, y recuerda que no estás solo."
+                    : "Su tendencia reciente muestra más fatiga y dolor de lo habitual. Es buen momento para hablar con él, reforzar que puede expresar cómo se siente, y considerar comentarlo con su médico.",
                 emoji: "💙",
                 category: .rest,
                 urgency: .moderate
             )]
         case .improving:
             return [Suggestion(
-                title: "¡Vas mejorando!",
-                detail: "Tu tendencia reciente es positiva. Mantén el ritmo suave y sigue escuchando a tu cuerpo.",
+                title: recipient == .child
+                    ? "¡Vas mejorando, campeón! 🏆"
+                    : "¡Tu niño va mejorando! 🏆",
+                detail: recipient == .child
+                    ? "Tus últimas entradas muestran que te has sentido mejor. Eso es increíble. Sigue escuchando a tu cuerpo y celebra cada pequeño avance."
+                    : "Su tendencia reciente es positiva — se ha sentido mejor en sus últimas entradas. Celebra este avance con él, los pequeños logros importan mucho.",
                 emoji: "📈",
                 category: .lightActivity,
                 urgency: .gentle
