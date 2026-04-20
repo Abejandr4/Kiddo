@@ -127,4 +127,15 @@ struct SettingsView: View {
     }
     
 }
+#Preview("Vista Niño") {
+    NavigationStack {
+        SettingsView(userType: .child)
+    }
+}
+
+#Preview("Vista Padre") {
+    NavigationStack {
+        SettingsView(userType: .parent)
+    }
+}
 

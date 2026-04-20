@@ -23,7 +23,7 @@ struct AnimacionFeliz: View {
         Image(secuencia[fotogramaActual])
             .resizable()
             .scaledToFit()
-            .frame(width: 130, height: 130)
+            .frame(width: 120, height: 120)
             // La transición de opacidad ayuda a que no se vea un salto brusco
             .transition(.opacity)
             .id(fotogramaActual)

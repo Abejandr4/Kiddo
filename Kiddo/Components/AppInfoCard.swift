@@ -11,11 +11,7 @@ struct AppInfoCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 15) {
-                Image("feliz_4")
-                        .resizable()
-                            .scaledToFit()
-                            .frame(width: 80, height: 80)
-                    .font(.system(size: 40))
+                AnimacionFeliz()
                 VStack(alignment: .leading) {
                     Text("Kiddo")
                         .font(.headline)
