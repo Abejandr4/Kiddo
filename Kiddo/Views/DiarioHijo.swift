@@ -5,7 +5,7 @@ struct DiarioHijo: View {
     @EnvironmentObject var dataManager: DataManager
 
     var body: some View {
-        DiaryView()  // DiaryView ya maneja las sugerencias sola
+        DiaryView()  
     }
 }
 

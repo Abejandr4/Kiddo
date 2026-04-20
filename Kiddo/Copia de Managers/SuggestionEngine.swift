@@ -52,7 +52,7 @@ final class SuggestionEngine {
     private init() {}
 
 
-    /// Genera sugerencias personalizadas en base al contexto actual del usuario.
+    //Sugerencias basadas en el usuario
     func suggestions(for context: SuggestionContext, recipient: RecipientType = .child) -> [Suggestion] {
         var result: [Suggestion] = []
 
@@ -67,7 +67,7 @@ final class SuggestionEngine {
             .map { $0 }
     }
 
-    /// Construye el contexto automáticamente desde las entradas recientes + insight del día.
+    //Construye el contexto automáticamente desde las entradas recientes + insight del día.
     func buildContext(
         recentEntries: [DiaryEntry],
         insight: DailyInsight,

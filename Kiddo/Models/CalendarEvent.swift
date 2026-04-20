@@ -11,10 +11,10 @@ class CalendarEvent {
     var startTime: String
     var endTime: String?
     var eventDescription: String?
-    var hexColor: String // Guardamos el Hex en lugar del tipo Color
-    var isTaken: Bool = false // <-- NUEVO ESTADO
+    var hexColor: String
+    var isTaken: Bool = false
     
-    // Convertimos el String de nuevo a Enum para usarlo fácil en el código
+    
     @Transient
     var type: EventType {
         get { EventType(rawValue: typeRawValue) ?? .medication }

@@ -13,7 +13,6 @@ struct UserProfileCard: View {
     var body: some View {
         VStack(spacing: 15) {
             ZStack {
-                // Borde con degradado
                 Circle()
                     .fill(LinearGradient(
                         gradient: Gradient(colors: [Color(hex: "7BC67E"), Color(hex: "87CEEB")]),
@@ -22,7 +21,6 @@ struct UserProfileCard: View {
                     ))
                     .frame(width: 140, height: 140)
                 
-                // Fondo interior con el degradado pastel
                 Circle()
                     .fill(
                         LinearGradient(
@@ -36,7 +34,6 @@ struct UserProfileCard: View {
                     )
                     .frame(width: 132, height: 132)
                 
-                // --- LÓGICA DE IMAGEN SEGÚN TIPO ---
                 if userType == .child {
                     // Muestra el Kiddo personalizado para el niño
                     AvatarView(avatar: avatar)
@@ -44,7 +41,7 @@ struct UserProfileCard: View {
                         .frame(width: 132, height: 132)
                         .clipShape(Circle())
                 } else {
-                    // Muestra la imagen de Cuidador de tus assets para el padre
+                    // Muestra la imagen de Cuidador para el padre
                     Image("Cuidador")
                         .resizable()
                         .scaledToFit()

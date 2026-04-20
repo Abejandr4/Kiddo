@@ -6,18 +6,16 @@ struct MedicationCard: View {
     let medication: Medication
     let onLearnMore: () -> Void
     
-    // Colores exactos basados en la imagen
     let titleColor = Color(red: 45/255, green: 55/255, blue: 72/255)
     let subtitleColor = Color(red: 113/255, green: 128/255, blue: 150/255)
     
-    // Colores del gradiente del botón
     let gradientStart = Color(red: 135/255, green: 206/255, blue: 235/255)
     let gradientEnd = Color(red: 180/255, green: 167/255, blue: 214/255)
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             HStack(alignment: .top, spacing: 18) {
-                // Imagen/Emoji 3D
+                // Imagen
                 if let emoji = medication.emoji {
                     Text(emoji)
                         .font(.system(size: 60))
@@ -67,13 +65,13 @@ struct MedicationCard: View {
                     )
                 )
                 .foregroundColor(.white)
-                .clipShape(Capsule()) // Forma de cápsula exacta a la imagen
+                .clipShape(Capsule())
             }
             .padding(.top, 8)
         }
         .padding(30)
         .background(Color.white)
-        .cornerRadius(45) // Esquinas muy redondeadas
+        .cornerRadius(45)
         .shadow(color: Color.black.opacity(0.05), radius: 15, x: 0, y: 10)
     }
 }

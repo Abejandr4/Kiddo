@@ -31,13 +31,13 @@ class OncologyChatService {
         session = LanguageModelSession(instructions: instructions)
     }
     
-    // ① Simple one-shot response
+    // Simple one-shot response
     func respond(to message: String) async throws -> String {
         guard let session else { throw ChatError.noSession }
         return try await session.respond(to: message).content
     }
     
-    // ② Streaming response — lives HERE, same file
+    // Streaming response — lives HERE, same file
     func streamResponse(to message: String) -> AsyncThrowingStream<String, Error> {
         AsyncThrowingStream { continuation in
             Task {
@@ -55,7 +55,7 @@ class OncologyChatService {
         }
     }
     
-    // ③ Structured output
+    // Structured output
     // Managers/OncologyChatService.swift
     func explainTopic(_ topic: String) async throws -> OncologyExplanation {
         guard let session else { throw ChatError.noSession }

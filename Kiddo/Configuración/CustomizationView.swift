@@ -1,11 +1,9 @@
 import SwiftUI
 
 struct CustomizationView: View {
-    // Vínculos directos a AppStorage para guardar permanentemente
     @Binding var avatarCapa: String
     @Binding var avatarAccesorio: String
     
-    // Estados temporales para la previsualización antes de guardar
     @State private var tempCapa: String
     @State private var tempAccesorio: String
     
@@ -31,14 +29,12 @@ struct CustomizationView: View {
     var body: some View {
         VStack(spacing: 20) {
             
-            // --- TOP: Previsualización constante ---
             AvatarView(avatar: tempAvatar)
                 .frame(height: 220)
                 .padding()
                 .background(
                     RoundedRectangle(cornerRadius: 30)
                         .fill(
-                            // ¡NUEVO DEGRADADO PASTEL!
                             LinearGradient(
                                 gradient: Gradient(colors: [
                                     Color(red: 1.0, green: 0.8, blue: 0.8), // Rosa pastel
@@ -48,7 +44,6 @@ struct CustomizationView: View {
                                 endPoint: .bottomTrailing
                             )
                         )
-                        // Sombra ajustada para combinar con el rosa pastel
                         .shadow(color: Color(red: 1.0, green: 0.8, blue: 0.8).opacity(0.6), radius: 12, x: 0, y: 8)
                 )
                 .padding(.horizontal)
@@ -83,7 +78,7 @@ struct CustomizationView: View {
                     
                     Divider().padding(.horizontal)
                     
-                    // --- SECCIÓN ACCESORIOS ---
+                    // Accesos
                     Text("Elige un accesorio")
                         .font(.title3)
                         .fontWeight(.bold)
@@ -109,7 +104,7 @@ struct CustomizationView: View {
                 }
             }
             
-            // --- BOTÓN GUARDAR ---
+            // Botón guardar
             Button(action: {
                 avatarCapa = tempCapa
                 avatarAccesorio = tempAccesorio
@@ -142,7 +137,7 @@ struct CustomizationView: View {
 
 // MARK: - Subcomponentes Visuales
 
-// Tarjeta para los botones de texto ("Ninguno", "Ninguna")
+// Tarjeta para los botones de texto
 struct SelectionCard: View {
     let title: String
     let isSelected: Bool
@@ -168,7 +163,7 @@ struct SelectionCard: View {
     }
 }
 
-// Tarjeta para las imágenes (Capas y accesorios)
+// Tarjeta para las imágenes 
 struct OptionImageCard: View {
     let name: String
     let isSelected: Bool

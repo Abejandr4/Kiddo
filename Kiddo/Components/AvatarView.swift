@@ -5,19 +5,19 @@ struct AvatarView: View {
     
     var body: some View {
         ZStack {
-            // 1. Capa (al fondo)
+            // Capa
             if let capa = avatar.capa {
                 Image(capa)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
             }
             
-            // 2. Cuerpo (en medio)
+            // Cuerpo
             Image(avatar.cuerpo)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
             
-            // 3. Accesorio (al frente)
+            // Accesorio
             if let accesorio = avatar.accesorio {
                 Image(accesorio)
                     .resizable()

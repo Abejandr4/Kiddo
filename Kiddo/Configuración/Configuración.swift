@@ -51,7 +51,7 @@ struct SettingsView: View {
                             )
                         }
                         
-                        // OPCIÓN SOLO PARA PADRE (Privacidad y Protección de Datos)
+                        // Padre
                         if userType == .parent {
                             NavigationRow(
                                 icon: "lock.shield",
@@ -90,7 +90,7 @@ struct SettingsView: View {
                         }
                         
                         
-                        // OPCIÓN PARA AMBOS (Vinculación)
+                        // Niño
                         NavigationRow(
                             icon: "qrcode.viewfinder",
                             title: "Vinculación",

@@ -4,7 +4,7 @@ struct PersonalizedSuggestionView: View {
     
     @EnvironmentObject var dataManager: DataManager
     
-    let suggestion: Suggestion  // ← cambia AISuggestion por Suggestion
+    let suggestion: Suggestion  // Cambia la sugerencia
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -16,7 +16,7 @@ struct PersonalizedSuggestionView: View {
             }
             
             HStack(alignment: .top, spacing: 15) {
-                Text(suggestion.emoji)          // ← tip.icon → suggestion.emoji
+                Text(suggestion.emoji)
                     .font(.system(size: 40))
                 
                 VStack(alignment: .leading, spacing: 4) {
@@ -24,7 +24,7 @@ struct PersonalizedSuggestionView: View {
                         .font(.headline)
                         .foregroundColor(Color(red: 0.18, green: 0.22, blue: 0.28))
                     
-                    Text(suggestion.detail)     // ← tip.description → suggestion.detail
+                    Text(suggestion.detail)     
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .fixedSize(horizontal: false, vertical: true)

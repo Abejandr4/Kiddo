@@ -151,7 +151,6 @@ struct EventRow: View {
                     }
                 }
                 
-                // CAMBIO 1: Usar eventDescription en lugar de description
                 if let desc = event.eventDescription {
                     Text(desc)
                         .font(.subheadline)
@@ -159,11 +158,9 @@ struct EventRow: View {
                 }
             }
             .padding()
-            // CAMBIO 2: Usar Color(hex:) para convertir el hexColor a SwiftUI Color
             .background(Color(hex: event.hexColor))
             .foregroundColor(.white)
             .cornerRadius(18)
-            // CAMBIO 3: Usar Color(hex:) también en la sombra
             .shadow(color: Color(hex: event.hexColor).opacity(0.3), radius: 4, x: 0, y: 2)
         }
     }

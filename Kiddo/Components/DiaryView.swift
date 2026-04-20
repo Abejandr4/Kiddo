@@ -39,7 +39,6 @@ struct DiaryEntryy: Identifiable {
 struct DiaryView: View {
     @EnvironmentObject var dataManager: DataManager
     
-    // --- NUEVO: Leemos el avatar guardado ---
     @AppStorage("avatarCapa") private var avatarCapa: String = ""
     @AppStorage("avatarAccesorio") private var avatarAccesorio: String = ""
     
@@ -50,7 +49,6 @@ struct DiaryView: View {
             accesorio: avatarAccesorio.isEmpty ? nil : avatarAccesorio
         )
     }
-    // ----------------------------------------
 
     @State private var entries: [DiaryEntryy] = [
         DiaryEntryy(date: Date(), mood: .great, energyLevel: 8, painLevel: 2, sideEffects: ["Cansancio leve"], notes: "¡Me sentí muy bien hoy!"),
@@ -81,12 +79,12 @@ struct DiaryView: View {
                     PrivacyNoticeView(onClose: { showPrivacyNotice = false })
                 }
                 
-                // ── Sección de Tips ──────────────────────────────────────
+                // Tips
                 VStack(alignment: .leading, spacing: 15) {
                     HStack {
-                        // --- AQUÍ ESTÁ EL CAMBIO: Avatar en lugar de la imagen estática ---
+                        
                         AvatarView(avatar: currentAvatar)
-                            .scaleEffect(0.28) // (70 / 250 = 0.28) para que encaje
+                            .scaleEffect(0.28)
                             .frame(width: 70, height: 70)
                             .background(Circle().fill(Color.white.opacity(0.6)))
                             .clipShape(Circle())
@@ -99,7 +97,7 @@ struct DiaryView: View {
                     
                     VStack(spacing: 12) {
                         if suggestions.isEmpty {
-                            // Placeholder mientras cargan o no hay entradas aún
+                            
                             HeroTipCard(
                                 emoji: "⭐️",
                                 title: "¡Registra tu primera batalla!",
@@ -121,7 +119,6 @@ struct DiaryView: View {
                     .padding(.horizontal)
                 }
                 .padding(.top, 10)
-                // ─────────────────────────────────────────────────────────
                 
                 // Botones de Acción
                 VStack(spacing: 15) {

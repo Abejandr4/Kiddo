@@ -2,12 +2,10 @@ import SwiftUI
 import SwiftData // <-- AÑADIR ESTO
 
 struct MedicamentosView: View {
-    // 1. Ahora consultamos la base de datos directamente
     @Query private var calendarEvents: [CalendarEvent]
     
     @State private var selectedMedication: Medication? = nil
     
-    // 2. Filtro (se mantiene igual)
     var filteredMedications: [Medication] {
         medicationList.filter { med in
             calendarEvents.contains { event in
@@ -37,7 +35,6 @@ struct MedicamentosView: View {
                 // MARK: - Medications List
                 VStack(spacing: 16) {
                     if filteredMedications.isEmpty {
-                        // Estado vacío
                         VStack(spacing: 20) {
                             Image(systemName: "calendar.badge.plus")
                                 .font(.system(size: 50))
