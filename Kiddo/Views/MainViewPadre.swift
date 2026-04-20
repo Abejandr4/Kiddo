@@ -10,31 +10,9 @@ struct MainViewPadre: View {
             // --- 1. INICIO (Con QR Centrado) ---
             NavigationStack {
                 VStack(spacing: 0) {
-                    // Botón de QR centrado en la parte superior
-                    NavigationLink(destination: VinculacionQRView(token: linkingToken)) {
-                        VStack {
-                            Image(systemName: "qrcode")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 60, height: 60)
-                                .foregroundColor(.primary)
-                            
-                            Text("Vincular dispositivo")
-                                .font(.subheadline)
-                                .padding(5)
-                                .bold()
-                        }
-                        .padding(20)
-                        .background(Color(.systemBackground))
-                        .cornerRadius(15)
-                        .shadow(radius: 2)
-                    }
-                    .padding(30)
-
-                    // Tu vista de inicio debajo
-                    InicioPadre(todayMedsTaken: 2, totalMeds: 5, progress: 0.4)
+                   
+                    InicioPadre()
                 }
-                .navigationTitle("¡Hola!")
             }
             .tabItem { Label("Inicio", systemImage: "house.fill") }
             
@@ -59,7 +37,7 @@ struct MainViewPadre: View {
             // --- 5. AJUSTES ---
             NavigationStack {
                 AjustesPadre()
-                    .navigationTitle("Ajustes")
+                    
             }
             .tabItem { Label("Ajustes", systemImage: "gearshape.fill") }
         }
