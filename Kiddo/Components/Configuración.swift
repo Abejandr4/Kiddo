@@ -52,7 +52,7 @@ struct SettingsView: View {
                             title: "Privacidad",
                             subtitle: "Cómo usamos tus datos",
                             gradient: Gradient(colors: [.green, .teal]),
-                            destination: Text("La IA analiza las entradas de tu diario para hacer mejores recomendaciones a ti y a tu tutor, pero tu tutor no puede acceder las entradas directamente")
+                            destination: Text("La IA analiza las entradas de tu diario para hacer mejores recomendaciones a los usuarios, pero el tutor no puede acceder a las entradas directamente")
                                 .padding()
                         )
                         

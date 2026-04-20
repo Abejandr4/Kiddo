@@ -8,7 +8,7 @@ struct CustomizationView: View {
     @State private var tempAvatar: Avatar
     
     // Datos de los assets
-    let opcionesCapas = ["capa_verde", "capa_azul", "capa_rosa"]
+    let opcionesCapas = ["capa_verde", "capa_azul", "capa_roja", "capa_morada"]
     let opcionesAccesorios = ["kiddo_rana", "kiddo_conejo"]
     
     // Inicializador para copiar el estado actual al temporal
