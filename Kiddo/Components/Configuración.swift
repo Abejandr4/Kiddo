@@ -15,6 +15,8 @@ enum UserType {
 
 struct SettingsView: View {
     let userType: UserType
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
+    @AppStorage("userRole") private var userRole: String = "None"
     
     @State private var myAvatar = Avatar()
     
@@ -73,7 +75,11 @@ struct SettingsView: View {
                     AppInfoCard()
                     
                     // Logout Button
-                    Button(action: onLogout) {
+                    Button(action: {
+                        hasCompletedOnboarding = false
+                        userRole = "None"
+                        onLogout() // por si necesitas hacer algo más
+                    }) {
                         HStack {
                             Image(systemName: "rectangle.portrait.and.arrow.right")
                             Text("Cerrar Sesión")
