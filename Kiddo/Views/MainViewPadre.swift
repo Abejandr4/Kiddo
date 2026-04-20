@@ -26,9 +26,14 @@ struct MainViewPadre: View {
             }
             .tabItem { Label("Calendario", systemImage: "calendar") }
             
+            NavigationStack {
+                AIChatView()
+            }
+            .tabItem { Label("Chat", systemImage: "star.bubble") }
+            
             // --- 4. AJUSTES ---
             NavigationStack {
-                AjustesHijo()
+                AjustesPadre()
                     .navigationTitle("Ajustes")
             }
             .tabItem { Label("Ajustes", systemImage: "gearshape.fill") }
