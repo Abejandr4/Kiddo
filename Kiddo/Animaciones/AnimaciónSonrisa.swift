@@ -24,7 +24,7 @@ struct AnimacionSonrisa: View {
         Image(secuencia[fotogramaActual])
             .resizable()
             .scaledToFit()
-            .frame(width: 70, height: 70)
+            .frame(width: 90, height: 90)
             // La transición de opacidad ayuda a que no se vea un salto brusco
             .transition(.opacity)
             .id(fotogramaActual)

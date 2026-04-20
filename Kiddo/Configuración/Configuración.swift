@@ -1,8 +1,6 @@
 //
-//  Configuración.swift
+//  Configuración.swift
 //  Kiddo
-//
-//  Created by Valentina Garcia on 18/04/26.
 //
 
 
@@ -18,13 +16,11 @@ struct SettingsView: View {
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
     @AppStorage("userRole") private var userRole: String = "None"
     
-    // Variables de persistencia para el avatar
     @AppStorage("avatarCapa") private var avatarCapa: String = ""
     @AppStorage("avatarAccesorio") private var avatarAccesorio: String = ""
     
     var onLogout: () -> Void = { }
     
-    // Avatar dinámico que siempre refleja lo guardado
     var currentAvatar: Avatar {
         Avatar(
             capa: avatarCapa.isEmpty ? nil : avatarCapa,
@@ -36,15 +32,14 @@ struct SettingsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
-                // Solo dejamos este encabezado
                 HStoreHeader()
                 
-                // Pasamos el avatar actualizado
                 UserProfileCard(userType: userType, avatar: currentAvatar)
                 
                 NavigationStack {
                     VStack(spacing: 20) {
                         
+                        // OPCIÓN SOLO PARA NIÑO
                         if userType == .child {
                             NavigationRow(
                                 icon: "person.crop.circle",
@@ -55,27 +50,62 @@ struct SettingsView: View {
                             )
                         }
                         
-                        // Nueva opción de Vinculación con padre
-                        // Nueva opción de Vinculación con padre
+                        // OPCIÓN SOLO PARA PADRE (Privacidad y Protección de Datos)
+                        if userType == .parent {
+                            NavigationRow(
+                                icon: "lock.shield",
+                                title: "Privacidad",
+                                subtitle: "Protección de datos",
+                                gradient: Gradient(colors: [.green, .teal]),
+                                // --- NUEVO MENSAJE DE PRIVACIDAD ---
+                                destination: ScrollView {
+                                    VStack(spacing: 25) {
+                                        Image(systemName: "checkmark.shield.fill")
+                                            .font(.system(size: 65))
+                                            .foregroundColor(Color(hex: "7BC67E"))
+                                            .padding(.top, 20)
+                                        
+                                        Text("Privacidad y Protección de Datos")
+                                            .font(.title2)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(Color(hex: "2D3748"))
+                                            .multilineTextAlignment(.center)
+                                        
+                                        Text("En Kiddo, la seguridad de tu familia es nuestra máxima prioridad. Toda la información médica y personal está encriptada y almacenada bajo estrictos estándares de seguridad.\n\nEl diario interactivo es un espacio seguro y confidencial diseñado para que el niño pueda expresar sus emociones libremente. Nuestra Inteligencia Artificial procesa estas entradas de forma anónima y local, únicamente para personalizar las recomendaciones de bienestar.\n\nPara fomentar un entorno de total confianza y proteger su privacidad emocional, los textos originales del diario no son accesibles para el tutor ni se comparten con terceros.")
+                                            .font(.body)
+                                            .foregroundColor(Color(hex: "718096"))
+                                            .multilineTextAlignment(.center)
+                                            .lineSpacing(4)
+                                            .padding(.horizontal, 20)
+                                        AnimacionSonrisa()
+                                        Spacer()
+                                    }
+                                    .padding()
+                                }
+                                .navigationTitle("Privacidad")
+                                .navigationBarTitleDisplayMode(.inline),
+                                
+                            )
+                        }
+                        
+                        
+                        // OPCIÓN PARA AMBOS (Vinculación)
                         NavigationRow(
                             icon: "qrcode.viewfinder",
-                            title: "Vinculación con padre",
-                            subtitle: "Conecta tu cuenta",
-                            gradient: Gradient(colors: [.green, .teal]),
-                            // ¡Aquí está la corrección! Agregamos "View" y un token de prueba
+                            title: "Vinculación",
+                            subtitle: userType == .child ? "Conecta con tu padre" : "Sincroniza con el niño",
+                            gradient: Gradient(colors: [.blue, Color(hex: "87CEEB")]),
                             destination: VinculacionQRView(token: "KIDDO-1234-ABCD")
                         )
-                        
                     }
                     .background(Color.white)
                     .cornerRadius(25)
                     .shadow(color: Color.black.opacity(0.05), radius: 10, x: 0, y: 5)
-                    .padding(.bottom, 10)
+                    .padding(.bottom, 20)
                     
-                    // App Info Card
                     AppInfoCard()
                     
-                    // Logout Button
+                    // Botón Cerrar Sesión
                     Button(action: {
                         hasCompletedOnboarding = false
                         userRole = "None"
@@ -88,7 +118,7 @@ struct SettingsView: View {
                         }
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 10)
+                        .padding(.vertical, 14)
                         .background(
                             LinearGradient(
                                 gradient: Gradient(colors: [Color(hex: "FF8ED4"), Color(hex: "FFB366")]),
@@ -97,7 +127,6 @@ struct SettingsView: View {
                             )
                         )
                         .cornerRadius(25)
-                        .shadow(color: Color(hex: "FF8ED4").opacity(0.3), radius: 8, x: 0, y: 4)
                     }
                     .padding(.top, 10)
                 }
@@ -106,8 +135,6 @@ struct SettingsView: View {
             .background(Color(hex: "F7FAFC").ignoresSafeArea())
         }
     }
-    
-    // MARK: - Subviews
     
     struct HStoreHeader: View {
         var body: some View {

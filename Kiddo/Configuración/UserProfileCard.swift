@@ -13,7 +13,7 @@ struct UserProfileCard: View {
     var body: some View {
         VStack(spacing: 15) {
             ZStack {
-                // Borde con degradado (Verde a Azul)
+                // Borde con degradado
                 Circle()
                     .fill(LinearGradient(
                         gradient: Gradient(colors: [Color(hex: "7BC67E"), Color(hex: "87CEEB")]),
@@ -22,13 +22,13 @@ struct UserProfileCard: View {
                     ))
                     .frame(width: 140, height: 140)
                 
-                // Fondo interior del círculo (¡NUEVO DEGRADADO PASTEL!)
+                // Fondo interior con el degradado pastel
                 Circle()
                     .fill(
                         LinearGradient(
                             gradient: Gradient(colors: [
-                                Color(red: 1.0, green: 0.8, blue: 0.8), // Rosa pastel
-                                Color(red: 0.9, green: 0.9, blue: 1.0)  // Azul/Morado pastel
+                                Color(red: 1.0, green: 0.8, blue: 0.8),
+                                Color(red: 0.9, green: 0.9, blue: 1.0)
                             ]),
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
@@ -36,11 +36,20 @@ struct UserProfileCard: View {
                     )
                     .frame(width: 132, height: 132)
                 
-                // Avatar recortado
-                AvatarView(avatar: avatar)
-                    .scaleEffect(0.45)
-                    .frame(width: 132, height: 132)
-                    .clipShape(Circle())
+                // --- LÓGICA DE IMAGEN SEGÚN TIPO ---
+                if userType == .child {
+                    // Muestra el Kiddo personalizado para el niño
+                    AvatarView(avatar: avatar)
+                        .scaleEffect(0.45)
+                        .frame(width: 132, height: 132)
+                        .clipShape(Circle())
+                } else {
+                    // Muestra la imagen de Cuidador de tus assets para el padre
+                    Image("Cuidador")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 100, height: 100)
+                }
             }
             .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
             

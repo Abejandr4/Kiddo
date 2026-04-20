@@ -142,6 +142,7 @@ struct InicioHijo: View {
                         
                         AnimacionSonrisa()
                                     .frame(width: 50, height: 50)
+                                    .padding(20)
                     }
                     
                     Text("Sigue así, completar tus misiones te hace más fuerte cada día.")
