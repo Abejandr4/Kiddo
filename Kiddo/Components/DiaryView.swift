@@ -1,14 +1,13 @@
 import SwiftUI
+import SwiftData
 import Foundation
 
-// Mantenemos tu Enum y Struct de prueba
 enum Mood: String, CaseIterable {
     case great, good, neutral, bad, terrible
     
-    // Nueva propiedad para las imágenes de tus Assets
     var imageName: String {
         switch self {
-        case .great: return "Muy_bien"       // Reemplaza con tus nombres reales
+        case .great: return "Muy_bien"
         case .good: return "Bien"
         case .neutral: return "Meh"
         case .bad: return "Mal"
@@ -38,11 +37,14 @@ struct DiaryEntryy: Identifiable {
 }
 
 struct DiaryView: View {
+    @EnvironmentObject var dataManager: DataManager  // ← agregado
+
     @State private var entries: [DiaryEntryy] = [
         DiaryEntryy(date: Date(), mood: .great, energyLevel: 8, painLevel: 2, sideEffects: ["Cansancio leve"], notes: "¡Me sentí muy bien hoy!"),
         DiaryEntryy(date: Date().addingTimeInterval(-86400), mood: .neutral, energyLevel: 5, painLevel: 4, sideEffects: ["Mareos", "Náuseas"], notes: "Día tranquilo.")
     ]
     
+    @State private var suggestions: [Suggestion] = []          // ← agregado
     @State private var showPrivacyNotice = true
     @State private var showNewEntrySheet = false
     @State private var showHistorySheet = false
@@ -66,13 +68,13 @@ struct DiaryView: View {
                     PrivacyNoticeView(onClose: { showPrivacyNotice = false })
                 }
                 
-                // Sección de Tips Estática
+                // ── Sección de Tips ──────────────────────────────────────
                 VStack(alignment: .leading, spacing: 15) {
                     HStack {
                         Image("Superhéroe")
-                                .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 70, height: 70)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 70, height: 70)
                         Text("Tips de Héroe")
                             .font(.title2)
                             .fontWeight(.bold)
@@ -80,13 +82,30 @@ struct DiaryView: View {
                     .padding(.horizontal)
                     
                     VStack(spacing: 12) {
-                        HeroTipCard(emoji: "🧘‍♂️", title: "Yoga suave", description: "Practica yoga entre 2-3 PM para mantener energía", timeText: "Después de comer")
-                        HeroTipCard(emoji: "😴", title: "Siesta reparadora", description: "Una siesta de 20-30 minutos puede ayudar", timeText: "3:00 PM")
-                        HeroTipCard(emoji: "🚶‍♂️", title: "Paseo ligero", description: "Caminar 10 minutos al aire libre revitaliza", timeText: "Por la tarde")
+                        if suggestions.isEmpty {
+                            // Placeholder mientras cargan o no hay entradas aún
+                            HeroTipCard(
+                                emoji: "⭐️",
+                                title: "¡Registra tu primera batalla!",
+                                description: "Agrega entradas al diario para recibir tips personalizados según cómo te sientes.",
+                                timeText: "Cuando quieras"
+                            )
+                        } else {
+                            // Tips generados por el modelo ← aquí está el cambio
+                            ForEach(suggestions) { suggestion in
+                                HeroTipCard(
+                                    emoji: suggestion.emoji,
+                                    title: suggestion.title,
+                                    description: suggestion.detail,
+                                    timeText: suggestion.urgencyLabel
+                                )
+                            }
+                        }
                     }
                     .padding(.horizontal)
                 }
                 .padding(.top, 10)
+                // ─────────────────────────────────────────────────────────
                 
                 // Botones de Acción
                 VStack(spacing: 15) {
@@ -101,30 +120,29 @@ struct DiaryView: View {
                     }
                     
                     Button(action: { showHistorySheet = true }) {
-                            Text("Historial de batallas")
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(LinearGradient(colors: [Color(red: 0.48, green: 0.78, blue: 0.49), Color(red: 0.53, green: 0.81, blue: 0.92)], startPoint: .leading, endPoint: .trailing))
-                                .cornerRadius(20)
+                        Text("Historial de batallas")
+                            .font(.headline)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(LinearGradient(colors: [Color(red: 0.48, green: 0.78, blue: 0.49), Color(red: 0.53, green: 0.81, blue: 0.92)], startPoint: .leading, endPoint: .trailing))
+                            .cornerRadius(20)
                     }
                 }
                 .padding(.horizontal)
                 .padding(.top, 10)
-                
             }
             .padding(.vertical)
         }
         .background(Color(red: 0.96, green: 0.98, blue: 0.96).ignoresSafeArea())
-        
-        // Modal de Registro de Batalla
+        .task {
+            await loadSuggestions()  // ← carga al aparecer la vista
+        }
         .sheet(isPresented: $showNewEntrySheet) {
             NavigationStack {
                 NewEntryForm(onSave: saveEntry, onCancel: { showNewEntrySheet = false })
             }
         }
-        // Modal de Historial
         .sheet(isPresented: $showHistorySheet) {
             NavigationStack {
                 ScrollView {
@@ -147,48 +165,60 @@ struct DiaryView: View {
         }
     }
     
+    // MARK: - Cargar sugerencias del modelo
+    
+    private func loadSuggestions() async {
+        do {
+            let entries = try dataManager.fetchAll()
+            guard !entries.isEmpty else { return }
+
+            let insight: DailyInsight
+
+            if PredictionEngine.shared.modelsLoaded {
+                insight = try PredictionEngine.shared.generateDailyInsight(recentEntries: entries)
+            } else {
+                let averages = try dataManager.averagesByHour()
+                insight = PredictionEngine.shared.generateHeuristicInsight(averagesByHour: averages)
+            }
+
+            guard let context = SuggestionEngine.shared.buildContext(
+                recentEntries: entries,
+                insight: insight
+            ) else { return }
+
+            await MainActor.run {
+                suggestions = SuggestionEngine.shared.suggestions(for: context)
+            }
+
+        } catch {
+            print("Error cargando sugerencias: \(error.localizedDescription)")
+        }
+    }
+    
     private func saveEntry(mood: Mood, energy: Double, pain: Double, notes: String, villains: [String]) {
+        // Guardar en UI local (como ya hacías)
         let entry = DiaryEntryy(date: Date(), mood: mood, energyLevel: energy, painLevel: pain, sideEffects: villains, notes: notes)
         entries.insert(entry, at: 0)
         showNewEntrySheet = false
-    }
-}
-
-// MARK: - Subcomponentes
-
-struct HeroTipCard: View {
-    let emoji: String
-    let title: String
-    let description: String
-    let timeText: String
-    
-    var body: some View {
-        HStack(alignment: .top, spacing: 15) {
-            Text(emoji)
-                .font(.largeTitle)
-            
-            VStack(alignment: .leading, spacing: 5) {
-                Text(title)
-                    .font(.headline)
-                    .foregroundColor(Color(red: 0.18, green: 0.22, blue: 0.28))
-                Text(description)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
-                
-                HStack {
-                    Image(systemName: "clock")
-                    Text(timeText)
-                }
-                .font(.caption)
-                .foregroundColor(.green)
-                .padding(.top, 2)
-            }
-            Spacer()
+        
+        // ← NUEVO: guardar también en SwiftData para el modelo ML
+        let wellbeing: Wellbeing
+        switch mood {
+        case .great:    wellbeing = .veryGood
+        case .good:     wellbeing = .good
+        case .neutral:  wellbeing = .neutral
+        case .bad:      wellbeing = .bad
+        case .terrible: wellbeing = .veryBad
         }
-        .padding()
-        .background(Color(red: 0.91, green: 0.96, blue: 0.91))
-        .cornerRadius(20)
+
+        // Convertir escala 1-10 a 1-5 para el modelo
+        let fatigue = max(1, min(5, Int((energy / 10.0) * 5)))
+        let painML  = max(1, min(5, Int((pain   / 10.0) * 5)))
+
+        try? dataManager.addEntry(fatigue: fatigue, pain: painML, wellbeing: wellbeing)
+        
+        // Recargar sugerencias con los nuevos datos
+        Task { await loadSuggestions() }
     }
 }
 
@@ -460,5 +490,10 @@ struct LevelIndicator: View {
 }
 
 #Preview {
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: DiaryEntry.self, configurations: config)
+    
     DiaryView()
+        .environmentObject(DataManager(modelContext: container.mainContext))
+        .modelContainer(container)
 }
