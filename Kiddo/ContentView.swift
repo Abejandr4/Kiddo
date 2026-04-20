@@ -14,10 +14,6 @@ struct ContentView: View {
     
     @AppStorage("linkingToken") private var linkingToken: String = "" // this
         
-    @StateObject private var ckManager: CloudKitManager = {
-        let isPreview = ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
-        return CloudKitManager(isPreview: isPreview)
-    }()
     @State private var isConfiguring: Bool = false
 
     var body: some View {
