@@ -1,8 +1,9 @@
 import SwiftUI
+import SwiftData
 
 struct AddEventView: View {
+    @Environment(\.modelContext) private var modelContext // <-- NUEVO: Conexión a la base de datos
     @Environment(\.dismiss) var dismiss
-    @Binding var events: [CalendarEvent]
     
     // Estados para el formulario
     @State private var type: CalendarEvent.EventType = .medication
@@ -153,41 +154,37 @@ struct AddEventView: View {
         }
     }
     
-    // --- SOLUCIÓN ERROR 2: Implementar saveEvent() ---
+    // --- NUEVA LÓGICA DE GUARDADO EN SWIFTDATA ---
     private func saveEvent() {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         let timeString = formatter.string(from: selectedDate)
         
         let title = type == .medication ? (selectedMedication?.name ?? "Medicamento") : customTitle
+        let hexColor = type == .medication ? "7BC67E" : "87CEEB" // Verdecito o Azulito
         
-        // 1. Crear el evento principal (el del día seleccionado)
+        // 1. Crear el evento principal y guardarlo en SwiftData
         let mainEvent = CalendarEvent(
             title: title,
             type: type,
             date: selectedDate,
             startTime: timeString,
             endTime: nil,
-            description: notes.isEmpty ? nil : notes,
-            color: type == .medication ? .blue : .green
+            eventDescription: notes.isEmpty ? nil : notes,
+            hexColor: hexColor
         )
-        events.append(mainEvent)
+        modelContext.insert(mainEvent) // <-- NUEVO
         
         // 2. Si es recurrente, calculamos las repeticiones
         if isRecurring && !selectedDays.isEmpty {
             let calendar = Calendar.current
-            // Mapeo de tus abreviaturas a números de día de la semana de Swift (1 = Dom, 2 = Lun...)
             let dayMapping: [String: Int] = [
                 "Dom": 1, "Lun": 2, "Mar": 3, "Mié": 4, "Jue": 5, "Vie": 6, "Sáb": 7
             ]
-            
-            // Convertimos tus "Lun", "Mar" a números (2, 3...)
             let targetDays = selectedDays.compactMap { dayMapping[$0] }
             
-            // Calculamos repeticiones para las próximas 4 semanas (puedes aumentar este número)
             for weekOffset in 0..<4 {
                 for dayOfWeek in targetDays {
-                    // Buscamos la fecha que corresponde a ese día de la semana en esa semana específica
                     var components = DateComponents()
                     components.weekday = dayOfWeek
                     components.weekOfYear = calendar.component(.weekOfYear, from: selectedDate) + weekOffset
@@ -195,19 +192,19 @@ struct AddEventView: View {
                     
                     if let recurringDate = calendar.nextDate(after: calendar.startOfDay(for: selectedDate).addingTimeInterval(-1), matching: components, matchingPolicy: .nextTime) {
                         
-                        // Evitamos duplicar el evento principal si cae en el mismo día y hora
                         if calendar.isDate(recurringDate, inSameDayAs: selectedDate) { continue }
                         
+                        // Crear eventos recurrentes y guardarlos en SwiftData
                         let recurringEvent = CalendarEvent(
                             title: title,
                             type: type,
                             date: recurringDate,
                             startTime: timeString,
                             endTime: nil,
-                            description: notes,
-                            color: type == .medication ? .blue : .green
+                            eventDescription: notes.isEmpty ? nil : notes,
+                            hexColor: hexColor
                         )
-                        events.append(recurringEvent)
+                        modelContext.insert(recurringEvent) // <-- NUEVO
                     }
                 }
             }

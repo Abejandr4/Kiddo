@@ -1,8 +1,8 @@
 import SwiftUI
+import SwiftData
 
 struct MainViewPadre: View {
-    // 1. Fuente de verdad única
-    @State var allEvents: [CalendarEvent] = []
+    // ❌ Borramos el @State var allEvents porque SwiftData ya es nuestra fuente de verdad
     
     var body: some View {
         TabView {
@@ -15,16 +15,14 @@ struct MainViewPadre: View {
             
             // --- 2. MEDICINAS (DIARIO) ---
             NavigationStack {
-                // Pasamos $allEvents para que la lista se actualice sola
-                MedicamentosView(calendarEvents: $allEvents)
+                // ✅ Le quitamos el parámetro (calendarEvents: $allEvents)
+                MedicamentosView()
             }
             .tabItem { Label("Medicinas", systemImage: "heart.text.square.fill") }
             
             // --- 3. CALENDARIO ---
             NavigationStack {
-                // IMPORTANTE: Aquí también debes pasar $allEvents
-                CalendarioPadre(allEvents: $allEvents)
-                    
+                CalendarioPadre()
             }
             .tabItem { Label("Calendario", systemImage: "calendar") }
             
@@ -40,4 +38,6 @@ struct MainViewPadre: View {
 
 #Preview {
     MainViewPadre()
+        // ✅ Le agregamos el modelContainer al Preview para que no marque error el simulador
+        .modelContainer(for: [DiaryEntry.self, CalendarEvent.self], inMemory: true)
 }

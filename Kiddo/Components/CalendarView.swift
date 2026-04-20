@@ -70,7 +70,7 @@ struct CalendarView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 120, height: 120)
-                            Text("¡Tu superhéroe ha tomado todos sus medicamentos!")
+                            Text("¡El superhéroe ha activado todos sus poderes!")
                                 .font(.title3)
                                 .fontWeight(.medium)
                                 .foregroundColor(.secondary)
@@ -154,17 +154,20 @@ struct EventRow: View {
                     }
                 }
                 
-                if let desc = event.description {
+                // CAMBIO 1: Usar eventDescription en lugar de description
+                if let desc = event.eventDescription {
                     Text(desc)
                         .font(.subheadline)
                         .opacity(0.85)
                 }
             }
             .padding()
-            .background(event.color)
+            // CAMBIO 2: Usar Color(hex:) para convertir el hexColor a SwiftUI Color
+            .background(Color(hex: event.hexColor))
             .foregroundColor(.white)
             .cornerRadius(18)
-            .shadow(color: event.color.opacity(0.3), radius: 4, x: 0, y: 2)
+            // CAMBIO 3: Usar Color(hex:) también en la sombra
+            .shadow(color: Color(hex: event.hexColor).opacity(0.3), radius: 4, x: 0, y: 2)
         }
     }
 }

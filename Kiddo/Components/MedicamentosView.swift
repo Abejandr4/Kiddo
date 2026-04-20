@@ -1,15 +1,16 @@
 import SwiftUI
+import SwiftData // <-- AÑADIR ESTO
+
 struct MedicamentosView: View {
-    // 1. Recibimos la lista de eventos del calendario para filtrar
-    @Binding var calendarEvents: [CalendarEvent]
+    // 1. Ahora consultamos la base de datos directamente
+    @Query private var calendarEvents: [CalendarEvent]
     
     @State private var selectedMedication: Medication? = nil
     
-    // 2. Filtro: Solo muestra medicinas que han sido agregadas a la agenda
+    // 2. Filtro (se mantiene igual)
     var filteredMedications: [Medication] {
         medicationList.filter { med in
             calendarEvents.contains { event in
-                // Comprobamos si el nombre de la medicina está dentro del título del evento
                 event.title.localizedCaseInsensitiveContains(med.name)
             }
         }
@@ -163,21 +164,8 @@ private struct ImportantInfoCardView: View {
         .shadow(color: Color(hex: "B4A7D6").opacity(0.3), radius: 10, x: 0, y: 5)
     }
 }
-struct MedicamentosView_Previews: PreviewProvider {
-    static var previews: some View {
-        MedicamentosView(calendarEvents: .constant([
-            CalendarEvent(
-                title: "Tomar Ibuprofeno",
-                // 1. Cambiamos el String por el caso del Enum (ajusta .medication si tiene otro nombre)
-                type: .medication,
-                date: Date(),
-                // 2. Cambiamos Date() por un String
-                startTime: "08:00",
-                endTime: "08:30",
-                description: "Dosis matutina",
-                color: .blue
-            )
-        ]))
-    }
+#Preview {
+    MedicamentosView()
+        .modelContainer(for: CalendarEvent.self, inMemory: true)
 }
 
