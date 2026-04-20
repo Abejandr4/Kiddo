@@ -155,16 +155,17 @@ struct AddEventView: View {
         }
     }
     
-    // --- NUEVA LÓGICA DE GUARDADO EN SWIFTDATA ---
+   
+    
     private func saveEvent() {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         let timeString = formatter.string(from: selectedDate)
         
         let title = type == .medication ? (selectedMedication?.name ?? "Medicamento") : customTitle
-        let hexColor = type == .medication ? "7BC67E" : "87CEEB" // Verdecito o Azulito
+        let hexColor = type == .medication ? "7BC67E" : "87CEEB"
         
-        // 1. Crear el evento principal y guardarlo en SwiftData
+        // 1. Crear y guardar el evento principal
         let mainEvent = CalendarEvent(
             title: title,
             type: type,
@@ -174,9 +175,10 @@ struct AddEventView: View {
             eventDescription: notes.isEmpty ? nil : notes,
             hexColor: hexColor
         )
-        modelContext.insert(mainEvent) // <-- NUEVO
+        modelContext.insert(mainEvent)
+        NotificationManager.shared.scheduleNotification(for: mainEvent) // <-- ADD THIS
         
-        // 2. Si es recurrente, calculamos las repeticiones
+        // 2. Si es recurrente
         if isRecurring && !selectedDays.isEmpty {
             let calendar = Calendar.current
             let dayMapping: [String: Int] = [
@@ -195,7 +197,6 @@ struct AddEventView: View {
                         
                         if calendar.isDate(recurringDate, inSameDayAs: selectedDate) { continue }
                         
-                        // Crear eventos recurrentes y guardarlos en SwiftData
                         let recurringEvent = CalendarEvent(
                             title: title,
                             type: type,
@@ -205,7 +206,8 @@ struct AddEventView: View {
                             eventDescription: notes.isEmpty ? nil : notes,
                             hexColor: hexColor
                         )
-                        modelContext.insert(recurringEvent) // <-- NUEVO
+                        modelContext.insert(recurringEvent)
+                        NotificationManager.shared.scheduleNotification(for: recurringEvent) // <-- AND THIS
                     }
                 }
             }

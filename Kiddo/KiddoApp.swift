@@ -3,6 +3,11 @@ import SwiftData
 
 @main
 struct KiddoApp: App {
+    init() {
+            NotificationManager.shared.requestPermission()
+            UNUserNotificationCenter.current().delegate = NotificationDelegate.shared 
+        }
+    
     var sharedModelContainer: ModelContainer = {
         // Mantenemos tu DiaryEntry y agregamos el nuevo CalendarEvent
         let schema = Schema([
