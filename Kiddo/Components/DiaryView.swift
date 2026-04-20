@@ -69,11 +69,10 @@ struct DiaryView: View {
                 // Sección de Tips Estática
                 VStack(alignment: .leading, spacing: 15) {
                     HStack {
-                        Image(systemName: "bolt.fill")
-                            .foregroundColor(.orange)
-                            .padding(8)
-                            .background(Color.orange.opacity(0.2))
-                            .clipShape(Circle())
+                        Image("Superhéroe")
+                                .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 70, height: 70)
                         Text("Tips de Héroe")
                             .font(.title2)
                             .fontWeight(.bold)
