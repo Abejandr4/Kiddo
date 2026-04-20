@@ -140,10 +140,8 @@ struct InicioHijo: View {
                         
                         Spacer()
                         
-                        Image( "recomendacion_2")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 80, height: 80)
+                        AnimacionSonrisa()
+                                    .frame(width: 50, height: 50)
                     }
                     
                     Text("Sigue así, completar tus misiones te hace más fuerte cada día.")
