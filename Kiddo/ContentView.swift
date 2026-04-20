@@ -11,6 +11,14 @@ import SwiftData
 struct ContentView: View {
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
     @AppStorage("userRole") private var userRole: String = "None"
+    
+    @AppStorage("linkingToken") private var linkingToken: String = "" // this
+        
+    @StateObject private var ckManager: CloudKitManager = {
+        let isPreview = ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
+        return CloudKitManager(isPreview: isPreview)
+    }()
+    @State private var isConfiguring: Bool = false
 
     var body: some View {
         Group {
