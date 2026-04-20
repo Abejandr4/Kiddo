@@ -1,17 +1,18 @@
 import SwiftUI
 import Foundation
 
-// Mantenemos tu Enum y Struct de prueba (Asegúrate de migrar a tu @Model real cuando conectes SwiftData)
+// Mantenemos tu Enum y Struct de prueba
 enum Mood: String, CaseIterable {
     case great, good, neutral, bad, terrible
     
-    var emoji: String {
+    // Nueva propiedad para las imágenes de tus Assets
+    var imageName: String {
         switch self {
-        case .great: return "😄"
-        case .good: return "🙂"
-        case .neutral: return "😐"
-        case .bad: return "😟"
-        case .terrible: return "😢"
+        case .great: return "Muy_bien"       // Reemplaza con tus nombres reales
+        case .good: return "Bien"
+        case .neutral: return "Meh"
+        case .bad: return "Mal"
+        case .terrible: return "Muy_mal"
         }
     }
     
@@ -32,7 +33,7 @@ struct DiaryEntryy: Identifiable {
     let mood: Mood
     let energyLevel: Double
     let painLevel: Double
-    let sideEffects: [String] // En tu app real esto se mapeará a los "Villanos"
+    let sideEffects: [String]
     let notes: String
 }
 
@@ -68,11 +69,10 @@ struct DiaryView: View {
                 // Sección de Tips Estática
                 VStack(alignment: .leading, spacing: 15) {
                     HStack {
-                        Image(systemName: "bolt.fill")
-                            .foregroundColor(.orange)
-                            .padding(8)
-                            .background(Color.orange.opacity(0.2))
-                            .clipShape(Circle())
+                        Image("Superhéroe")
+                                .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 70, height: 70)
                         Text("Tips de Héroe")
                             .font(.title2)
                             .fontWeight(.bold)
@@ -106,8 +106,6 @@ struct DiaryView: View {
                                 .foregroundColor(.white)
                                 .frame(maxWidth: .infinity)
                                 .padding()
-                                // Aquí usamos un gradiente verde/azul para que haga juego con la app,
-                                // pero si quieres el mismo color exacto, puedes copiar el LinearGradient de arriba.
                                 .background(LinearGradient(colors: [Color(red: 0.48, green: 0.78, blue: 0.49), Color(red: 0.53, green: 0.81, blue: 0.92)], startPoint: .leading, endPoint: .trailing))
                                 .cornerRadius(20)
                     }
@@ -198,8 +196,10 @@ struct PrivacyNoticeView: View {
     var onClose: () -> Void
     var body: some View {
         HStack(spacing: 15) {
-            Text("🔒")
-                .font(.system(size: 40))
+            Image("Candado")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 90, height: 90)
             VStack(alignment: .leading, spacing: 4) {
                 Text("Tu espacio privado")
                     .font(.headline)
@@ -226,7 +226,7 @@ struct NewEntryForm: View {
     @State private var energy: Double = 5.0
     @State private var pain: Double = 2.0
     @State private var notes: String = ""
-    @State private var selectedVillains: Set<String> = [] // Selección múltiple
+    @State private var selectedVillains: Set<String> = []
     
     var onSave: (Mood, Double, Double, String, [String]) -> Void
     var onCancel: () -> Void
@@ -252,7 +252,12 @@ struct NewEntryForm: View {
                         ForEach(Mood.allCases, id: \.self) { m in
                             Button { mood = m } label: {
                                 VStack {
-                                    Text(m.emoji).font(.system(size: 30))
+                                    // AQUI CAMBIAMOS EL EMOJI POR LA IMAGEN
+                                    Image(m.imageName)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 60, height: 60) // Ajusta el tamaño según necesites
+                                    
                                     Text(m.label).font(.system(size: 10))
                                 }
                                 .frame(maxWidth: .infinity)
@@ -361,7 +366,12 @@ struct DiaryEntryyCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
             HStack(alignment: .top) {
-                Text(entry.mood.emoji).font(.system(size: 45))
+                // AQUI CAMBIAMOS EL EMOJI POR LA IMAGEN PARA EL HISTORIAL
+                Image(entry.mood.imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 75, height: 75) // Mismo tamaño visual que el emoji anterior
+                
                 VStack(alignment: .leading) {
                     Text(entry.date.formatted(date: .abbreviated, time: .omitted))
                         .font(.subheadline).bold()
@@ -388,7 +398,6 @@ struct DiaryEntryyCard: View {
                         .font(.caption)
                         .foregroundColor(.secondary)
                     
-                    // Envoltorio simple para tags (requiere iOS 16+)
                     ViewThatFits {
                         HStack {
                             ForEach(entry.sideEffects, id: \.self) { villain in

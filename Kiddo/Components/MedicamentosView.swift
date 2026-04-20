@@ -147,7 +147,7 @@ private struct ImportantInfoCardView: View {
                     .font(.system(size: 20, weight: .semibold))
             }
             
-            Text("Esta información es educativa. Si notas efectos secundarios no listados o te sientes mal, contacta a tu médico inmediatamente.")
+            Text("Esta información es educativa. Si notas efectos secundarios no listados, contacta a tu médico inmediatamente.")
                 .font(.system(size: 15))
                 .lineSpacing(4)
         }

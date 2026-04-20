@@ -40,7 +40,8 @@ struct AddEventView: View {
                     // Al seleccionar, regresamos a la vista anterior
                 }) {
                     HStack {
-                        Text(medication.emoji ?? "💊")
+                        Text(medication.emoji ?? "Píldora")
+                            
                         VStack(alignment: .leading) {
                             Text(medication.name).font(.headline)
                             Text(medication.genericName).font(.caption).foregroundColor(.secondary)
