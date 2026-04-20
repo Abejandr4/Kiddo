@@ -5,6 +5,7 @@
 //  Created by Valentina Garcia on 18/04/26.
 //
 
+
 import Foundation
 import SwiftUI
 
@@ -12,32 +13,37 @@ enum UserType {
     case child, parent
 }
 
-
 struct SettingsView: View {
     let userType: UserType
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
     @AppStorage("userRole") private var userRole: String = "None"
     
-    @State private var myAvatar = Avatar()
-    
-    // 1. This should be your DATA model, not a View
-    // Assuming 'Avatar' is your struct that holds the choices
-    @State private var avatarConfig = Avatar(capa: "default", accesorio: "default")
+    // Variables de persistencia para el avatar
+    @AppStorage("avatarCapa") private var avatarCapa: String = ""
+    @AppStorage("avatarAccesorio") private var avatarAccesorio: String = ""
     
     var onLogout: () -> Void = { }
+    
+    // Avatar dinámico que siempre refleja lo guardado
+    var currentAvatar: Avatar {
+        Avatar(
+            capa: avatarCapa.isEmpty ? nil : avatarCapa,
+            cuerpo: "kiddo_principal",
+            accesorio: avatarAccesorio.isEmpty ? nil : avatarAccesorio
+        )
+    }
     
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
+                // Solo dejamos este encabezado
                 HStoreHeader()
                 
-                // 2. Pass the data model here.
-                // Use the argument name 'avatar' as defined in UserProfileCard
-                UserProfileCard(userType: userType, avatar: avatarConfig)
+                // Pasamos el avatar actualizado
+                UserProfileCard(userType: userType, avatar: currentAvatar)
                 
                 NavigationStack {
                     VStack(spacing: 20) {
-                        HStoreHeader()
                         
                         if userType == .child {
                             NavigationRow(
@@ -45,31 +51,26 @@ struct SettingsView: View {
                                 title: "Personalizar Superhéroe",
                                 subtitle: "Edita tu avatar",
                                 gradient: Gradient(colors: [.purple, .blue]),
-                                destination: CustomizationView(userAvatar: $myAvatar)
+                                destination: CustomizationView(avatarCapa: $avatarCapa, avatarAccesorio: $avatarAccesorio)
                             )
                         }
                         
+                        // Nueva opción de Vinculación con padre
+                        // Nueva opción de Vinculación con padre
                         NavigationRow(
-                            icon: "lock.shield",
-                            title: "Privacidad",
-                            subtitle: "Cómo usamos tus datos",
+                            icon: "qrcode.viewfinder",
+                            title: "Vinculación con padre",
+                            subtitle: "Conecta tu cuenta",
                             gradient: Gradient(colors: [.green, .teal]),
-                            destination: Text("La IA analiza las entradas de tu diario para hacer mejores recomendaciones a los usuarios, pero el tutor no puede acceder a las entradas directamente")
-                                .padding()
+                            // ¡Aquí está la corrección! Agregamos "View" y un token de prueba
+                            destination: VinculacionQRView(token: "KIDDO-1234-ABCD")
                         )
                         
-                        NavigationRow(
-                            icon: "info.circle",
-                            title: "Acerca de",
-                            subtitle: "Información de la app",
-                            gradient: Gradient(colors: [.orange, .pink]),
-                            destination: Text("Versión 1.0.0 - Mi Jardín de Salud")
-                                .padding()
-                        )
                     }
                     .background(Color.white)
                     .cornerRadius(25)
                     .shadow(color: Color.black.opacity(0.05), radius: 10, x: 0, y: 5)
+                    .padding(.bottom, 10)
                     
                     // App Info Card
                     AppInfoCard()
@@ -78,7 +79,7 @@ struct SettingsView: View {
                     Button(action: {
                         hasCompletedOnboarding = false
                         userRole = "None"
-                        onLogout() // por si necesitas hacer algo más
+                        onLogout()
                     }) {
                         HStack {
                             Image(systemName: "rectangle.portrait.and.arrow.right")
@@ -87,10 +88,9 @@ struct SettingsView: View {
                         }
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 18)
+                        .padding(.vertical, 10)
                         .background(
                             LinearGradient(
-                                // CORRECCIÓN: Se agrega hex:
                                 gradient: Gradient(colors: [Color(hex: "FF8ED4"), Color(hex: "FFB366")]),
                                 startPoint: .leading,
                                 endPoint: .trailing
@@ -114,19 +114,18 @@ struct SettingsView: View {
             HStack(spacing: 12) {
                 Image(systemName: "person.fill")
                     .font(.system(size: 24, weight: .bold))
-                // CORRECCIÓN: hex:
                     .foregroundColor(Color(hex: "7BC67E"))
                 Text("Configuración")
                     .font(.system(size: 28, weight: .bold))
-                // CORRECCIÓN: hex:
                     .foregroundColor(Color(hex: "2D3748"))
                 Spacer()
             }
+            .padding(.horizontal)
             .padding(.bottom, 5)
         }
     }
-    
 }
+
 #Preview("Vista Niño") {
     NavigationStack {
         SettingsView(userType: .child)

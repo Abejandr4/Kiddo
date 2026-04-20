@@ -130,7 +130,7 @@ struct InicioHijo: View {
                     .cornerRadius(30)
                     .shadow(color: .black.opacity(0.05), radius: 10)
 
-                // MARK: - Tarjeta Motivacional (AQUÍ ESTÁ INTEGRADA)
+               
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
                         Text("¡Vas muy bien, campeón!")

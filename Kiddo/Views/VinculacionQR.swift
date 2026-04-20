@@ -9,7 +9,7 @@ struct VinculacionQRView: View {
                 .font(.title2)
                 .fontWeight(.bold)
             
-            Text("Escanea este código desde la aplicación en el dispositivo del niño para sincronizar los medicamentos.")
+            Text("Escanea este código desde la aplicación en el dispositivo de tu pequeño superhéroe para sincronizar los medicamentos.")
                 .font(.subheadline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
