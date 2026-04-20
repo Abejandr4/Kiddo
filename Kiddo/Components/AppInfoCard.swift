@@ -19,7 +19,7 @@ struct AppInfoCard: View {
                 VStack(alignment: .leading) {
                     Text("Kiddo")
                         .font(.headline)
-                    Text("Una para acompañar a cada superhéroe en su misión")
+                    Text("Una app para acompañar a cada superhéroe en su misión")
                         .font(.subheadline)
                         .opacity(0.9)
                 }
