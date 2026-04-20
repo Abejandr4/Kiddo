@@ -8,9 +8,8 @@ final class DiaryEntry {
     var villains: [String] = []
     var fatigueLevel: Int
     var painLevel: Int
-    var wellbeingRaw: String   // ← guardamos el rawValue del enum, no el enum directo
+    var wellbeingRaw: String
 
-    // Propiedad computada para acceder al enum — @Transient la excluye de SwiftData
     @Transient
     var wellbeing: Wellbeing {
         get { Wellbeing(rawValue: wellbeingRaw) ?? .neutral }
@@ -26,9 +25,7 @@ final class DiaryEntry {
     }
 }
 
-// MARK: - Computed properties para ML (fuera del @Model, en extension)
-// Ponerlas en extension evita que SwiftData intente persistirlas
-
+// MARK: - Extension para ML y Lógica de Negocio
 extension DiaryEntry {
     var hour: Double {
         Double(Calendar.current.component(.hour, from: timestamp))
@@ -44,7 +41,6 @@ extension DiaryEntry {
 }
 
 // MARK: - Wellbeing Enum
-
 enum Wellbeing: String, Codable, CaseIterable {
     case veryGood = "Muy bien"
     case good     = "Bien"
@@ -62,14 +58,15 @@ enum Wellbeing: String, Codable, CaseIterable {
         }
     }
 
+    // Esta propiedad busca el archivo en tus Assets
     var imageName: String {
-            switch self {
-            case .veryGood: return "Muy_bien" // Cambia por tus nombres reales
-            case .good:     return "Bien"
-            case .neutral:  return "Meh"
-            case .bad:      return "Mal"
-            case .veryBad:  return "Muy_mal"
-            }
+        switch self {
+        case .veryGood: return "Muy_bien"
+        case .good:     return "Bien"
+        case .neutral:  return "Meh"
+        case .bad:      return "Mal"
+        case .veryBad:  return "Muy_mal"
         }
     }
+}
 
