@@ -109,6 +109,11 @@ struct InicioHijo: View {
                         Text("No hay poderes programados para hoy.")
                             .foregroundColor(.secondary)
                             .padding()
+                        Image("pastillas_1")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 80, height: 80)
+                            
                     }
                 }
                 .padding()

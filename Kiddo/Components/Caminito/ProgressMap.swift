@@ -62,7 +62,6 @@ struct ProgressMap: View {
                     )
                 }
                 
-                // 🦸‍♂️ NUESTRO AVATAR ANIMADO
                 WalkingAvatar(
                     progress: progress,
                     points: checkpoints.map { CGPoint(x: $0.x, y: $0.y) },
