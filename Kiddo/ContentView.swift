@@ -19,7 +19,7 @@ struct ContentView: View {
                     MainViewPadre()
                 } else {
                     // Aquí iría la vista del Superhéroe (Hijo)
-                    Text("Vista del Superhéroe")
+                    MainView()
                 }
             } else {
                 // Pasamos una función que actualice el AppStorage
