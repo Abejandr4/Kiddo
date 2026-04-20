@@ -72,10 +72,7 @@ struct InicioHijo: View {
                             VStack(alignment: .leading, spacing: 12) {
                                 HStack {
                                     VStack(alignment: .leading) {
-                                        Image("Superhéroe")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 80, height: 80)
+                                        Text("\(mission.title) 💊")
                                             .font(.title3).bold()
                                         Text("Hoy a las \(mission.startTime) • \(mission.eventDescription ?? "")")
                                             .font(.subheadline)
@@ -114,10 +111,7 @@ struct InicioHijo: View {
                             .padding()
                         HStack {
                             Spacer()
-                            Image("pastillas_1")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 80, height: 80)
+                            AnimacionImagenesAlternas()
                             Spacer()
                         }
                             
