@@ -232,7 +232,7 @@ final class SuggestionEngine {
         case .worsening:
             return [Suggestion(
                 title: "Has tenido un día difícil",
-                detail: "Tus últimas entradas muestran que has empeorado. Prioriza el descanso sobre cualquier otra cosa.",
+                detail: "Tus últimas entradas muestran que un buen descanso podría ayudarte.",
                 emoji: "💙",
                 category: .rest,
                 urgency: .moderate
