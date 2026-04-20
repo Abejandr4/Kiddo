@@ -39,7 +39,7 @@ struct LoginScreen: View {
                     // MARK: - Botones
                     VStack(spacing: 20) {
                         UserTypeButton(
-                            emoji: "🦸",
+                            imageName: "Superhéroe",
                             title: "Soy el Superhéroe",
                             subtitle: "Mi diario personal",
                             gradient: [Color(hex: "7BC67E"), Color(hex: "87CEEB")]
@@ -48,7 +48,7 @@ struct LoginScreen: View {
                         }
                         
                         UserTypeButton(
-                            emoji: "👨‍👩‍👧‍👦",
+                            imageName: "Cuidador",
                             title: "Soy el Cuidador",
                             subtitle: "Apoyo a mi superhéroe",
                             gradient: [Color(hex: "B4A7D6"), Color(hex: "FFB366")]
@@ -67,7 +67,7 @@ struct LoginScreen: View {
 
 // El componente UserTypeButton se queda igual, pero ajustamos el sombreado
 struct UserTypeButton: View {
-    let emoji: String
+    let imageName: String
     let title: String
     let subtitle: String
     let gradient: [Color]
@@ -76,8 +76,10 @@ struct UserTypeButton: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: 15) {
-                Text(emoji)
-                    .font(.system(size: 50))
+                Image(imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100, height: 100)
                 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(title)

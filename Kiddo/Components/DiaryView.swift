@@ -197,8 +197,10 @@ struct PrivacyNoticeView: View {
     var onClose: () -> Void
     var body: some View {
         HStack(spacing: 15) {
-            Text("🔒")
-                .font(.system(size: 40))
+            Image("Candado")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 90, height: 90)
             VStack(alignment: .leading, spacing: 4) {
                 Text("Tu espacio privado")
                     .font(.headline)
