@@ -17,7 +17,7 @@ struct AIChatView: View {
 
     let quickQuestions = [
         QuickQuestion(icon: "pill.fill", text: "¿Efectos secundarios de Prednisona?"),
-        QuickQuestion(icon: "fork.knife", text: "Alimentos recomendados"),
+        QuickQuestion(icon: "fork.knife", text: "Como puedo hacer que mi hijo coma más?"),
         QuickQuestion(icon: "heart.fill", text: "¿Cómo manejar las náuseas?"),
         QuickQuestion(icon: "exclamationmark.triangle.fill", text: "¿Cuándo llamar al doctor?")
     ]
