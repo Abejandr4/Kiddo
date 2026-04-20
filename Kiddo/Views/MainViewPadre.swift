@@ -30,7 +30,7 @@ struct MainViewPadre: View {
             
             // --- 4. AJUSTES ---
             NavigationStack {
-                AjustesHijo()
+                AjustesPadre()
                     .navigationTitle("Ajustes")
             }
             .tabItem { Label("Ajustes", systemImage: "gearshape.fill") }
