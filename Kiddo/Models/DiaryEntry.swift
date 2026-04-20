@@ -62,13 +62,14 @@ enum Wellbeing: String, Codable, CaseIterable {
         }
     }
 
-    var emoji: String {
-        switch self {
-        case .veryGood: return "😄"
-        case .good:     return "🙂"
-        case .neutral:  return "😐"
-        case .bad:      return "😔"
-        case .veryBad:  return "😞"
+    var imageName: String {
+            switch self {
+            case .veryGood: return "Muy_bien" // Cambia por tus nombres reales
+            case .good:     return "Bien"
+            case .neutral:  return "Meh"
+            case .bad:      return "Mal"
+            case .veryBad:  return "Muy_mal"
+            }
         }
     }
-}
+
