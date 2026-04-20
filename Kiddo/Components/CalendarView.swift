@@ -66,10 +66,7 @@ struct CalendarView: View {
                     if filteredEvents.isEmpty {
                         VStack(spacing: 20) {
                             Spacer(minLength: 50)
-                            Image("recomendacion_2")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 120, height: 120)
+                            AnimacionFeliz()
                             Text("¡El superhéroe ha activado todos sus poderes!")
                                 .font(.title3)
                                 .fontWeight(.medium)
