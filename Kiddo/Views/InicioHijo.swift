@@ -72,7 +72,10 @@ struct InicioHijo: View {
                             VStack(alignment: .leading, spacing: 12) {
                                 HStack {
                                     VStack(alignment: .leading) {
-                                        Text("\(mission.title) 💊")
+                                        Image("Superhéroe")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 80, height: 80)
                                             .font(.title3).bold()
                                         Text("Hoy a las \(mission.startTime) • \(mission.eventDescription ?? "")")
                                             .font(.subheadline)
@@ -109,6 +112,15 @@ struct InicioHijo: View {
                         Text("No hay poderes programados para hoy.")
                             .foregroundColor(.secondary)
                             .padding()
+                        HStack {
+                            Spacer()
+                            Image("pastillas_1")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 80, height: 80)
+                            Spacer()
+                        }
+                            
                     }
                 }
                 .padding()

@@ -11,12 +11,15 @@ struct AppInfoCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 15) {
-                Text("🌸")
+                Image("feliz_4")
+                        .resizable()
+                            .scaledToFit()
+                            .frame(width: 80, height: 80)
                     .font(.system(size: 40))
                 VStack(alignment: .leading) {
-                    Text("Mi Jardín de Salud")
+                    Text("Kiddo")
                         .font(.headline)
-                    Text("Una app para cuidar de ti con amor")
+                    Text("Una para acompañar a cada superhéroe en su misión")
                         .font(.subheadline)
                         .opacity(0.9)
                 }

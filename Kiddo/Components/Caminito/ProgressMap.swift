@@ -24,7 +24,7 @@ struct ProgressMap: View {
     var body: some View {
         let checkpoints = [
             Checkpoint(x: 0.2, y: 0.75, label: "Mañana", imageName: "Mañana", time: "8:00 AM"),
-            Checkpoint(x: 0.8, y: 0.60, label: "Mediodía", imageName: "Medio_dia", time: "12:00 PM"),
+            Checkpoint(x: 0.8, y: 0.60, label: "Mediodía", imageName: "Medio_día", time: "12:00 PM"),
             Checkpoint(x: 0.26, y: 0.45, label: "Tarde", imageName: "Tarde", time: "4:00 PM"),
             Checkpoint(x: 0.75, y: 0.34, label: "Noche", imageName: "Noche", time: "8:00 PM"),
             Checkpoint(x: 0.50, y: 0.15, label: "¡Día completo!", imageName: "Trofeo", time: "")
@@ -62,7 +62,6 @@ struct ProgressMap: View {
                     )
                 }
                 
-                // 🦸‍♂️ NUESTRO AVATAR ANIMADO
                 WalkingAvatar(
                     progress: progress,
                     points: checkpoints.map { CGPoint(x: $0.x, y: $0.y) },
@@ -111,7 +110,7 @@ struct ProgressMap: View {
 // MARK: - Preview
 #Preview {
     VStack {
-        ProgressMap(progress: 20.0)
+        ProgressMap(progress: 100.0)
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .background(Color(hex: "F7FAFC"))

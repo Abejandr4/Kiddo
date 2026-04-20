@@ -6,7 +6,7 @@ struct CalendarioPadre: View {
     @Query(sort: \CalendarEvent.date) private var allEvents: [CalendarEvent]
     @State private var showingAddSheet = false
     @State private var selectedDate = Date()
-
+    
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottomTrailing) {
@@ -15,17 +15,17 @@ struct CalendarioPadre: View {
                 CalendarView(events: allEvents, selectedDate: $selectedDate)
                     .ignoresSafeArea(edges: .bottom)
                 
-                ActionButton("+") {
+                ActionButton("+", fontSize: 35) { // 👈 ¡Solo agregas el fontSize aquí!
                     showingAddSheet = true
                 }
                 .padding(.trailing, 20)
                 .padding(.bottom, 30)
-                .shadow(color: Color.black.opacity(0.15), radius: 10, x: 0, y: 5) // Mantenemos tu sombra
-            }
-            .sheet(isPresented: $showingAddSheet) {
-                AddEventView() // Ya no requiere el binding
+                .shadow(color: Color.black.opacity(0.15), radius: 10, x: 0, y: 5)
+                .sheet(isPresented: $showingAddSheet) {
+                    AddEventView() // Ya no requiere el binding
+                }
             }
         }
     }
+    
 }
-
