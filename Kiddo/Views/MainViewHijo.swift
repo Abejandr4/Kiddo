@@ -44,7 +44,6 @@ struct MainView: View {
             // 4. AJUSTES
             NavigationStack {
                 AjustesHijo()
-                    .navigationTitle("Ajustes")
             }
             .tabItem {
                 Label("Ajustes", systemImage: "gearshape.fill")
