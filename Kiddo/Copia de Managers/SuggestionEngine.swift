@@ -98,10 +98,10 @@ final class SuggestionEngine {
             suggestions.append(Suggestion(
                 title: recipient == .child
                     ? "Hoy tu cuerpo necesita descanso 💙"
-                    : "Tu pequeño necesita descansar hoy 💙",
+                    : "Tu pequeño necesita descansar en estos momentos",
                 detail: recipient == .child
                     ? "Está bien no estar bien. Tu cuerpo está trabajando muy duro y merece un descanso. Recuéstate un ratito y respira tranquilo."
-                    : "Su cuerpo está trabajando muy duro. Ayúdalo a encontrar un lugar cómodo para descansar y hazle saber que está bien tomarse una pausa.",
+                    : "Su cuerpo está trabajando muy duro. Ayúdalo a encontrar un lugar cómodo para descansar y llevársela tranquilo. Hazle saber que está bien tomarse una pausa y ofrécele agua y comida.",
                 emoji: "🛋️",
                 category: .rest,
                 urgency: .strong
@@ -128,8 +128,8 @@ final class SuggestionEngine {
                     ? "Sabemos que duele, y está bien decirlo"
                     : "Tu niño tiene dolor elevado ahora",
                 detail: recipient == .child
-                    ? "No tienes que aguantar solo. Cuéntale a alguien de confianza cómo te sientes. Mientras tanto, intenta cambiar de postura o poner algo calientito donde duela."
-                    : "Es un buen momento para preguntarle cómo se siente y ofrecerle consuelo. Calor local o un cambio de postura pueden ayudar. Si persiste, considera contactar a su médico.",
+                    ? "No tienes que aguantar solo. Cuéntale a alguien de confianza cómo te sientes para buscar formas de hacerte sentir mejor."
+                    : "Es un buen momento para preguntarle cómo se siente y ofrecerle consuelo. Calor local, un cambio de postura, o medicina para el dolor pueden ayudar. Si persiste demasiado, considera contactar a su médico.",
                 emoji: "🩹",
                 category: .selfCare,
                 urgency: .strong
@@ -143,7 +143,7 @@ final class SuggestionEngine {
                     : "¡Tu niño está con mucha energía hoy! ⚡️",
                 detail: recipient == .child
                     ? "Tu cuerpo está contento ahora mismo. ¡Aprovecha para hacer algo que te encante — jugar, dibujar, lo que tú quieras!"
-                    : "Este es uno de sus mejores momentos del día. Ideal para hacer algo juntos — salir a caminar, jugar, o simplemente disfrutar su buena energía.",
+                    : "Este es uno de sus mejores momentos del día. Ideal para hacer algo juntos — salir a caminar, jugar, aprender algo nuevo o simplemente disfrutar su buena energía.",
                 emoji: "✨",
                 category: .productivity,
                 urgency: .moderate
@@ -184,7 +184,7 @@ final class SuggestionEngine {
                     ? "Es hora de darle las buenas noches a tu cuerpo"
                     : "Tu niño debería estar descansando ya",
                 detail: recipient == .child
-                    ? "Ya hiciste mucho hoy, ¡eres increíble! Prepárate para dormir y mañana será un nuevo día lleno de posibilidades."
+                    ? "Ya hiciste mucho hoy, ¡eres increíble! Prepárate para dormir y mañana será un nuevo día lleno de más súper misiones."
                     : "Es tarde y su nivel de fatiga es alto. Iniciar la rutina de dormir ahora le ayudará a descansar mejor esta noche.",
                 emoji: "🌙",
                 category: .rest,
