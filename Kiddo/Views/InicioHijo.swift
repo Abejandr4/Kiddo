@@ -80,16 +80,16 @@ struct InicioHijo: View {
                     }
                     
                     if !currentMissions.isEmpty {
-                        // Iteramos sobre las medicinas agrupadas para esta hora
+                       
                         ForEach(currentMissions) { mission in
                             VStack(alignment: .leading, spacing: 12) {
                                 HStack(spacing: 12) {
                                     
-                                    // --- AQUÍ ESTÁ EL CAMBIO: Avatar en lugar de 💊 ---
+                                    
                                     AvatarView(avatar: currentAvatar)
-                                        .scaleEffect(0.16) // Lo reducimos (40 / 250 = 0.16)
-                                        .frame(width: 70, height: 70)
-                                        .background(Circle().fill(Color.white.opacity(0.6))) // Un fondito blanco transparente para que resalte
+                                        .scaleEffect(0.16)
+                                        .frame(width: 100, height: 100)
+                                        .background(Circle().fill(Color.white.opacity(0.6)))
                                         .clipShape(Circle())
                                     
                                     VStack(alignment: .leading) {

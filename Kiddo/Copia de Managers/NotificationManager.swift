@@ -19,10 +19,8 @@ class NotificationManager {
         content.interruptionLevel = .timeSensitive
         content.relevanceScore = 1.0
 
-        // Use event.date directly — no string parsing needed
         let triggerDate = event.date.addingTimeInterval(-1 * 60) // 10 min before
         
-        // Don't schedule if the date has already passed
         guard triggerDate > Date() else {
             print("⚠️ Event date already passed, skipping: \(event.title)")
             return

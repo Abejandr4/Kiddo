@@ -46,6 +46,6 @@ struct MainViewPadre: View {
 
 #Preview {
     MainViewPadre()
-        // ✅ Le agregamos el modelContainer al Preview para que no marque error el simulador
+       
         .modelContainer(for: [DiaryEntry.self, CalendarEvent.self], inMemory: true)
 }

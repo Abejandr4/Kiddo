@@ -13,7 +13,7 @@ struct AIInsightsView: View {
     let averageEnergy: Double = 6.5
     let trend: String = "improving"
     
-    // Aquí recibimos la sugerencia generada por la IA
+    // Sugerencia de IA
     @State var suggestion: AISuggestion? = AISuggestion(
         icon: "🧘",
         title: "Yoga suave",

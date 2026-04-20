@@ -8,7 +8,7 @@ struct HourlyPrediction {
     let predictedFatigue: Double   // 1.0–5.0
     let predictedPain: Double      // 1.0–5.0
 
-    /// Nivel de energía compuesto (inverso de fatiga+dolor, normalizado 0–1)
+    // Nivel de energía compuesto (inverso de fatiga+dolor, normalizado 0–1)
     var energyScore: Double {
         let combined = (predictedFatigue + predictedPain) / 2.0
         return (5.0 - combined) / 4.0  // 0 = peor, 1 = mejor
@@ -54,7 +54,7 @@ final class PredictionEngine {
 
     // MARK: - Carga de modelos
 
-    /// Carga los modelos compilados desde disco. Llama esto después de entrenar.
+    //Carga los modelos compilados desde disco. Llama esto después de entrenar.
     func loadModels() throws {
         guard let fatigueURL = MLTrainer.shared.fatigueModelURL,
               let painURL    = MLTrainer.shared.painModelURL else {
@@ -71,7 +71,7 @@ final class PredictionEngine {
 
     // MARK: - Predicción por hora
 
-    /// Predice fatiga y dolor para una hora específica del día
+    // Predice fatiga y dolor para una hora específica del día
     func predict(hour: Int, dayOfWeek: Int, recentWellbeing: Double = 3.0) throws -> HourlyPrediction {
         guard let fatigueModel, let painModel else {
             throw PredictionEngineError.modelNotFound
@@ -95,8 +95,8 @@ final class PredictionEngine {
 
     // MARK: - Predicción del día completo (las 24 horas)
 
-    /// Genera predicciones para todas las horas del día y calcula el insight diario.
-    /// Usa el día de hoy y el bienestar promedio reciente del usuario.
+    //Genera predicciones para todas las horas del día y calcula el insight diario.
+    //Usa el día de hoy y el bienestar promedio reciente del usuario.
     func generateDailyInsight(
         recentEntries: [DiaryEntry],
         targetDate: Date = .now
@@ -139,7 +139,7 @@ final class PredictionEngine {
 
     // MARK: - Fallback sin modelo (heurístico con promedios)
 
-    /// Cuando no hay modelo entrenado aún, usa promedios históricos simples.
+    //Cuando no hay modelo entrenado aún, usa promedios históricos simples.
     func generateHeuristicInsight(averagesByHour: [Int: (fatigue: Double, pain: Double, wellbeing: Double)]) -> DailyInsight {
 
         let predictions: [HourlyPrediction] = (0..<24).map { hour in
@@ -172,7 +172,7 @@ final class PredictionEngine {
             "dayOfWeek":      MLFeatureValue(double: Double(dayOfWeek)),
             "wellbeingScore": MLFeatureValue(double: wellbeing)
         ]
-        // Force try es seguro aquí porque las keys son literales correctas
+        
         return try! MLDictionaryFeatureProvider(dictionary: features)
     }
 

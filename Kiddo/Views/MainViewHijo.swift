@@ -7,7 +7,6 @@ import SwiftData
 struct MainView: View {
     @EnvironmentObject var dataManager: DataManager
     
-    // 1. Añade estas variables de estado aquí
     @State private var medicineTaken = false
     @State private var showAnimation = false
     @State private var progressPercentage: Double = 0.0
@@ -16,14 +15,12 @@ struct MainView: View {
         TabView {
             // 1. INICIO
             NavigationStack {
-                // 2. Pásale las variables a InicioHijo
                 InicioHijo(showAnimation: $showAnimation)
             }
             .tabItem {
                 Label("Inicio", systemImage: "house.fill")
             }
             
-            // ... (el resto de tus pestañas Diario, Calendario, Ajustes se quedan igual)
             
             // 2. DIARIO
             NavigationStack {
@@ -59,7 +56,7 @@ struct MainView: View {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: DiaryEntry.self, configurations: config)
     
-    MainView()  // ← sin "return"
+    MainView()  
         .environmentObject(DataManager(modelContext: container.mainContext))
         .modelContainer(container)
 }

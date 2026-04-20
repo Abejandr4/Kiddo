@@ -13,16 +13,13 @@ struct AddEventView: View {
     @State private var notes = ""
     @State private var searchText = ""
     
-    // Configuración de repetición
     let daysOfWeek = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"]
     @State private var selectedDays: Set<String> = []
     @State private var isRecurring = false
     
-    // Colores para el degradado de fondo
     let startColor = Color(red: 0.53, green: 0.84, blue: 0.61).opacity(0.4)
     let endColor = Color(red: 0.55, green: 0.86, blue: 0.95).opacity(0.4)
     
-    // Lista filtrada para la búsqueda
     var filteredMedications: [Medication] {
         if searchText.isEmpty {
             return medicationList
@@ -31,13 +28,11 @@ struct AddEventView: View {
         }
     }
     
-    // --- SOLUCIÓN ERROR 1: Definir medicationSearchList ---
     var medicationSearchList: some View {
         List {
             ForEach(filteredMedications) { medication in
                 Button(action: {
                     self.selectedMedication = medication
-                    // Al seleccionar, regresamos a la vista anterior
                 }) {
                     HStack {
                         Text(medication.emoji ?? "Píldora")
@@ -165,7 +160,7 @@ struct AddEventView: View {
         let title = type == .medication ? (selectedMedication?.name ?? "Medicamento") : customTitle
         let hexColor = type == .medication ? "7BC67E" : "87CEEB"
         
-        // 1. Crear y guardar el evento principal
+        // Evento principal
         let mainEvent = CalendarEvent(
             title: title,
             type: type,

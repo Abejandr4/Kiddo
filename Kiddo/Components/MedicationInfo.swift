@@ -6,7 +6,7 @@ struct MedicationInfoCard: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // --- HEADER (Degradado con Título e Info) ---
+            // Header
             HStack(alignment: .center, spacing: 15) {
                 ZStack {
                     Circle()
@@ -47,7 +47,7 @@ struct MedicationInfoCard: View {
                 )
             )
             
-            // --- CONTENIDO SCROLLABLE ---
+            //Scroll
             ScrollView {
                 VStack(alignment: .leading, spacing: 25) {
                     
@@ -132,7 +132,7 @@ struct MedicationInfoCard: View {
                 .padding(25)
             }
             
-            // --- FOOTER ---
+            
             VStack {
                 Button("Entendido") {
                     onClose()
@@ -155,7 +155,6 @@ struct MedicationInfoCard: View {
     }
 }
 
-// --- PREVIEW CORREGIDO ---
 struct MedicationInfoCard_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {

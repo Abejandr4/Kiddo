@@ -13,17 +13,16 @@ struct LoginScreen: View {
     
     var body: some View {
         ZStack {
-            // Fondo crema suave para resaltar el naranja y los gradientes
+          
             Color(hex: "FDFBF2")
                 .ignoresSafeArea()
             
             VStack {
-                Spacer() // Empuja el contenido hacia el centro
+                Spacer()
                 
                 VStack(spacing: 60) {
                     // MARK: - App Name (Estilo Imagen 2)
                     VStack(spacing: -10) {
-                        // Rayitos decorativos
                         HStack {
                             
                         }
@@ -32,7 +31,7 @@ struct LoginScreen: View {
                         
                         Text("Kiddo")
                             .font(.system(size: 80, weight: .black, design: .rounded))
-                            .foregroundColor(Color(hex: "E59866")) // Color naranja similar a la imagen
+                            .foregroundColor(Color(hex: "E59866"))
                             .shadow(color: Color.black.opacity(0.05), radius: 2, x: 2, y: 2)
                     }
                     
@@ -59,13 +58,13 @@ struct LoginScreen: View {
                     .padding(.horizontal, 30)
                 }
                 
-                Spacer() // Empuja el contenido hacia el centro desde abajo
+                Spacer()
             }
         }
     }
 }
 
-// El componente UserTypeButton se queda igual, pero ajustamos el sombreado
+
 struct UserTypeButton: View {
     let imageName: String
     let title: String
@@ -97,7 +96,7 @@ struct UserTypeButton: View {
                 LinearGradient(gradient: Gradient(colors: gradient), startPoint: .topLeading, endPoint: .bottomTrailing)
             )
             .cornerRadius(25)
-            // Sombreado más profundo para que parezcan "cards" físicas
+            
             .shadow(color: Color.black.opacity(0.12), radius: 10, x: 0, y: 6)
         }
         .buttonStyle(PlainButtonStyle())
