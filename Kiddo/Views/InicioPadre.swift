@@ -37,6 +37,26 @@ struct InicioPadre: View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 25) {
                 
+                VStack(alignment: .leading, spacing: 8) {
+                                    Text("Cuidador")
+                                        .font(.title.bold())
+                                    Text("Apoyando a tu superhéroe")
+                                        
+                                        .opacity(0.9)
+                                }
+                                .foregroundColor(.white)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(15)
+                                .background(
+                                    LinearGradient(
+                                        colors: [Color(hex: "7BC67E"), Color(hex: "87CEEB")],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .cornerRadius(35)
+                                .padding(.top, 10)
+                
                 // --- CABECERA ---
                 VStack(spacing: 15) {
                     Image("Cuidador")
