@@ -5,6 +5,7 @@ import SwiftData
 final class DiaryEntry {
     var id: UUID
     var timestamp: Date
+    var villains: [String] = []
     var fatigueLevel: Int
     var painLevel: Int
     var wellbeingRaw: String   // ← guardamos el rawValue del enum, no el enum directo
