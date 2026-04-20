@@ -15,6 +15,19 @@ struct InicioHijo: View {
     
     @Binding var showAnimation: Bool
     
+    // --- NUEVO: Leemos el avatar guardado ---
+    @AppStorage("avatarCapa") private var avatarCapa: String = ""
+    @AppStorage("avatarAccesorio") private var avatarAccesorio: String = ""
+    
+    var currentAvatar: Avatar {
+        Avatar(
+            capa: avatarCapa.isEmpty ? nil : avatarCapa,
+            cuerpo: "kiddo_principal",
+            accesorio: avatarAccesorio.isEmpty ? nil : avatarAccesorio
+        )
+    }
+    // ----------------------------------------
+    
     // 2. Filtramos solo los medicamentos de HOY
     var todaysMedications: [CalendarEvent] {
         let calendar = Calendar.current
@@ -70,9 +83,17 @@ struct InicioHijo: View {
                         // Iteramos sobre las medicinas agrupadas para esta hora
                         ForEach(currentMissions) { mission in
                             VStack(alignment: .leading, spacing: 12) {
-                                HStack {
+                                HStack(spacing: 12) {
+                                    
+                                    // --- AQUÍ ESTÁ EL CAMBIO: Avatar en lugar de 💊 ---
+                                    AvatarView(avatar: currentAvatar)
+                                        .scaleEffect(0.16) // Lo reducimos (40 / 250 = 0.16)
+                                        .frame(width: 70, height: 70)
+                                        .background(Circle().fill(Color.white.opacity(0.6))) // Un fondito blanco transparente para que resalte
+                                        .clipShape(Circle())
+                                    
                                     VStack(alignment: .leading) {
-                                        Text("\(mission.title) 💊")
+                                        Text("\(mission.title)")
                                             .font(.title3).bold()
                                         Text("Hoy a las \(mission.startTime) • \(mission.eventDescription ?? "")")
                                             .font(.subheadline)
@@ -130,7 +151,7 @@ struct InicioHijo: View {
                     .cornerRadius(30)
                     .shadow(color: .black.opacity(0.05), radius: 10)
 
-               
+                
                 VStack(alignment: .leading, spacing: 12) {
                     HStack {
                         Text("¡Vas muy bien, campeón!")
@@ -173,4 +194,3 @@ struct InicioHijo: View {
     InicioHijo(showAnimation: .constant(false))
         .modelContainer(for: CalendarEvent.self, inMemory: true)
 }
-

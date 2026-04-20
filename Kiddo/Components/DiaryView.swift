@@ -37,14 +37,27 @@ struct DiaryEntryy: Identifiable {
 }
 
 struct DiaryView: View {
-    @EnvironmentObject var dataManager: DataManager  // ← agregado
+    @EnvironmentObject var dataManager: DataManager
+    
+    // --- NUEVO: Leemos el avatar guardado ---
+    @AppStorage("avatarCapa") private var avatarCapa: String = ""
+    @AppStorage("avatarAccesorio") private var avatarAccesorio: String = ""
+    
+    var currentAvatar: Avatar {
+        Avatar(
+            capa: avatarCapa.isEmpty ? nil : avatarCapa,
+            cuerpo: "kiddo_principal",
+            accesorio: avatarAccesorio.isEmpty ? nil : avatarAccesorio
+        )
+    }
+    // ----------------------------------------
 
     @State private var entries: [DiaryEntryy] = [
         DiaryEntryy(date: Date(), mood: .great, energyLevel: 8, painLevel: 2, sideEffects: ["Cansancio leve"], notes: "¡Me sentí muy bien hoy!"),
         DiaryEntryy(date: Date().addingTimeInterval(-86400), mood: .neutral, energyLevel: 5, painLevel: 4, sideEffects: ["Mareos", "Náuseas"], notes: "Día tranquilo.")
     ]
     
-    @State private var suggestions: [Suggestion] = []          // ← agregado
+    @State private var suggestions: [Suggestion] = []
     @State private var showPrivacyNotice = true
     @State private var showNewEntrySheet = false
     @State private var showHistorySheet = false
@@ -71,10 +84,13 @@ struct DiaryView: View {
                 // ── Sección de Tips ──────────────────────────────────────
                 VStack(alignment: .leading, spacing: 15) {
                     HStack {
-                        Image("Superhéroe")
-                            .resizable()
-                            .scaledToFit()
+                        // --- AQUÍ ESTÁ EL CAMBIO: Avatar en lugar de la imagen estática ---
+                        AvatarView(avatar: currentAvatar)
+                            .scaleEffect(0.28) // (70 / 250 = 0.28) para que encaje
                             .frame(width: 70, height: 70)
+                            .background(Circle().fill(Color.white.opacity(0.6)))
+                            .clipShape(Circle())
+                        
                         Text("Tips de Héroe")
                             .font(.title2)
                             .fontWeight(.bold)
@@ -91,7 +107,7 @@ struct DiaryView: View {
                                 timeText: "Cuando quieras"
                             )
                         } else {
-                            // Tips generados por el modelo ← aquí está el cambio
+                            // Tips generados por el modelo
                             ForEach(suggestions) { suggestion in
                                 HeroTipCard(
                                     emoji: suggestion.emoji,
@@ -136,7 +152,7 @@ struct DiaryView: View {
         }
         .background(Color(red: 0.96, green: 0.98, blue: 0.96).ignoresSafeArea())
         .task {
-            await loadSuggestions()  // ← carga al aparecer la vista
+            await loadSuggestions()
         }
         .sheet(isPresented: $showNewEntrySheet) {
             NavigationStack {
@@ -196,12 +212,10 @@ struct DiaryView: View {
     }
     
     private func saveEntry(mood: Mood, energy: Double, pain: Double, notes: String, villains: [String]) {
-        // Guardar en UI local (como ya hacías)
         let entry = DiaryEntryy(date: Date(), mood: mood, energyLevel: energy, painLevel: pain, sideEffects: villains, notes: notes)
         entries.insert(entry, at: 0)
         showNewEntrySheet = false
         
-        // ← NUEVO: guardar también en SwiftData para el modelo ML
         let wellbeing: Wellbeing
         switch mood {
         case .great:    wellbeing = .veryGood
@@ -211,13 +225,11 @@ struct DiaryView: View {
         case .terrible: wellbeing = .veryBad
         }
 
-        // Convertir escala 1-10 a 1-5 para el modelo
         let fatigue = max(1, min(5, Int((energy / 10.0) * 5)))
         let painML  = max(1, min(5, Int((pain   / 10.0) * 5)))
 
         try? dataManager.addEntry(fatigue: fatigue, pain: painML, wellbeing: wellbeing)
         
-        // Recargar sugerencias con los nuevos datos
         Task { await loadSuggestions() }
     }
 }
@@ -282,11 +294,10 @@ struct NewEntryForm: View {
                         ForEach(Mood.allCases, id: \.self) { m in
                             Button { mood = m } label: {
                                 VStack {
-                                    // AQUI CAMBIAMOS EL EMOJI POR LA IMAGEN
                                     Image(m.imageName)
                                         .resizable()
                                         .scaledToFit()
-                                        .frame(width: 60, height: 60) // Ajusta el tamaño según necesites
+                                        .frame(width: 60, height: 60)
                                     
                                     Text(m.label).font(.system(size: 10))
                                 }
@@ -321,7 +332,6 @@ struct NewEntryForm: View {
                     }
                 }
                 
-                // SECCIÓN VILLANOS DE HOY
                 VStack(alignment: .leading, spacing: 10) {
                     Text("Villanos de hoy")
                         .font(.headline)
@@ -377,7 +387,6 @@ struct NewEntryForm: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button("Cancelar", action: onCancel)
-                    
             }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Guardar") {
@@ -396,11 +405,10 @@ struct DiaryEntryyCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
             HStack(alignment: .top) {
-                // AQUI CAMBIAMOS EL EMOJI POR LA IMAGEN PARA EL HISTORIAL
                 Image(entry.mood.imageName)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 75, height: 75) // Mismo tamaño visual que el emoji anterior
+                    .frame(width: 75, height: 75)
                 
                 VStack(alignment: .leading) {
                     Text(entry.date.formatted(date: .abbreviated, time: .omitted))
@@ -421,7 +429,6 @@ struct DiaryEntryyCard: View {
                 LevelIndicator(label: "Dolor", value: entry.painLevel, icon: "heart.slash.fill", color: .red)
             }
             
-            // Mostrar Villanos en el historial
             if !entry.sideEffects.isEmpty {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Villanos enfrentados:")
