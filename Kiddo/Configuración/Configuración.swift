@@ -30,13 +30,14 @@ struct SettingsView: View {
     }
     
     var body: some View {
+        NavigationStack {
         ScrollView {
             VStack(spacing: 20) {
                 HStoreHeader()
                 
                 UserProfileCard(userType: userType, avatar: currentAvatar)
                 
-                NavigationStack {
+                
                     VStack(spacing: 20) {
                         
                         // OPCIÓN SOLO PARA NIÑO
