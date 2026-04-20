@@ -30,7 +30,7 @@ struct MainViewPadre: View {
             
             // --- 4. CHAT ---
             NavigationStack {
-                AIChatView()
+                AIChatViewFF()
             }
             .tabItem { Label("Chat", systemImage: "star.bubble") }
             

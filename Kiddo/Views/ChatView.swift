@@ -13,8 +13,7 @@ struct AIChatViewFF: View {
     let qaResponses: [String: String] = [
         "¿Efectos secundarios de Prednisona?": "La Prednisona es un corticosteroide común en tratamientos de leucemia. Sus efectos secundarios incluyen cambios de humor, aumento del apetito, retención de líquidos e insomnio. Es importante tomarla con alimentos y nunca suspenderla bruscamente.",
         "Alimentos recomendados": "Durante el tratamiento se recomienda priorizar proteínas magras (pollo, huevo, legumbres), frutas y verduras bien lavadas, y granos enteros. Evita alimentos crudos o sin pasteurizar si tu sistema inmune está comprometido.",
-        "¿Cómo manejar las náuseas?": "El Ondansetrón (Zofran) es muy efectivo para las náuseas. También ayuda comer porciones pequeñas y frías, evitar olores fuertes, y descansar sentado después de comer. Infórmale a tu médico si persisten.",
-        "¿Cuándo llamar al doctor?": "Llama de inmediato si presentas fiebre mayor a 38°C, sangrado inusual, dificultad para respirar, dolor de pecho, o signos de infección. Estos pueden ser señales de alerta importantes durante el tratamiento."
+        "¿Cómo manejar las náuseas?": "El Ondansetrón (Zofran) es muy efectivo para las náuseas. También ayuda comer porciones pequeñas y frías, evitar olores fuertes, y descansar sentado después de comer. Infórmale a tu médico si persisten."
     ]
 
     // All available quick questions
