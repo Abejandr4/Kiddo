@@ -44,17 +44,18 @@ struct CheckpointView: View {
                     .shadow(radius: 5)
                 
                 // Contenido: Avatar o Emoji
-                if isActive {
-                    // Aquí iría tu SuperheroSprite
-                    Text("🦸‍♂️")
-                        .font(.system(size: 20))
-                        .rotationEffect(.degrees(isActive ? 2 : 0))
-                        .animation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true), value: isActive)
-                } else {
-                    Text(checkpoint.emoji)
-                        .font(.system(size: 30))
-                }
-                
+                // Contenido: Avatar animado o Asset estático
+                                if isActive {
+                                    // 🌟 Dejamos este espacio VACÍO.
+                                    // No ponemos nada aquí porque el avatar animado
+                                    // (el que camina) se va a poner encima desde la vista principal.
+                                } else {
+                                    // ✅ Aquí sí mostramos tus imágenes (Trofeo, Noche, etc.)
+                                    Image(checkpoint.imageName)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 35, height: 35) // Ajusta el tamaño para que quepa en tu círculo de 60x60
+                                }
                 // Checkmark de completado
                 if isCompleted {
                     Image(systemName: "checkmark")
@@ -104,7 +105,7 @@ struct CheckpointView: View {
             
             // 1. ESTADO COMPLETADO (Arriba)
             CheckpointView(
-                checkpoint: Checkpoint(x: 0.5, y: 0.2, label: "Completado", emoji: "🌅", time: "8:00 AM"),
+                checkpoint: Checkpoint(x: 0.5, y: 0.2, label: "Completado", imageName: "Trofeo", time: "8:00 AM"),
                 isActive: false,
                 isCompleted: true,
                 size: geometry.size
@@ -112,7 +113,7 @@ struct CheckpointView: View {
             
             // 2. ESTADO ACTIVO (Centro)
             CheckpointView(
-                checkpoint: Checkpoint(x: 0.5, y: 0.5, label: "Actual", emoji: "☀️", time: "12:00 PM"),
+                checkpoint: Checkpoint(x: 0.5, y: 0.5, label: "Actual", imageName: "Trofeo", time: "12:00 PM"),
                 isActive: true,
                 isCompleted: false,
                 size: geometry.size
@@ -120,7 +121,7 @@ struct CheckpointView: View {
             
             // 3. ESTADO PENDIENTE (Abajo)
             CheckpointView(
-                checkpoint: Checkpoint(x: 0.5, y: 0.8, label: "Pendiente", emoji: "🌙", time: "8:00 PM"),
+                checkpoint: Checkpoint(x: 0.5, y: 0.8, label: "Pendiente", imageName: "Noche", time: "8:00 PM"),
                 isActive: false,
                 isCompleted: false,
                 size: geometry.size
