@@ -277,8 +277,8 @@ docs/                         # Imágenes de este README
 
 | Nombre | Rol |
 |---|---|
-| [Myrahis](https://github.com/MyrahisYSanluis) | Diseño y UI |
-| [Valentina](https://github.com/Valoo-1201) | UX |
-| [Alejandra](https://github.com/Abejandr4) | Desarrollo técnico |
+| [Alejandra Valentina Cruz Ruiz](https://github.com/Abejandr4) | Desarrollo técnico |
+| [Myrahis Yurizahan Sanluis Cerezo](https://github.com/MyrahisYSanluis) | Diseño y UI |
+| [María Valentina García Hernández](https://github.com/Valoo-1201) | UX |
 
 Universidad de las Américas Puebla (UDLAP)
