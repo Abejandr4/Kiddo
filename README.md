@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/kiddo-guino.gif" alt="Kiddo guiñando el ojo" width="170">
+  <img src="docs/kiddo-guino.png" alt="Kiddo guiñando el ojo" width="170">
 </p>
 
 <h1 align="center">Kiddo</h1>
@@ -103,7 +103,7 @@ Pacientes oncológicos pediátricos y sus cuidadores.
 
 ### 6.1 Selección de rol (onboarding)
 
-<p align="center"><img src="docs/seleccion-de-rol.jpg" alt="Selección de rol" width="220"></p>
+<p align="center"><img src="docs/seleccion-de-rol.png" alt="Selección de rol" width="260"></p>
 
 La primera vez que se abre la app, el usuario elige entre dos perfiles con tarjetas visuales: **"Soy el Superhéroe"** (mi diario personal) o **"Soy el Cuidador"** (apoyo a mi superhéroe). Esta decisión define toda la navegación.
 
@@ -111,7 +111,7 @@ La primera vez que se abre la app, el usuario elige entre dos perfiles con tarje
 
 ### 6.2 Perfil Cuidador
 
-![Perfil Cuidador](docs/perfil-cuidador.jpg)
+![Perfil Cuidador](docs/perfil-cuidador.png)
 
 - **Inicio:** avatar del cuidador, barra de "Misiones de hoy" con progreso, tarjeta de "Próxima misión" con el nombre del medicamento (p. ej. Blincyto) y la hora, y un panel sobre el diario del niño con tips de cuidado.
 - **Medicinas / Nuevo registro:** formulario para agendar medicamentos o citas médicas. Permite elegir el tipo de registro, la medicina, la fecha y la hora, activar la repetición semanal y añadir notas (dosis, recordatorios).
@@ -122,7 +122,7 @@ La primera vez que se abre la app, el usuario elige entre dos perfiles con tarje
 
 ### 6.3 Perfil Niño / Superhéroe
 
-![Perfil Superhéroe](docs/perfil-superheroe.jpg)
+![Perfil Superhéroe](docs/perfil-superheroe.png)
 
 - **Inicio:** mapa visual de "misiones del día" por momentos (Mañana 8:00, Mediodía 12:00, Tarde 4:00 y Noche 8:00) unidos por un camino que termina en una copa de "¡Día completo!". Al completar una misión aparece una palomita ✓ y sube la barra de progreso. Debajo hay un mensaje motivacional.
 - **Diario / Mi Diario Secreto:** espacio privado con la tarjeta "Tu espacio privado", "Tips de Héroe" personalizados según sus registros (p. ej. *"Aprovecha que te sientes bien ahora"*, *"Tu momento estrella es a las 6pm"*) y dos botones: "Registro de batalla" e "Historial de batallas".
@@ -206,7 +206,7 @@ Kiddo/
 Kiddo.xcodeproj
 KiddoTests/
 KiddoUITests/
-docs/                         # Imágenes y GIFs de este README
+docs/                         # Imágenes de este README
 ```
 
 ---

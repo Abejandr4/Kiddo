@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/kiddo-guino.gif" alt="Kiddo winking" width="170">
+  <img src="docs/kiddo-guino.png" alt="Kiddo winking" width="170">
 </p>
 
 <h1 align="center">Kiddo</h1>
@@ -105,7 +105,7 @@ Pediatric oncology patients and their caregivers.
 
 ### 6.1 Role selection (onboarding)
 
-<p align="center"><img src="docs/seleccion-de-rol.jpg" alt="Role selection" width="220"></p>
+<p align="center"><img src="docs/seleccion-de-rol.png" alt="Role selection" width="260"></p>
 
 The first time the app is opened, the user chooses between two profiles shown as visual cards: **"Soy el Superhéroe"** (I'm the Superhero — my personal diary) or **"Soy el Cuidador"** (I'm the Caregiver — support for my superhero). This choice defines all subsequent navigation.
 
@@ -113,7 +113,7 @@ The first time the app is opened, the user chooses between two profiles shown as
 
 ### 6.2 Caregiver profile
 
-![Caregiver profile](docs/perfil-cuidador.jpg)
+![Caregiver profile](docs/perfil-cuidador.png)
 
 - **Home:** caregiver avatar, a "Misiones de hoy" (Today's missions) bar with progress, a "Próxima misión" (Next mission) card with the medication name (e.g. Blincyto) and time, and a panel about the child's diary with care tips.
 - **Medications / New entry:** form to schedule medications or medical appointments. Users choose the entry type, the medication, date and start time, turn on weekly repetition and add notes (dose, reminders).
@@ -124,7 +124,7 @@ The first time the app is opened, the user chooses between two profiles shown as
 
 ### 6.3 Child / Superhero profile
 
-![Superhero profile](docs/perfil-superheroe.jpg)
+![Superhero profile](docs/perfil-superheroe.png)
 
 - **Home:** a visual map of the day's missions by time of day (Morning 8:00 AM, Noon 12:00 PM, Afternoon 4:00 PM and Night 8:00 PM), connected by a path that ends in a "¡Día completo!" (Day complete!) trophy. Completing a mission shows a ✓ and raises the progress bar. A motivational message appears below.
 - **Diary / Mi Diario Secreto (My Secret Diary):** a private space with a "Tu espacio privado" (Your private space) card, personalized "Tips de Héroe" (Hero Tips) based on previous entries (e.g. *"Make the most of feeling good right now"*, *"Your star moment is at 6pm"*) and two large buttons: "Registro de batalla" (Battle log) and "Historial de batallas" (Battle history).
@@ -208,7 +208,7 @@ Kiddo/
 Kiddo.xcodeproj
 KiddoTests/
 KiddoUITests/
-docs/                         # Images and GIF used in this README
+docs/                         # Images used in this README
 ```
 
 ---
